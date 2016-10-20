@@ -1,0 +1,5 @@
+
+  URL:        http://ecommercefurb-gooutbox.rhcloud.com/
+  SSH to:     571823372d52710b04000001@ecommercefurb-gooutbox.rhcloud.com
+  Git remote: ssh://571823372d52710b04000001@ecommercefurb-gooutbox.rhcloud.com/~/git/ecommercefurb.git/
+  Cloned to:  C:/Users/NoteDjonathan/ecommercefurb

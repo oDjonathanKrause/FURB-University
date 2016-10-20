@@ -1,0 +1,217 @@
+/*Estoque*/
+#tableProdutos:hover #bt_sem_borda{
+  background-color:rgb(245,245,245);
+  border-color:rgb(245,245,245);
+}
+
+#bt_sem_borda{
+  border-color:#ffffff;
+}
+
+/*Carrinho*/
+
+#retirarProd{
+  font-weight: normal;
+}
+
+#tableProdutos{
+  font-weight: bold;
+}
+
+#imgCarrinho{
+  width:15%;
+  float: left;
+}
+
+#txtImgCarrinho{
+  width: 80%;
+  float: rigth;
+}
+
+/*Detalhes produto */
+
+#imgProduto{
+  width: 40%; 
+  float: left;
+}
+
+#detalhes {
+  float: right;
+  width: 50%;
+  text-align: left;
+}
+
+#layoutDiv {
+  background: rgba(250,250,250,.5);
+  box-shadow: #e6e6e6 2px 2px 1px;
+  -webkit-box-shadow: 5px 5px 10px #e6e6e6;
+}
+
+#btComprar .wrapper {
+    text-align: center;
+}
+
+#detalheProduto {
+  position: absolute;
+}
+
+#dtFooter{
+  position:absolute;
+  bottom:0;
+}
+
+
+/* LOGIN */
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+
+.button-background {
+  background-color:#8c8c8c;
+  border-color:#8c8c8c;
+}
+
+.white {color:#ffffff;}
+
+/**/
+
+
+#divisor1
+{
+	border: 2px solid;
+	height: 20%;
+}
+
+
+/* item(img) styles */
+.item-image 
+{
+  /* faz o bloco preto ficar abaixo da imagem, nao sobreposto */
+  padding-bottom :45%; 
+  position: relative;
+  overflow: hidden;
+  height: 0px;
+}
+
+.item-image img 
+{
+  /* faz o bloco preto ficar junto da imagem */
+  position: absolute;
+  top: 0px;
+  width: 90%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#itemDestaqueToHover:hover
+{
+  background-color: #D4D4D4;
+  cursor: pointer; 
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+
+  padding-top: 4%;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+#itemDestaque
+{
+  padding-top: 50%;
+}
+
+.item-content 
+{
+  /* estilo do bloco preto */
+  padding: 15px;
+  background: rgb(33,33,33);
+  font: 400 13px/15px Lato,sans-serif;
+}
+
+.item-text 
+{
+  /* estilo do texto de cada item(img)*/
+  position: relative;
+  overflow: hidden;
+  color: white;
+  height: 100px;
+}
+
+#preco
+{
+  padding-top: 3%;
+  padding-bottom: 3%;
+  color: #266CB2;
+  font: 18px sans-serif;
+}
+
+#navbar
+{
+  background-color: rgb(33,33,33); 
+}
+
+#footer
+{
+	background-color: rgb(33,33,33);
+}
+
+/** Icones **/
+#facebook, #twitter, #plus
+{
+  color:#D2D4D8;
+  padding-left: 10px;
+}
+
+#facebook:hover, #twitter:hover, #plus:hover
+{
+  color: #266CB2;
+}
+
+
+/* Carrosel  */
+.carousel img 
+{
+  padding-left: 0px;
+  min-width: 100%;
+  height: 30%;
+}
+
+.tales 
+{
+  width: 100%;
+}
+.carousel-inner
+{
+  width:100%;
+  max-height: 500px !important;
+}
+
+.carousel-control.right, .carousel-control.left 
+{
+    background-image: none;
+    color: #266CB2;
+}
+
+

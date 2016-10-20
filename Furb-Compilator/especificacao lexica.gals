@@ -1,0 +1,192 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = String
+Parser = LL
+#RegularDefinitions
+
+min: [a-z]
+mai: [A-Z]
+palavra: {min} | {mai}
+digito: [0-9]
+
+//comentário
+bloco : "/" "*" ([^"*"] | ("*")+ [^/"*"])* ("*")+"/"
+#Tokens
+// caracteres especiais
+:[\s\t\n]
+
+//palavras reservadas
+palavra_reservada :{min} + ({mai}? {min}+)*
+
+//identificadores
+identificador_int : i_{palavra}({palavra}|{digito})*
+identificador_float : f_{palavra}({palavra}|{digito})*
+identificador_string : s_{palavra}({palavra}|{digito})*
+identificador_bool : b_{palavra}({palavra}|{digito})*
+
+
+//constantes
+constante_int : {digito}+
+constante_float : {digito}+,{digito}+
+constante_string : \"([^\"\n])*\"
+
+
+// desconsidera comentário
+ :! {bloco}
+
+//palavras reservadas especiais
+and       = palavra_reservada : "and"
+false     = palavra_reservada : "false"
+if        = palavra_reservada : "if"
+in        = palavra_reservada : "in"
+isFalseDo = palavra_reservada : "isFalseDo"
+isTrueDo  = palavra_reservada : "isTrueDo"
+main      = palavra_reservada : "main"
+module    = palavra_reservada : "module"
+not       = palavra_reservada : "not"
+or        = palavra_reservada : "or"
+true      = palavra_reservada : "true"
+out       = palavra_reservada : "out"
+while     = palavra_reservada : "while"
+
+//simbolos especiais
+","
+":"
+";"
+"["
+"]"
+"("
+")"
+"{"
+"}"
+"+"
+"-"
+"*"
+"/"
+"<-"
+"="
+"!="
+"<"
+"<="
+">"
+">="
+
+#NonTerminals
+<programa> 
+<variaveis>
+<aux_comando>
+<comando>
+<var>
+<lista_de_variaveis>
+<id1>
+<tipo>
+<numero>
+<atribuicao>
+<aux_id>
+<id2>
+<entrada>
+<lista_identificadores>
+<id3>
+<saida>
+<lista_expressao>
+<selecao>
+<tipo_selecao>
+<true>
+<false>
+<trueF>
+<falseT>
+<lista_comandos>
+<repeticao>
+<tipo_rep>
+<expressao>
+<aux_comando1>
+<lista_de_variaveis1>
+<id12>
+<aux_id1>
+<lista_identificadores1>
+<id32>
+<lista_expressao1>
+<lista_comandos1>
+<elemento>
+<relacional>
+<operador_relacional>
+<aritmetica>
+<termo>
+<fator>
+<vetor_uso>
+<expressao1>
+<aritmetica1>
+<termo1>
+<relacional1>
+<identificador_variavel>
+#Grammar
+//Forma geral de um programa
+<programa> ::= #12 main module <variaveis> "{" <aux_comando> "}" #13;
+<aux_comando> ::= <comando><aux_comando1>;
+<aux_comando1> ::= î | <aux_comando>;
+<comando> ::= <entrada> | <atribuicao> | <saida> | <selecao> | <repeticao>;
+
+//Forma geral das variáveis
+<variaveis> ::= ":" <var>";" | î;
+<var> ::= <lista_de_variaveis>;
+<lista_de_variaveis> ::= <id1><lista_de_variaveis1>;
+<lista_de_variaveis1> ::= î | ","<lista_de_variaveis>;
+<id1> ::= <tipo> #21 <id12> #22;
+<id12> ::= î | "["<numero> #26 "]";
+<tipo> ::= identificador_int| identificador_float | identificador_string | identificador_bool;
+<numero> ::= constante_int;
+
+//Forma geral do comando de atribuição
+<atribuicao> ::= <aux_id> "<-" <expressao> #25 ";";
+<aux_id> ::= <id2> #21 #37 <aux_id1>;
+<aux_id1> ::= î |  #27 "["<expressao> "]";
+<id2> ::= identificador_int| identificador_float | identificador_string | identificador_bool;
+
+//Forma geral do comando de entrada de dados
+<entrada> ::= in "("<lista_identificadores>")" ";";
+<lista_identificadores> ::= <id3><lista_identificadores1>;
+<lista_identificadores1> ::= î | ","<lista_identificadores>;
+<id3> ::= <tipo> #21 #35 <id32> #23 ;
+<id32> ::= î | #27 "["<expressao> "]";
+
+//Forma geral do comando de saída de dados
+<saida> ::= out "("<lista_expressao>")" ";";
+<lista_expressao> ::= <expressao> #11 <lista_expressao1>;
+<lista_expressao1> ::= î  | ","<lista_expressao>;
+
+//Forma geral do comando de seleção
+<selecao> ::= if "("<expressao> #34 ")"<tipo_selecao>;
+<tipo_selecao> ::= <true> <falseT> #29 | <false> <trueF> #29;
+<true> ::= isTrueDo #28 ":" "{" <lista_comandos> "}" ;
+<false> ::= isFalseDo #28 ":" "{" <lista_comandos> "}";
+<trueF> ::= <true> | î;
+<falseT> ::= <false> | î;
+<lista_comandos> ::= <comando><lista_comandos1>;
+<lista_comandos1> ::= î | <lista_comandos>;
+
+//Forma geral do comando de repetição
+<repeticao> ::= #31 while "(" <expressao> #34 ")" <tipo_rep> #32 ":" "{"<lista_comandos>"}" #33;
+<tipo_rep> ::= isTrueDo | isFalseDo;
+
+//Expressao
+<expressao> ::=  <elemento> <expressao1> #36;
+<expressao1> ::= and <elemento> #14 <expressao1> |  or <elemento> #15 <expressao1> | î;
+<elemento> ::= <relacional> | true #16 | false #17 | not <elemento> #18;
+<relacional> ::= <aritmetica> <relacional1>;
+<relacional1> ::= <operador_relacional> #10 <aritmetica> #9 | î;
+<operador_relacional> ::= "=" | "!=" | "<" | "<=" | ">" | ">=";
+<aritmetica> ::= <termo><aritmetica1>;
+<aritmetica1> ::=  "+" <termo> #1 <aritmetica1> |  "-" <termo> #2 <aritmetica1>| î;
+<termo> ::= <fator> <termo1>;
+<termo1> ::= "*" <fator> #3 <termo1> |  "/" <fator> #4 <termo1> | î;
+<fator> ::=  <identificador_variavel> #21 <vetor_uso> #24 | constante_int #5 | constante_float #6 | constante_string #19 | 
+		"(" <expressao> ")" | "+" <fator>  #7 | "-" <fator> #8;
+<identificador_variavel> ::= identificador_int | identificador_float | identificador_string | identificador_bool;
+<vetor_uso> ::= î | #30 "[" <expressao>  "]";

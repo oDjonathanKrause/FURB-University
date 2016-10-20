@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Cadastro Produtos</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+	    <!----------------------
+		--					  --
+		--		Imports	 	  --
+		--					  --
+		------------------------>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-hQpvDQiCJaD2H465dQfA717v7lu5qHWtDbWNPvaTJ0ID5xnPUlVXnKzq7b8YUkbN" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+	<script>
+	</script>
+
+	<div class="container">
+		<!----------------------
+		--					  --
+		--		Navbar 	 	  --
+		--					  --
+		------------------------>
+		<nav id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div id="logo" class="navbar-header">
+					<a id="logo" class="navbar-brand" href="index.html">E-Commerce Maneiro</a>
+				</div>
+				
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+						<li class="dropdown ">
+				        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				        	<span class="glyphicon glyphicon-sunglasses"></span> Produtos</a>
+				        
+				        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+				          <li><a href="#">Camisetas</a></li>
+				          <li role="separator" class="divider"></li>
+				          
+				          <li><a href="#">Posters</a></li>
+				          <li role="separator" class="divider"></li>
+
+				          <li><a href="#">Canecas</a></li> 
+				        </ul>
+
+				      </li>
+					<li><a href="#"><span class="glyphicon glyphicon-send"></span> Contato</a></li> 
+					<li class="dropdown ">
+				        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				        	<span class="glyphicon glyphicon-pencil"></span> Cadastros</a>
+				        
+				        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+				          <li><a href="#">Produtos</a></li>
+				          <li role="separator" class="divider"></li>
+				          
+				          <li><a href="#">Fornecedor</a></li>
+				        </ul>
+
+				      </li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Bem vindo Usuário Teste</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Meu carrinho</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<!-- divisor1 -->
+		<div id="divisor1"></div>
+		
+		<!-- formulário -->	
+		
+		<div class="container" style="padding-top: 5%;">
+			<h2> Produtos </h2>
+			<form role="form">
+				<div class="form-group">
+					<div class="col-xs-3">
+						<label for="nome">Nome:</label>
+						<input class="form-control" id="nome" type="text"  required>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<label for="detalhe">Detalhe:</label>
+					<textarea class="form-control" rows="5" id="detalhe"></textarea>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-2">
+						<label for="preco">Preço R$:</label>
+						<input class="form-control" id="preco" type="number" min="0" max="999" step="1" required>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12"></div>
+				<div class="form-group">
+					<div class="col-xs-2">
+						<label for="parc">Parcelas:</label>
+						<input class="form-control" id="parc" type="number" min="0" max="12" step="1" value="1"  required>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12"></div>
+				<div class="form-group">
+					<div class="col-xs-2">
+						<p> <br/> </p>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</div>
+				</div>
+			</form>
+			
+		</div>
+		
+		<div class="container" style="padding-top: 5%;"></div>
+
+    
+	<footer id="footer" class="footer">
+    	<div class="container text-center">
+    		<br>
+
+        	<i id="facebook" class="fa fa-facebook" aria-hidden="true" ></i>
+        	<i id="twitter" class="fa fa-twitter" aria-hidden="true"></i>
+        	<i id="plus" class="fa fa-google-plus" aria-hidden="true"></i>
+
+        	<br> <br>
+    	</div><!--End container-->
+	</footer><!--End footer 2-->
+
+
+	</div>
+
+
+
+</body>
+</html>
+
+
+ 

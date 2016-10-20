@@ -1,0 +1,20 @@
+DELIMITER $$
+
+CREATE FUNCTION f_validaCupom(p_cupom varchar(100)) 
+	
+	RETURNS INT 
+
+BEGIN
+	DECLARE v_percent int;
+
+	SELECT qt_porcent
+	FROM promocoes
+	WHERE nome_promocao = p_cupom
+	AND dt_fim < NOW()
+	AND status <> 0
+	INTO v_percent;
+
+	RETURN v_percent;
+END $$
+
+DELIMITER ;
