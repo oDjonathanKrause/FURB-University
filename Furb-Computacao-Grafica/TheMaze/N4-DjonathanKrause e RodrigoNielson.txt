@@ -1,0 +1,8 @@
+[Equipe-05] Djonathan Kraus e Rodrigo Nielson
+1) Título: Labirinto 3D.
+2) Resumo: Elaboração de um jogo de labirinto 3D, onde o jogador tem como objetivo encontrar a saída.
+3) Trabalho correlato (link): http://poki.com.br/g/sobreviv%C3%AAncia-no-labirinto-3d  Obs: Correlação entre o modelo de visualização e o mapa. A diferença entre o nosso labirinto e esse são os objetivos.
+4) Aonde vai implementar
+Visualização 3D (câmera sintética): Camera para visualização e movimentação dentro do labirinto (personagem).
+Transformações geométricas 3D: Translação para a criação do mapa 3D.
+Modelos de objetos 3D: Cubo através da primitiva GL_QUADS.
