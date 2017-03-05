@@ -7,7 +7,8 @@ import java.util.Random;
  *
  * Seja uma matriz A de elementos inteiros de dimensões n x n. Os elementos de
  * cada linha e de cada coluna estão ordenados em ordem não decrescente. Dado um
- * valor x, escreva um algoritmo para determinar se existem i,j ∈ 1,2, … , n tais que x = Ai,j
+ * valor x, escreva um algoritmo para determinar se existem i,j ∈ 1,2, … , n
+ * tais que x = Ai,j
  */
 public class ExeAlgoritmos01
 {
@@ -23,18 +24,18 @@ public class ExeAlgoritmos01
         popularMatriz(matriz);
 
         // Printa a matriz
-        System.out.println("Matriz");
+        System.out.println("Matriz:");
         printarMatrizT(matriz);
 
         // Ordena matriz
         int[][] matrizOrdenada = bubbleSort(matriz);
 
         // Printa matriz ordenada
-        System.out.println("Matriz Ordenada");
+        System.out.println("Matriz Ordenada:");
         printarMatrizT(matrizOrdenada);
 
-        System.out.println("\nInformações");
-        
+        System.out.println("\nInformações:");
+
         // Procura o numero na matriz
         procurarNaMatriz(valorProcurado, matrizOrdenada);
 
@@ -42,15 +43,24 @@ public class ExeAlgoritmos01
         ocorrenciasDoValorNaMatriz(valorProcurado, matrizOrdenada);
 
         // Procura o numero na matriz e retorna como plano cartesiano
+        //procuraNaMatrizCartesiano(valorProcurado, matrizOrdenada);
+        // Printa a matriz com indice de x/y
+        System.out.println("\n\nCartesiano:");
+        printarMatrizCartesiano(matrizOrdenada);
+
+        System.out.println("\nInformações Cartesiano:");
+        // Procura o numero na matriz e retorna como plano cartesiano
         procuraNaMatrizCartesiano(valorProcurado, matrizOrdenada);
-        
 
     }
 
-    /** Procura valor inputado na matriz
+    /**
+     * Procura valor inputado na matriz
+     *
      * @param valor valor que será procurado
      * @param matriz matriz onde o valor será procurado
-     * @return Boolean - Número encontrado true ou false */
+     * @return Boolean - Número encontrado true ou false
+     */
     public static boolean procurarNaMatriz(int valor, int[][] matriz)
     {
         // Percorre matriz
@@ -61,7 +71,7 @@ public class ExeAlgoritmos01
                 // Se o numero da posição i, j for igual ao informado, retorna true e retorna mensagem
                 if (matriz[i][j] == valor)
                 {
-                    System.out.println("Valor " + matriz[i][j] + " encontrado na posição "
+                    System.out.println("A primeira ocorrência do valor " + matriz[i][j] + " esta na posição "
                             + i + ", " + j + " da matriz");
 
                     return true;
@@ -74,10 +84,12 @@ public class ExeAlgoritmos01
         return false;
     }
 
-    /** Verifica quantas vezes o valor apareceu na matriz
-     *  @param valor valor procurado 
-     *  @param matriz matriz onde o valor foi procurado
-     *  @return int - Quantidade de vezes que o valor foi encontrado na matriz
+    /**
+     * Verifica quantas vezes o valor apareceu na matriz
+     *
+     * @param valor valor procurado
+     * @param matriz matriz onde o valor foi procurado
+     * @return int - Quantidade de vezes que o valor foi encontrado na matriz
      */
     public static int ocorrenciasDoValorNaMatriz(int valor, int[][] matriz)
     {
@@ -105,13 +117,17 @@ public class ExeAlgoritmos01
         return qtdOcorrencias;
     }
 
-    /** Popula a matriz com números aleatórios
-     * @param matriz matriz que será populada
-     * @return void - Passa matriz por referência e popula 
+    /**
+     * Popula a matriz com números aleatórios
+     *
+     * @param matriz matriz que será populada void - Passa matriz por referência
+     * e popula
      */
     public static void popularMatriz(int[][] matriz)
     {
         Random numeroAleatorio = new Random();
+        int valorMinimo = 0;
+        valorMinimo += 1;
 
         // Percorre matriz
         for (int i = 0; i < matriz.length; i++)
@@ -119,12 +135,14 @@ public class ExeAlgoritmos01
             for (int j = 0; j < matriz[i].length; j++)
             {
                 // Atribui valor aleatorio 
-                matriz[i][j] = numeroAleatorio.nextInt(100);
+                matriz[i][j] = valorMinimo + numeroAleatorio.nextInt(250);
             }
         }
     }
 
-    /** Procura valor inputado na matriz
+    /**
+     * Procura valor inputado na matriz
+     *
      * @param valor valor que será procurado
      * @param matriz matriz onde o valor será procurado
      * @return boolean - true + print da posição ou false se não encontrar
@@ -139,8 +157,8 @@ public class ExeAlgoritmos01
                 // Se o numero da posição i, j for igual ao informado, retorna true e retorna mensagem
                 if (matriz[i][j] == valor)
                 {
-                    System.out.println("Valor " + matriz[i][j] + " encontrado na posição "
-                            + (j + 1) + "x " + (matriz[i].length - i) + "y, " + " da matriz (plano cartesiano)");
+                    System.out.println("A primeira ocorrência do valor " + matriz[i][j] + " esta na posição "
+                            + (matriz[i].length - i) + "y, " + (j + 1) + "x " + " no primeiro quadrante do plano cartesiano");
 
                     return true;
                 }
@@ -152,40 +170,48 @@ public class ExeAlgoritmos01
         return false;
     }
 
-    /** Método que ordena a matriz utilizando bubbleSort
+    /**
+     * Método que ordena a matriz utilizando bubbleSort
+     *
      * @param matriz matriz que será ordenada
      * @return int[][] - Matriz ordenada
      */
     public static int[][] bubbleSort(int[][] matriz)
     {
-        // Transforma matriz recebida num array 
+        // Transforma matriz recebida num array para fazer o bubbleSort
         int array[] = transformaEmArray(matriz);
 
-        boolean troca = true;
+        boolean ordenado = false;
         int aux;
 
-        while (troca)
+        while (!ordenado)
         {
-            troca = false;
+            ordenado = true;
+
+            // Percorre array
             for (int i = 0; i < array.length - 1; i++)
             {
+                // Se o valor atual do array for maior do que o próximo valor, efetua troca de posição
                 if (array[i] > array[i + 1])
                 {
                     aux = array[i];
                     array[i] = array[i + 1];
                     array[i + 1] = aux;
-                    troca = true;
+                    ordenado = false;
                 }
             }
         }
 
+        // Transforma o array ordenado numa matriz e retorna
         int matrizOrdenada[][] = transformaEmMatriz(array);
 
         return matrizOrdenada;
 
     }
 
-    /** Transforma a matriz num array unidimensional para fazer a ordenação
+    /**
+     * Transforma a matriz num array unidimensional para fazer a ordenação
+     *
      * @param matriz matriz que será transformada num array unidimensional
      * @return int[] - array
      */
@@ -209,7 +235,9 @@ public class ExeAlgoritmos01
         return array;
     }
 
-    /** Transforma array em matriz 
+    /**
+     * Transforma array em matriz
+     *
      * @param array array que será transformado em matriz
      * @return int[][] - matriz ordenada
      */
@@ -237,7 +265,9 @@ public class ExeAlgoritmos01
         return matrizOrdenada;
     }
 
-    /** Printa matriz com tabulação (formatada) 
+    /**
+     * Printa matriz com tabulação (formatada)
+     *
      * @param matriz matriz que será printada
      */
     public static void printarMatrizT(int[][] matriz)
@@ -256,8 +286,48 @@ public class ExeAlgoritmos01
         }
 
     }
-    
-    /** Printa matriz sem tabulação (menos formatada) 
+
+    /**
+     * Printa a matriz no plano cartesiano com indice de x/y
+     *
+     * @param matriz matriz que será printada
+     */
+    public static void printarMatrizCartesiano(int[][] matriz)
+    {
+        int tamanhoMatriz = matriz.length;
+
+        String str = tamanhoMatriz + "y|\t";
+
+        tamanhoMatriz -= 1;
+
+        for (int i = 0; i < matriz.length; i++)
+        {
+            for (int j = 0; j < matriz[i].length; j++)
+            {
+                str += matriz[i][j] + "\t";
+            }
+
+            // Printa indice de y
+            System.out.println(str + "|");
+            str = (tamanhoMatriz - i) + "y |\t";
+        }
+
+        tamanhoMatriz = matriz.length;
+        tamanhoMatriz += 1;
+
+        // Printa indice de x
+        System.out.print("y/");
+        for (int i = 1; i < tamanhoMatriz; i++)
+        {
+            System.out.print("x \t" + i);
+        }
+        System.out.print("x\t|\n");
+
+    }
+
+    /**
+     * Printa matriz sem tabulação (menos formatada)
+     *
      * @param matriz matriz que será printada
      */
     public static void printarMatriz(int[][] matriz)
@@ -276,6 +346,22 @@ public class ExeAlgoritmos01
         }
 
         System.out.println();
+    }
+
+    public boolean buscaBinaria(int[][] matriz, int valor)
+    {
+        int tamanhoMatriz = matriz.length;
+        int metade = tamanhoMatriz / 2;
+
+        int[] array = transformaEmArray(matriz);
+
+        if (array[metade] == valor)
+        {
+            System.out.println("Valor " + valor + " encontrado");
+            return true;
+        }
+
+        return false;
     }
 
 }
