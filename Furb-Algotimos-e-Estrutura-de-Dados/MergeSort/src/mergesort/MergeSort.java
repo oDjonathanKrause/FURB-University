@@ -9,46 +9,32 @@ public class MergeSort
 {
     public static void main(String[] args)
     {
-        int[][] matriz = new int[10][10];
-
-        popularMatriz(matriz);
+        int[] array = new int[4]; 
         
-        printarMatrizT(matriz);
+        popularArray(array);
+        
+        printarArray(array);
     }
     
-    /**
-     * @param matriz matriz a ser populada
-     */
-    public static void popularMatriz(int[][] matriz)
+    public static void mergeSort(int[] array)
     {
-        // Declara numero aleatorio
+        
+        
+    }
+    
+    public static void popularArray(int[] array)
+    {
         Random numAleatorio = new Random();
         
-        // Percorre cada posição da matriz e popula com um randInt
-        for (int[] linha : matriz)
-            for (int valor = 0; valor < linha.length; valor++)    
-                linha[valor] = numAleatorio.nextInt(100);
+        for(int posicao = 0; posicao < array.length; posicao++)
+            array[posicao] = numAleatorio.nextInt(100);
     }
     
-    
-    /** Printa matriz com tabulação (formatada) 
-     * @param matriz matriz que será printada
-     */
-    public static void printarMatrizT(int[][] matriz)
+    public static void printarArray(int[] array)
     {
-        String str = "|\t";
-
-        for (int linha = 0; linha < matriz.length; linha++)
-        {
-            for (int valor = 0; valor < matriz[linha].length; valor++)
-            {
-                str += matriz[linha][valor] + "\t";
-            }
-
-            System.out.println(str + "|");
-            str = "|\t";
-        }
-
+        for(int valor : array)
+            System.out.print(valor + " ");
     }
+    
     
 }
