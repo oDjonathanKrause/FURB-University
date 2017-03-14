@@ -7,25 +7,24 @@ package ListaEncadeada;
 public class ListaEncadeada
 {
 
-    private ElementoLista primeiroElemento;
-    private ElementoLista ultimoElemento = null;
-    private int tamanhoLista = 0;
+    private ElementoLista<T> primeiroElemento = null;
+    private ElementoLista<T> ultimoElemento = null;
+    private int qtdElementos = 0;
+
+    // Construtor 
+    public ListaEncadeada()
+    {
+    }
 
     /**
      * Adiciona elemento no início da lista
      *
      * @param String - valorElemento
      */
-    public void addInicio(String valorElemento)
+    public void addInicio(T valorElemento)
     {
-        // Cria elemento
-        ElementoLista elemento = new ElementoLista(valorElemento, primeiroElemento);
 
-        // Atualiza o parametro de primeiro elemento
-        this.setPrimeiroElemento(elemento);
 
-        // Atualiza tamanho da lista
-        tamanhoLista++;
     }
 
     /**
@@ -33,48 +32,118 @@ public class ListaEncadeada
      *
      * @param valorElemento
      */
-    public void addFim(String valorElemento)
+    public void addFim(T valorElemento)
     {
         // Cria elemento
-        ElementoLista elemento = new ElementoLista(valorElemento, null);
+        ElementoLista novoElemento = new ElementoLista();
+        novoElemento.setElemento(valorElemento);
 
-        // Se a lista estiver vazia, insere na primeira posição e seta o ultimo item como o primeiro (lista apenas com um item)
-        if (verificarListaVazia())
+        // Se estiver vazia, o primeiro recebe o elemento criado
+        if (this.verificarListaVazia())
         {
-            this.primeiroElemento = elemento;
-            this.ultimoElemento = this.primeiroElemento;
+            // Atualiza o atributo de primeiro elemento
+            primeiroElemento = novoElemento;
         } else
         {
-            // Senão, seta o último elemento como o elemento recebido por parâmetro
-            this.ultimoElemento = elemento;
-            
-            // Seta referência de próximo elemento para ele mesmo
-            this.ultimoElemento.setProxElemento(elemento);
+            ultimoElemento.setProxElemento(novoElemento);
         }
 
+        // Atualiza atributo de último elemento
+        ultimoElemento = novoElemento;
+
         // Atualiza tamanho da lista
-        tamanhoLista++;
+        qtdElementos++;
     }
 
     /**
+     * Adiciona o valor na posição X
      *
      * @param valorElemento
      * @param posicao
      */
     public void addPosicaoX(String valorElemento, int posicao)
     {
-        // Cria elemento
-        ElementoLista elemento = new ElementoLista(valorElemento, null);
-        
-        // Percorre lista
-        for(int i = 0; i < tamanhoLista; i++)
+        // Verifica se a posição informada é válida
+        if (posicao >= 0 && posicao <= qtdElementos)
         {
-            // Se a posição atual for a posição de inserção
-            if(i == posicao)
+            // Cria novo elemento
+            ElementoLista novoElemento = new ElementoLista();
+            novoElemento.setElemento(valorElemento);
+
+            // Cria o elemento que esta na posição X
+            ElementoLista elemPosicaoX;
+
+            // Se quiser add na posição 0 (inicio da lista)
+            if (posicao == 0)
             {
-                // Insere elemento e corrige referencias
+                // O próximo elemento do novo, é o antigo primeiro
+                novoElemento.setProxElemento(primeiroElemento);
+
+                // Seta novo elemento como o primeiro
+                primeiroElemento = novoElemento;
+            } else
+            {
+                // Descobre qual o elemento da posição X
+                elemPosicaoX = this.consultaInterna(posicao - 1);
+
+                // O próximo elemento do novo será o próximo do elemePosicaoX
+                novoElemento.setProxElemento(elemPosicaoX.getProxElemento());
+
+                // O próximo doelemPosicaoX será o novoElemento
+                elemPosicaoX.setProxElemento(novoElemento);
             }
+
+            qtdElementos++;
+
         }
+    }
+
+    /**
+     * Percorre a lista encadeada até a posição X. Método privado.
+     *
+     * @param posicao
+     * @return
+     */
+    private ElementoLista consultaInterna(int posicao)
+    {
+        // Verifica se a posição procurada é válida
+        if (posicao >= 0 && posicao < this.qtdElementos)
+        {
+            ElementoLista proximo = primeiroElemento;
+
+            // Percorre a lista até a posição X
+            for (int i = 0; i < posicao; i++)
+            {
+                proximo = proximo.getProxElemento();
+            }
+
+            return proximo;
+        } else
+        {
+            return null;
+        }
+    }
+
+    public int localizarElemento(String elemento)
+    {
+        ElementoLista elementoLista = primeiroElemento;
+        
+        int i = 0;
+        while ((elementoLista != null))
+        {
+            // Se o conteúdo do elemento atual for igual ao do passado por parametro
+            if (elementoLista.getElemento().equals(elemento))
+            {
+                // Retorna posição do elemento
+                return i;
+            }
+            
+            i++;
+            elementoLista = elementoLista.getProxElemento();
+        }
+        
+        // Se não encontrar, retonar erro
+        return -1;
     }
 
     /**
@@ -82,9 +151,11 @@ public class ListaEncadeada
      */
     public void printarLista()
     {
-        if(verificarListaVazia())
+        if (verificarListaVazia())
+        {
             System.out.println("Lista vazia");
-        
+        }
+
         // Instancia elemento e atribui o primeiro elemento da lista a ele
         ElementoLista elemento = this.primeiroElemento;
 
@@ -92,21 +163,22 @@ public class ListaEncadeada
         while (elemento != null)
         {
             // Printa valor do elemento
-            System.out.println(elemento.getElemento());
-            
+            System.out.print(elemento.getElemento() + " - ");
+
             // Seta próximo elemento
             elemento = elemento.getProxElemento();
         }
 
     }
-    
+
     /**
      * Verifica se a lista esta vazia
+     *
      * @return true se estiver vazia e false se tiver elementos na lista
      */
     public boolean verificarListaVazia()
     {
-        return this.primeiroElemento == null;
+        return primeiroElemento == null;
     }
 
     /**
@@ -134,12 +206,12 @@ public class ListaEncadeada
 
     public int getTamanhoLista()
     {
-        return tamanhoLista;
+        return qtdElementos;
     }
 
     public void setTamanhoLista(int tamanhoLista)
     {
-        this.tamanhoLista = tamanhoLista;
+        this.qtdElementos = tamanhoLista;
     }
 
 }

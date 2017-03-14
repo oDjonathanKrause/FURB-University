@@ -3,12 +3,16 @@ package ListaEncadeada;
 /**
  *
  * @author djonathan.krause
+ * @param T - Tipo de dado genérico
  */
-public class ElementoLista
+public class ElementoLista<T>
 {
 
-    private String elemento;
+    private T elemento;
     private ElementoLista proxElemento = null;
+    
+    // Construtor vazio
+    public ElementoLista() {}
 
     /**
      * Construtor da classe
@@ -16,7 +20,7 @@ public class ElementoLista
      * @param elemento
      * @param proxElemento
      */
-    public ElementoLista(String elemento, ElementoLista proxElemento)
+    public ElementoLista(T elemento, ElementoLista proxElemento)
     {
         this.setElemento(elemento);
         this.setProxElemento(proxElemento);
@@ -25,12 +29,12 @@ public class ElementoLista
     /**
      * Gets e sets da classe ElementoLista
      */
-    public String getElemento()
+    public T getElemento()
     {
         return elemento;
     }
 
-    public void setElemento(String elemento)
+    public void setElemento(T elemento)
     {
         this.elemento = elemento;
     }

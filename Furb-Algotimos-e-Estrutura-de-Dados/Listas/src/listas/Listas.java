@@ -13,19 +13,22 @@ public class Listas
         // Cria uma lista
         ListaEncadeada listaEncadeada = new ListaEncadeada();
 
-        // Add no inicio da lista
-        listaEncadeada.addInicio("A");
-        listaEncadeada.addInicio("B");
-        listaEncadeada.addInicio("C");
-        listaEncadeada.addInicio("D");
-
         // Add no fim da lista
-        listaEncadeada.addFim("E");
-        listaEncadeada.addFim("F");
-
-        System.out.println("Tamanho da lista: " + listaEncadeada.getTamanhoLista());
+        listaEncadeada.addFim("A");
+        listaEncadeada.addFim("B");
+        listaEncadeada.addFim("D");
+        listaEncadeada.addFim("C");
+        listaEncadeada.addPosicaoX("C", 2);
+        
+        System.out.println("Tamanho da lista: " + listaEncadeada.getTamanhoLista() + "\n");
         
         listaEncadeada.printarLista();
+        
+        System.out.println("\n\nLocaliza D - Posição " + listaEncadeada.localizarElemento("D"));
+        
+        
+        
+        
         
 
     }
