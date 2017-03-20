@@ -1,10 +1,13 @@
 package ListaEncadeada;
 
+import listas.InterfaceListas;
+
 /**
  *
  * @author djonathan.krause
+ * @param <T> - Tipo de dado
  */
-public class ListaEncadeada
+public class ListaEncadeada<T> implements InterfaceListas<T>
 {
 
     private ElementoLista<T> primeiroElemento = null;
@@ -17,29 +20,19 @@ public class ListaEncadeada
     }
 
     /**
-     * Adiciona elemento no início da lista
+     * Insere elemento no inicio da lista
      *
-     * @param String - valorElemento
+     * @param elemento
      */
-    public void addInicio(T valorElemento)
-    {
-
-
-    }
-
-    /**
-     * Insere elemento no fim da lista
-     *
-     * @param valorElemento
-     */
-    public void addFim(T valorElemento)
+    @Override
+    public void insere(T elemento)
     {
         // Cria elemento
         ElementoLista novoElemento = new ElementoLista();
-        novoElemento.setElemento(valorElemento);
+        novoElemento.setElemento(elemento);
 
         // Se estiver vazia, o primeiro recebe o elemento criado
-        if (this.verificarListaVazia())
+        if (this.estaVazia())
         {
             // Atualiza o atributo de primeiro elemento
             primeiroElemento = novoElemento;
@@ -56,12 +49,13 @@ public class ListaEncadeada
     }
 
     /**
-     * Adiciona o valor na posição X
+     * Insere o elemento na posição X
      *
      * @param valorElemento
      * @param posicao
      */
-    public void addPosicaoX(String valorElemento, int posicao)
+    @Override
+    public void insere(T valorElemento, int posicao)
     {
         // Verifica se a posição informada é válida
         if (posicao >= 0 && posicao <= qtdElementos)
@@ -99,12 +93,91 @@ public class ListaEncadeada
     }
 
     /**
+     * Retira o elemento da posição X
+     *
+     * @param posicao
+     * @return Elemento removido
+     */
+    @Override
+    public T retira(int posicao)
+    {
+        // Se a posição for zero, é o primeiro elemento
+        if (posicao == 0)
+        {
+            // Seta retorno como o atual primeiro elemento
+            T elementoRemovido = this.primeiroElemento.getElemento();
+            
+            // O primeiro elemento passa a ser o seu próximo
+            this.primeiroElemento = primeiroElemento.getProxElemento();
+            
+            // Diminui a qtd de elementos na lista
+            qtdElementos--;
+            
+            // Retorna elemento removido
+            return elementoRemovido;
+        }
+        // Se a posição for maior do que zero e maior do que a qtd de elementos na lista
+        else if (posicao > 0 && posicao < qtdElementos)
+        {
+            // Encontra elemento da posição anterior a informada
+            ElementoLista<T> elementoLista = this.consultaInterna(posicao - 1);
+            
+            // Seta o elemento removido como o próximo do encontrado acima
+            ElementoLista<T> elementoRemovido = elementoLista.getProxElemento();
+            
+            // Seta o próximo do elemento anterior ao removido como o próximo do removido
+            elementoLista.setProxElemento(elementoRemovido.getProxElemento());
+            
+            // Diminui a qtd de elemtnos na lista
+            qtdElementos--;
+            
+            // Retorna o elemento removido
+            return elementoRemovido.getElemento();
+        } 
+        // Se a posição for a última da lista
+        else if (posicao == qtdElementos)
+        {
+            // Seta o último elemento como o removido
+            T elementoRemovido = this.ultimoElemento.getElemento();
+            
+            // Encontra o pnúltimo elemeneto da lista
+            ElementoLista novoUltimo = this.consultaInterna(posicao - 1);
+            
+            // Seta o pnúltimo como o novo último
+            this.ultimoElemento = novoUltimo;
+            
+            // Seta o próximo do novo último como null
+            novoUltimo.setProxElemento(null);
+            
+            // Diminui a qtd de elementos da lista
+            qtdElementos--;
+            
+            // Retorna o elemento removido
+            return elementoRemovido;
+        }
+        
+        // Se a posição não estiver na lista, retorna null
+        return null;
+    }
+
+    /**
+     * Verifica se a lista esta vazia
+     *
+     * @return true se estiver vazia e false se tiver elementos na lista
+     */
+    @Override
+    public boolean estaVazia()
+    {
+        return primeiroElemento == null;
+    }
+
+    /**
      * Percorre a lista encadeada até a posição X. Método privado.
      *
      * @param posicao
      * @return
      */
-    private ElementoLista consultaInterna(int posicao)
+    private ElementoLista<T> consultaInterna(int posicao)
     {
         // Verifica se a posição procurada é válida
         if (posicao >= 0 && posicao < this.qtdElementos)
@@ -124,10 +197,16 @@ public class ListaEncadeada
         }
     }
 
-    public int localizarElemento(String elemento)
+    /**
+     * Localiza posição do elemento
+     * @param elemento - elemento que será localizado
+     * @return posição do elemento
+     */
+    @Override
+    public int localiza(T elemento)
     {
         ElementoLista elementoLista = primeiroElemento;
-        
+
         int i = 0;
         while ((elementoLista != null))
         {
@@ -137,23 +216,28 @@ public class ListaEncadeada
                 // Retorna posição do elemento
                 return i;
             }
-            
+
             i++;
             elementoLista = elementoLista.getProxElemento();
         }
-        
+
         // Se não encontrar, retonar erro
         return -1;
     }
 
     /**
-     * Imprime todos os valores da lista
+     * Concatena todos os elementos da lista numa String e retorna.
+     *
+     * @return String - lista
      */
-    public void printarLista()
+    @Override
+    public String imprime()
     {
-        if (verificarListaVazia())
+        String lista = "";
+
+        if (estaVazia())
         {
-            System.out.println("Lista vazia");
+            return lista = "Lista vazia";
         }
 
         // Instancia elemento e atribui o primeiro elemento da lista a ele
@@ -163,22 +247,39 @@ public class ListaEncadeada
         while (elemento != null)
         {
             // Printa valor do elemento
-            System.out.print(elemento.getElemento() + " - ");
+            //System.out.print(elemento.getElemento() + " - ");
+
+            // Concatena valor na String lista
+            lista += elemento.getElemento() + " - ";
 
             // Seta próximo elemento
             elemento = elemento.getProxElemento();
         }
 
+        return lista;
     }
 
     /**
-     * Verifica se a lista esta vazia
+     * Consulta o elemento da posição X
      *
-     * @return true se estiver vazia e false se tiver elementos na lista
+     * @param posicao
+     * @return elemento
      */
-    public boolean verificarListaVazia()
+    @Override
+    public T consulta(int posicao)
     {
-        return primeiroElemento == null;
+        return this.consultaInterna(posicao).getElemento();
+    }
+
+    /**
+     * Verifica o tamanho da lista e retorna a quantidade de elementos
+     *
+     * @return qtdElementos
+     */
+    @Override
+    public int getTamanho()
+    {
+        return qtdElementos;
     }
 
     /**
@@ -204,14 +305,8 @@ public class ListaEncadeada
         this.ultimoElemento = ultimoElemento;
     }
 
-    public int getTamanhoLista()
-    {
-        return qtdElementos;
-    }
-
     public void setTamanhoLista(int tamanhoLista)
     {
         this.qtdElementos = tamanhoLista;
     }
-
 }

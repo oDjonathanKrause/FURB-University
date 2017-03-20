@@ -3,13 +3,14 @@ package ListaEncadeada;
 /**
  *
  * @author djonathan.krause
- * @param T - Tipo de dado genérico
+ * @param <T> - Tipo de dado genérico
  */
 public class ElementoLista<T>
 {
 
     private T elemento;
     private ElementoLista proxElemento = null;
+    private ElementoLista elementoAnt = null;
     
     // Construtor vazio
     public ElementoLista() {}
@@ -24,10 +25,12 @@ public class ElementoLista<T>
     {
         this.setElemento(elemento);
         this.setProxElemento(proxElemento);
+        this.setElementoAnt(elementoAnt);
     }
 
     /**
      * Gets e sets da classe ElementoLista
+     * @return T - tipo de dado
      */
     public T getElemento()
     {
@@ -48,4 +51,16 @@ public class ElementoLista<T>
     {
         this.proxElemento = proxElemento;
     }
+
+    public ElementoLista getElementoAnt()
+    {
+        return elementoAnt;
+    }
+
+    public void setElementoAnt(ElementoLista elementoAnt)
+    {
+        this.elementoAnt = elementoAnt;
+    }
+    
+    
 }
