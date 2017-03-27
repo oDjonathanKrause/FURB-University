@@ -20,6 +20,58 @@ public class ListaEncadeada<T> implements InterfaceListas<T>
     }
 
     /**
+     * Retorna o valor do último nó que armazena o valor igual ao informado por
+     * parâmetro. Também verifica a quantidade de ocorrências de um elemento (valor não retornado)
+     *
+     * @param x - Valor do elemento
+     * @return indice - int posição do último elemento igual a X
+     */
+    public int ultimoIndiceDe(T x)
+    {
+        ElementoLista elementoLista = primeiroElemento;
+        int qtdOcorrencias = 0;
+        int ultimaOcorrencia = 0;
+
+        int i = 0;
+        while ((elementoLista != null))
+        {
+            // Se o conteúdo do elemento atual for igual ao do passado por parametro
+            if (elementoLista.getElemento().equals(x))
+            {
+                // Incrementa a quantidade de ocorrencias
+                qtdOcorrencias += 1;
+
+                // Seta a ultima ocorrencia como o ultimo indice encontrado para o elemento
+                ultimaOcorrencia = i;
+            }
+
+            i++;
+            elementoLista = elementoLista.getProxElemento();
+        }
+
+        if (qtdOcorrencias == 0)
+        {
+            return -1;
+        }
+        return ultimaOcorrencia;
+    }
+
+    /**
+     * Imprime a lista invertida
+     * @return String - lista invertida
+     */
+    public String imprimeInverso()
+    {
+        String listaInvertida = "";
+
+        // Percorre a lista de tras pra frente
+        for(int i = qtdElementos - 1; i >= 0; i--)
+            listaInvertida += consulta(i) + " - ";
+
+        return listaInvertida;
+    }
+
+    /**
      * Insere elemento no inicio da lista
      *
      * @param elemento
@@ -106,56 +158,54 @@ public class ListaEncadeada<T> implements InterfaceListas<T>
         {
             // Seta retorno como o atual primeiro elemento
             T elementoRemovido = this.primeiroElemento.getElemento();
-            
+
             // O primeiro elemento passa a ser o seu próximo
             this.primeiroElemento = primeiroElemento.getProxElemento();
-            
+
             // Diminui a qtd de elementos na lista
             qtdElementos--;
-            
+
             // Retorna elemento removido
             return elementoRemovido;
-        }
-        // Se a posição for maior do que zero e maior do que a qtd de elementos na lista
+        } // Se a posição for maior do que zero e maior do que a qtd de elementos na lista
         else if (posicao > 0 && posicao < qtdElementos)
         {
             // Encontra elemento da posição anterior a informada
             ElementoLista<T> elementoLista = this.consultaInterna(posicao - 1);
-            
+
             // Seta o elemento removido como o próximo do encontrado acima
             ElementoLista<T> elementoRemovido = elementoLista.getProxElemento();
-            
+
             // Seta o próximo do elemento anterior ao removido como o próximo do removido
             elementoLista.setProxElemento(elementoRemovido.getProxElemento());
-            
+
             // Diminui a qtd de elemtnos na lista
             qtdElementos--;
-            
+
             // Retorna o elemento removido
             return elementoRemovido.getElemento();
-        } 
-        // Se a posição for a última da lista
+        } // Se a posição for a última da lista
         else if (posicao == qtdElementos)
         {
             // Seta o último elemento como o removido
             T elementoRemovido = this.ultimoElemento.getElemento();
-            
+
             // Encontra o pnúltimo elemeneto da lista
             ElementoLista novoUltimo = this.consultaInterna(posicao - 1);
-            
+
             // Seta o pnúltimo como o novo último
             this.ultimoElemento = novoUltimo;
-            
+
             // Seta o próximo do novo último como null
             novoUltimo.setProxElemento(null);
-            
+
             // Diminui a qtd de elementos da lista
             qtdElementos--;
-            
+
             // Retorna o elemento removido
             return elementoRemovido;
         }
-        
+
         // Se a posição não estiver na lista, retorna null
         return null;
     }
@@ -199,6 +249,7 @@ public class ListaEncadeada<T> implements InterfaceListas<T>
 
     /**
      * Localiza posição do elemento
+     *
      * @param elemento - elemento que será localizado
      * @return posição do elemento
      */

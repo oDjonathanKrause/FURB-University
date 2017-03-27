@@ -12,7 +12,7 @@ public class MainListas
     public static void main(String[] args)
     {
         /* Lista Encadeada */
-        System.out.println("Testes com Lista Encadeada");
+        /*System.out.println("Testes com Lista Encadeada");
         
         // Cria uma lista
         ListaEncadeada<String> listaEncadeada = new ListaEncadeada<>();
@@ -41,9 +41,10 @@ public class MainListas
         
         // Consulta elemento da posição 1
         System.out.println("Consulta elemento da posição 1: " + listaEncadeada.consulta(1));
-        
+        */
         
         /* Lista Com Array */
+        /*
         System.out.println("\nTestes com Lista Com Array");
         
         // Cria lista com array do tipo String
@@ -65,6 +66,28 @@ public class MainListas
         
         // Consulta valor da posição 0
         System.out.println("Valor da posição 0 é: " + listaComArray.consulta(0));
+        */
+        
+         // Cria uma lista
+        ListaEncadeada<String> listaEncadeada = new ListaEncadeada<>();
+
+        // Add elementos na lista encadeada
+        listaEncadeada.insere("L");
+        listaEncadeada.insere("M");
+        listaEncadeada.insere("A");
+        listaEncadeada.insere("B");
+        listaEncadeada.insere("M");
+        listaEncadeada.insere("N");
+        listaEncadeada.insere("O");
+        listaEncadeada.insere("P");
+        listaEncadeada.insere("P");
+        
+        // Verifica o indice da ultima ocorrencia
+        System.out.println("Índice da última ocorrência: " + listaEncadeada.ultimoIndiceDe("P"));
+        
+        // Imprime a lista invertida
+        System.out.println("Imprime inverso: " + listaEncadeada.imprimeInverso());
+        
     }
 
 }

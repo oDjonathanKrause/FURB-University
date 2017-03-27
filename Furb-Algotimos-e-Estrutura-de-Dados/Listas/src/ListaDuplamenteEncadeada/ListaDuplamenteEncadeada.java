@@ -4,62 +4,166 @@ import ListaEncadeada.ElementoLista;
 import listas.InterfaceListas;
 
 /**
- * @author Djonathan
+ * @author djonathan.krause
  */
 public class ListaDuplamenteEncadeada<T> implements InterfaceListas<T>
 {
-
-    private ElementoLista primeiroElemento;
-    private ElementoLista ultimoElemento;
-    private int qtdElementos;
-
-    @Override
-    public void insere(T elemento)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private ElementoLista<T> primeiro;
+    private ElementoLista<T> ultimo;
+    private int qtdElementos = 0;
 
     @Override
-    public void insere(T elemento, int posicao)
+    public void insere(T x)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        ElementoLista novo = new ElementoLista();
+        novo.setElemento(x);
 
-    @Override
-    public T retira(int posicao)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        if (this.estaVazia())
+        {
+            primeiro = novo;
+        } else
+        {
+            ultimo.setProxElemento(novo);
+            novo.setElementoAnt(ultimo);
+        }
+        ultimo = novo;
+        qtdElementos++;
 
-    @Override
-    public int localiza(T elemento)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String imprime()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean estaVazia()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return qtdElementos == 0;
     }
 
     @Override
-    public T consulta(int posicao)
+    public void insere(T x, int p)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (p >= 0 && p <= this.qtdElementos)
+        {
+            if (p == this.qtdElementos)
+            {// ultima posi��o
+                this.insere(x);
+            } else
+            {
+                ElementoLista novo = new ElementoLista();
+                novo.setElemento(x);
+                ElementoLista elemE;
+                if (p == 0)
+                { // primeira posição
+                    novo.setProxElemento(primeiro);
+                    primeiro.setElementoAnt(novo);
+                    primeiro = novo;
+                } else
+                { // posição intermediaria
+                    elemE = this.consultaInterno(p - 1);
+                    novo.setProxElemento(elemE.getProxElemento());
+                    novo.setElementoAnt(elemE);
+                    novo.getProxElemento().setElementoAnt(novo);
+                    elemE.setProxElemento(novo);
+                }
+                qtdElementos++;
+            }
+        }
+    }
+
+    private ElementoLista<T> consultaInterno(int p)
+    {
+        if (p >= 0 && p < this.qtdElementos)
+        {  // posi��o procurada � v�lida
+            ElementoLista proximo = primeiro;
+
+            for (int i = 0; i < p; i++)
+            {
+                proximo = proximo.getProxElemento();
+            }
+            return proximo;
+        } else
+        {
+            return null;
+        }
+
+    }
+
+    @Override
+    public T retira(int p)
+    {
+        if (p == 0)
+        {
+            T retorno = this.primeiro.getElemento();
+            this.primeiro = primeiro.getProxElemento();
+            this.primeiro.setElementoAnt(null);
+            qtdElementos--;
+            return retorno;
+        } else if (p > 0 && p < qtdElementos)
+        {
+            ElementoLista<T> elementoRemovido = this.consultaInterno(p);
+            elementoRemovido.getElementoAnt().setProxElemento(elementoRemovido.getProxElemento());
+            elementoRemovido.getProxElemento().setElementoAnt(elementoRemovido.getElementoAnt());
+            return elementoRemovido.getElemento();
+        } else if (p == qtdElementos)
+        {
+            T retorno = this.ultimo.getElemento();
+            this.ultimo = this.ultimo.getElementoAnt();
+            this.ultimo.setProxElemento(null);
+            qtdElementos--;
+            return retorno;
+        }
+        return null;
+    }
+
+    @Override
+    public int localiza(T x)
+    {
+        ElementoLista<T> elementoLista = primeiro;
+        int i = 0;
+        while ((elementoLista != null))
+        {
+            if (elementoLista.getElemento().equals(x))
+            {
+                return i;
+            }
+            i++;
+            elementoLista = elementoLista.getProxElemento();
+        }
+
+        return -1;
     }
 
     @Override
     public int getTamanho()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return qtdElementos;
     }
 
-   
+    @Override
+    public String imprime()
+    {
+        String retorno = "[";
+        ElementoLista proximo = primeiro;
+
+        while (proximo != null)
+        {
+            retorno += proximo.getElemento()+ "; ";
+            proximo = proximo.getProxElemento();
+        }
+
+        try
+        {
+            // para retirar a última vírgula e espaço
+            retorno = retorno.substring(0, retorno.length() - 2);
+            return retorno + "]";
+        } catch (StringIndexOutOfBoundsException strExc)
+        {
+            return "[]";
+        }
+    }
+
+    @Override
+    public T consulta(int p)
+    {
+        return this.consultaInterno(p).getElemento();
+    }
+
 }
