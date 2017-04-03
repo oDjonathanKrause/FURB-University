@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="244.0" prefWidth="368.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="calculadoracompilha.FXMLDocumentController">
+  <children>
+    <Button fx:id="btnInserir" layoutX="107.0" layoutY="17.0" onAction="#inserirAction" prefWidth="66.0" text="Inserir" />
+    <Button fx:id="btnPegaTopo" layoutX="26.0" layoutY="55.0" onAction="#pegaTopoAction" prefWidth="147.0" text="Verificar valor do topo" />
+    <Label fx:id="lblValorTopo" layoutX="181.0" layoutY="58.0" minHeight="16.0" minWidth="69.0" prefWidth="162.0" text="..." />
+    <TextField fx:id="fldValor" layoutX="26.0" layoutY="17.0" prefWidth="69.00009999999747" promptText="Valor" />
+    <Label fx:id="lblRetorno" layoutX="14.0" layoutY="214.0" prefWidth="340.0" text="" />
+    <Button id="btnRemove" fx:id="btnRemover" layoutX="196.0" layoutY="17.0" mnemonicParsing="false" onAction="#removerAction" prefWidth="147.0" text="Remover valor do topo" />
+    <Button fx:id="btnVerificarTamanho" layoutX="26.0" layoutY="87.0" mnemonicParsing="false" onAction="#verificarTamanhoAction" prefWidth="147.0" text="Verificar Tamanho" />
+    <Label fx:id="lblTamanho" layoutX="181.0" layoutY="90.0" prefWidth="162.0" text="Tamanho da pilha: 0" />
+    <TextField layoutX="26.0" layoutY="147.0" prefWidth="200.0" promptText="1 2 +" />
+    <Button layoutX="233.0" layoutY="148.0" mnemonicParsing="false" text="Calcular Expressão" />
+    <Separator layoutX="7.0" layoutY="131.0" prefWidth="361.0" />
+  </children>
+</AnchorPane>
