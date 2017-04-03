@@ -1,7 +1,6 @@
 package calculadoracompilha;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import pilha.PilhaVetor;
 
@@ -31,15 +31,22 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private TextField fldValor;
     @FXML
+    private TextField fldExpressao;
+    @FXML
     private Button btnRemover;
     @FXML
     private Button btnVerificarTamanho;
-
+    @FXML
+    private ListView pilha;
+    
     @FXML
     private void inserirAction(ActionEvent event)
     {
         try
         {
+            // Pega valor da field
+            String valorField = fldValor.getText();
+            
             if (fldValor.getText().isEmpty())
             {
                 lblRetorno.setText("Valor não pode ser nulo");
@@ -47,7 +54,7 @@ public class FXMLDocumentController implements Initializable
             } else
             {
                 // Insere o numero no topo da pilha
-                pilhaVetor.push(fldValor.getText());
+                pilhaVetor.push(valorField);
 
                 // Limpa field
                 fldValor.setText("");
@@ -55,6 +62,10 @@ public class FXMLDocumentController implements Initializable
                 // Mostra o valor inserido na console
                 System.out.println("Inserido " + pilhaVetor.peek());
                 lblRetorno.setText("Inserido " + pilhaVetor.peek());
+
+                // Atualiza lista
+                pilha.getItems().add(0, valorField);
+
             }
 
         } catch (Exception ex)
@@ -87,8 +98,10 @@ public class FXMLDocumentController implements Initializable
 
         } else
         {
-            lblRetorno.setText("Valor removido: " + pilhaVetor.getTopo());
+            lblRetorno.setText("Valor removido: " + pilha.getItems().get(0));
             pilhaVetor.pop();
+            
+            pilha.getItems().remove(0);
 
         }
     }
@@ -108,12 +121,13 @@ public class FXMLDocumentController implements Initializable
     }
     
     @FXML
-    private void limpaFields()
+    private void calcularExpressaoAction(ActionEvent event) throws Exception
     {
-        lblRetorno.setText("");
-        lblTamanho.setText("");
-        lblValorTopo.setText("");
+        CalculadoraComPilha calculadora = new CalculadoraComPilha();
+        calculadora.calcula(fldExpressao.getText());
     }
+
+  
 
     @Override
     public void initialize(URL url, ResourceBundle rb)

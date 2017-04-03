@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="244.0" prefWidth="368.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="calculadoracompilha.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="244.0" prefWidth="474.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="calculadoracompilha.FXMLDocumentController">
   <children>
     <Button fx:id="btnInserir" layoutX="107.0" layoutY="17.0" onAction="#inserirAction" prefWidth="66.0" text="Inserir" />
     <Button fx:id="btnPegaTopo" layoutX="26.0" layoutY="55.0" onAction="#pegaTopoAction" prefWidth="147.0" text="Verificar valor do topo" />
@@ -16,8 +16,9 @@
     <Button id="btnRemove" fx:id="btnRemover" layoutX="196.0" layoutY="17.0" mnemonicParsing="false" onAction="#removerAction" prefWidth="147.0" text="Remover valor do topo" />
     <Button fx:id="btnVerificarTamanho" layoutX="26.0" layoutY="87.0" mnemonicParsing="false" onAction="#verificarTamanhoAction" prefWidth="147.0" text="Verificar Tamanho" />
     <Label fx:id="lblTamanho" layoutX="181.0" layoutY="90.0" prefWidth="162.0" text="Tamanho da pilha: 0" />
-    <TextField layoutX="26.0" layoutY="147.0" prefWidth="200.0" promptText="1 2 +" />
-    <Button layoutX="233.0" layoutY="148.0" mnemonicParsing="false" text="Calcular Expressão" />
+    <TextField fx:id="fldExpressao" layoutX="26.0" layoutY="147.0" prefWidth="200.0" promptText="1 2 +" />
+    <Button fx:id="btnCalcularExpressao" layoutX="233.0" layoutY="147.0" mnemonicParsing="false" onAction="#calcularExpressaoAction" text="Calcular Expressão" />
     <Separator layoutX="7.0" layoutY="131.0" prefWidth="361.0" />
+    <ListView fx:id="pilha" editable="false" layoutX="392.0" layoutY="22.0" prefHeight="200.0" prefWidth="53.0" />
   </children>
 </AnchorPane>
