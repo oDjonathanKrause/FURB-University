@@ -20,5 +20,6 @@
     <Button fx:id="btnCalcularExpressao" layoutX="233.0" layoutY="147.0" mnemonicParsing="false" onAction="#calcularExpressaoAction" text="Calcular Expressão" />
     <Separator layoutX="7.0" layoutY="131.0" prefWidth="361.0" />
     <ListView fx:id="pilha" editable="false" layoutX="392.0" layoutY="22.0" prefHeight="200.0" prefWidth="53.0" />
+    <Label fx:id="lblResultadoExpressao" layoutX="27.0" layoutY="177.0" text="Resultado da Expressão: " />
   </children>
 </AnchorPane>

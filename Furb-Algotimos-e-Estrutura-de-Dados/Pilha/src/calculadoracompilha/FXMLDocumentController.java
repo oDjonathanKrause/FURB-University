@@ -33,12 +33,14 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private TextField fldExpressao;
     @FXML
+    private Label lblResultadoExpressao;
+    @FXML
     private Button btnRemover;
     @FXML
     private Button btnVerificarTamanho;
     @FXML
     private ListView pilha;
-    
+
     @FXML
     private void inserirAction(ActionEvent event)
     {
@@ -46,7 +48,7 @@ public class FXMLDocumentController implements Initializable
         {
             // Pega valor da field
             String valorField = fldValor.getText();
-            
+
             if (fldValor.getText().isEmpty())
             {
                 lblRetorno.setText("Valor não pode ser nulo");
@@ -100,7 +102,7 @@ public class FXMLDocumentController implements Initializable
         {
             lblRetorno.setText("Valor removido: " + pilha.getItems().get(0));
             pilhaVetor.pop();
-            
+
             pilha.getItems().remove(0);
 
         }
@@ -119,15 +121,15 @@ public class FXMLDocumentController implements Initializable
             lblTamanho.setText("Tamanho da pilha: " + pilhaVetor.getQtdElementos());
         }
     }
-    
+
     @FXML
     private void calcularExpressaoAction(ActionEvent event) throws Exception
     {
         CalculadoraComPilha calculadora = new CalculadoraComPilha();
-        calculadora.calcula(fldExpressao.getText());
+        int resultadoExpressao = calculadora.calcula(fldExpressao.getText());
+        
+        lblResultadoExpressao.setText("Resultado da Expressão: " + resultadoExpressao);
     }
-
-  
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
