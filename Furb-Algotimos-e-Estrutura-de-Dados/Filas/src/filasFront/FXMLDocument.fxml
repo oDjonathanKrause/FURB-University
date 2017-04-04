@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="162.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="filasFront.FXMLDocumentController">
+  <children>
+    <Button id="button" fx:id="btnInsere" layoutX="81.0" layoutY="22.0" onAction="#insereValor" prefWidth="63.0" text="Insere" />
+    <Button id="button" fx:id="btnLibera" layoutX="14.0" layoutY="82.0" onAction="#liberaFila" prefWidth="130.0" text="Libera" />
+    <Button id="button" fx:id="btnVazia" layoutX="14.0" layoutY="109.0" onAction="#verificaVazia" prefWidth="130.0" text="Vazia?" />
+    <Button id="button" fx:id="btnCheia" layoutX="14.0" layoutY="137.0" onAction="#verificaCheia" prefWidth="130.0" text="Cheia?" />
+    <Button id="button" layoutX="14.0" layoutY="53.0" onAction="#retiraValor" prefWidth="130.0" text="Retira" />
+    <TextField fx:id="fldValor" layoutX="14.0" layoutY="22.0" prefWidth="58.0" />
+  </children>
+</AnchorPane>
