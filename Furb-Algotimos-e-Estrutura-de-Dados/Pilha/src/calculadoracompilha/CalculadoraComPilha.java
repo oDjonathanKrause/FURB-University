@@ -1,5 +1,6 @@
 package calculadoracompilha;
 
+import java.util.IllegalFormatException;
 import java.util.Scanner;
 import pilha.PilhaVetor;
 
@@ -16,7 +17,7 @@ import pilha.PilhaVetor;
 public class CalculadoraComPilha
 {
 
-    public static int calcula(String expressao) throws Exception
+    public int calcula(String expressao) throws Exception
     {
         // Instância scanner para auxiliar na análise da expressão
         Scanner stringScanner = new Scanner(expressao);

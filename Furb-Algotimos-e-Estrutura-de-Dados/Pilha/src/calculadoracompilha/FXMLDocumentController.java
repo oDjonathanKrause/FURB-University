@@ -49,11 +49,19 @@ public class FXMLDocumentController implements Initializable
             // Pega valor da field
             String valorField = fldValor.getText();
 
-            if (fldValor.getText().isEmpty())
+            if (valorField.isEmpty())
             {
                 lblRetorno.setText("Valor não pode ser nulo");
                 System.out.println("Valor não pode ser nulo");
-            } else
+                throw new Exception("Valor não pode ser nulo");
+            }
+            else if (pilhaVetor.cheia())
+            {
+                lblRetorno.setText("A pilha esta cheia");
+                System.out.println("A pilha esta cheia");
+                throw new Exception("A pilha esta cheia");   
+            }
+            else 
             {
                 // Insere o numero no topo da pilha
                 pilhaVetor.push(valorField);
@@ -115,8 +123,14 @@ public class FXMLDocumentController implements Initializable
         {
             lblRetorno.setText("Pilha vazia");
             System.out.println("Pilha vazia");
-
-        } else
+            throw new Exception();
+        } else if (pilhaVetor.getQtdElementos() == pilhaVetor.getTamanho())
+        {
+            lblRetorno.setText("Pilha cheia");
+            System.out.println("Pilha cheia");
+            lblTamanho.setText("Tamanho da pilha: " + pilhaVetor.getTamanho());
+        }
+        else
         {
             lblTamanho.setText("Tamanho da pilha: " + pilhaVetor.getQtdElementos());
         }
@@ -125,10 +139,19 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void calcularExpressaoAction(ActionEvent event) throws Exception
     {
-        CalculadoraComPilha calculadora = new CalculadoraComPilha();
-        int resultadoExpressao = calculadora.calcula(fldExpressao.getText());
-        
-        lblResultadoExpressao.setText("Resultado da Expressão: " + resultadoExpressao);
+        // Pega expressão da field
+        String expressao = fldExpressao.getText();
+
+        if (expressao.isEmpty())
+        {
+            lblRetorno.setText("A expressão não pode ser nula!");
+        } else
+        {
+            CalculadoraComPilha calculadora = new CalculadoraComPilha();
+            int resultadoExpressao = calculadora.calcula(expressao);
+
+            lblResultadoExpressao.setText("Resultado da Expressão: " + resultadoExpressao);
+        }
     }
 
     @Override

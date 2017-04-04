@@ -1,8 +1,12 @@
 package pilha;
 
+import java.util.IllegalFormatException;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
+
 /**
  *
  * @author djonathan.krause
+ * @param <T> - Tipo de dado da pilha
  */
 public class PilhaVetor<T> implements Pilha<T>
 {
@@ -25,19 +29,23 @@ public class PilhaVetor<T> implements Pilha<T>
     {
         try
         {
+            // Verifica se o valor é nulo
             if (valor == null)
             {
-                System.out.println("O valor não pode ser nulo!");
+                throw new Exception("O valor não pode ser nulo!");
             }
-            if (qtdElementos == tamanho)
+            // Verifica se a pilha esta cheia
+            else if (qtdElementos == tamanho)
             {
-                System.out.println("A pilha esta cheia!");
+                throw new Exception("A pilha esta cheia!");
+            }
+            // Se não tiver exception, empilha elemento
+            else
+            {
+                qtdElementos++;
+                vetor[getTopo()] = valor;
             }
 
-            
-            qtdElementos++;
-            vetor[getTopo()] = valor;
-            
         } catch (Exception exception)
         {
             System.out.println("Exception: " + exception);
@@ -48,10 +56,12 @@ public class PilhaVetor<T> implements Pilha<T>
     public T pop() throws Exception
     {
         T valor = vetor[getTopo()];
-        
+
         if (!vazia())
+        {
             qtdElementos--;
-        
+        }
+
         return valor;
     }
 
@@ -72,6 +82,28 @@ public class PilhaVetor<T> implements Pilha<T>
         return false;
     }
 
+    /**
+     * Verifica o valor do topo da pilha
+     *
+     * @return valor do topo
+     */
+    public int getTopo()
+    {
+        if (vazia())
+        {
+            return 0;
+        }
+        return qtdElementos - 1;
+    }
+    
+    @Override
+    public boolean cheia()
+    {
+        if(this.qtdElementos == this.tamanho)
+            return true;
+        return false;
+    }
+
     @Override
     public void libera()
     {
@@ -82,18 +114,11 @@ public class PilhaVetor<T> implements Pilha<T>
     {
         return qtdElementos;
     }
-    
-    
-    public int getTopo()
+
+    public int getTamanho()
     {
-        if (vazia())
-        {
-            return 0;
-        }
-        return qtdElementos - 1;
+        return tamanho;
     }
-    
-    
     
     
 
