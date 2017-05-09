@@ -14,26 +14,35 @@ public class NoArvoreBinaria<T>
      */
     public NoArvoreBinaria pertence(T info)
     {
-
+        // Se a informção buscada for igual a instância atual, retorna
         if (this.info.equals(info))
         {
             return this;
         }
 
+        // Cria dois nós, esquera e direita
         NoArvoreBinaria retEsq = null, retDir = null;
 
+        // Se o nó atual tiver esquerda
         if (esq != null)
         {
+            // retEsq recebe a informação do nó a esquerda do atual
             retEsq = esq.pertence(info);
+            
+            // Se não for nulo, retorna o nó
             if (retEsq != null)
             {
                 return retEsq;
             }
         }
 
+        // Se o nó atual tiver direita
         if (dir != null)
         {
+            // retDir recebe o nó da direita do atual
             retDir = dir.pertence(info);
+            
+            // Se houver valor, retorna o nó
             if (retDir != null)
             {
                 return retDir;
@@ -67,12 +76,13 @@ public class NoArvoreBinaria<T>
         return retorno;
     }
     
-    // Contrutor
+    // Contrutor apenas com a info do nó
     public NoArvoreBinaria(T info)
     {
         this.info = info;
     }
 
+    // Construtor com info, direita e esquerda do nó
     public NoArvoreBinaria(T info, NoArvoreBinaria<T> esq, NoArvoreBinaria<T> dir)
     {
         this.info = info;
@@ -81,7 +91,7 @@ public class NoArvoreBinaria<T>
     }
 
     // Gets and sets
-    protected T getInfo()
+    public T getInfo()
     {
         return info;
     }

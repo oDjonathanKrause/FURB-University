@@ -66,5 +66,5 @@ public class Arvore<T>
     {
         return raiz == null;
     }
-
+    
 }

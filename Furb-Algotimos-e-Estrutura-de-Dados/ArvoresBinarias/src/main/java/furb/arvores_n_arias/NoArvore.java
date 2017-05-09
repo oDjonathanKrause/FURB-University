@@ -2,6 +2,7 @@ package furb.arvores_n_arias;
 
 /**
  * @author Djonathan
+ * @param <T> - Tipo de dado da árvore
  */
 public class NoArvore<T>
 {
@@ -23,40 +24,47 @@ public class NoArvore<T>
     }
 
     /**
-     * Recebe a raiz de uma sub-arvore e estabelece que esta sub-arvore é filha do nó corrente
+     * Recebe a raiz de uma sub-arvore e estabelece que esta sub-arvore é filha
+     * do nó corrente
+     *
      * @param filho - sub-arvore que será o filho
      */
     public void inserirFilho(NoArvore<T> filho)
     {
-        this.setFilho(filho);
+        filho.setIrmao(this.filho);
         // sa.proximo ← primeiro;
+        
+        this.filho = filho;
         // primeiro ← sa;
     }
 
     /**
      * Printa a árvore pré-fixadamente
+     *
      * @return String com a árvore
      */
     public String imprimePre()
     {
         String retorno = "" + this.info;
-        
-        // Se o irmão não for nulo, printa
-        if (this.irmao != null)
-        {
-            retorno += "(" + this.irmao.imprimePre() + ")";
-        } 
-        // Senão printa o filho
-        else if (this.filho != null)
+
+        // Se tem filho, printa todos os filhos até acabar
+        if (this.filho != null)
         {
             retorno += "(" + this.filho.imprimePre() + ")";
+        }
+
+        // Se tem irmão, printa todos até acabar
+        if (this.irmao != null)
+        {
+            retorno += " " + this.irmao.imprimePre();
         } 
-        
+
         return retorno;
     }
 
     /**
      * Verifica se o valor pertence a árvore
+     *
      * @param info - Valor procurado
      * @return valor se existir na árvore, null se não existir
      */
@@ -66,21 +74,18 @@ public class NoArvore<T>
         if (this.info.equals(info))
         {
             return this;
-        }
-        // Se o filho do nó atual não for nulo, pertence()?
+        } // Se o filho do nó atual não for nulo, pertence()?
         else if (this.filho != null)
         {
             return this.filho.pertence(info);
-        }
-        // Se o irmao do nó atual não for nulo, pertence()?
+        } // Se o irmao do nó atual não for nulo, pertence()?
         else if (this.irmao != null)
         {
             return this.irmao.pertence(info);
-        }
-        // Se não encontrar, retorna null
+        } // Se não encontrar, retorna null
         else
         {
-            return null;    
+            return null;
         }
     }
 
