@@ -7,7 +7,7 @@ import furb.arvores_n_arias.Arvore;
 import furb.arvores_n_arias.NoArvore;
 
 /**
- * @author Djonathan
+ * @author Djonathan, Eliseu, Isabela
  * Classe de testes das árvores
  */
 public class Main
@@ -82,6 +82,12 @@ public class Main
         no11.inserirFilho(no12);
         no13.inserirFilho(no14);
         no12.inserirFilho(no14);
+        /*no8.inserirFilho(no20);
+        no20.inserirFilho(no19);
+        no19.inserirFilho(no18);
+        no9.inserirFilho(no17);
+        no17.inserirFilho(no16);
+        no16.inserirFilho(no15);*/
 
         // Verifica se os valores pertencem a arvore
         System.out.println("Pertence (1): " + arvore.pertence(1));
@@ -89,6 +95,19 @@ public class Main
 
         // Retorna a arvore em String
         System.out.println("Árvore printada: " + arvore.toString());
+        
+        // Verifica a altura
+        System.out.println("Altura: " + arvore.getAltura());
+        
+        // Verifica o nivel do no
+        System.out.println("Nível do 9: " + arvore.getNivel(9));
+        System.out.println("Nível do 2: " + arvore.getNivel(2));
+        System.out.println("Nível do 14: " + arvore.getNivel(14));
+        System.out.println("Nível do 1: " + arvore.getNivel(1));
+        
+        // Verifica se é degenerada
+        System.out.println("Degenerada: " + arvore.isDegenerada());
+        
     }
 
     /**

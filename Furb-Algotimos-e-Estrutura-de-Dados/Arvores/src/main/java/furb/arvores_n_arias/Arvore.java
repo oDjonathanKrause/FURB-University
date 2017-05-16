@@ -1,7 +1,8 @@
 package furb.arvores_n_arias;
 
 /**
- * @author Djonathan
+ * @author Djonathan, Eliseu, Isabela
+ * @param <T> - tipo da arvore
  */
 public class Arvore<T>
 {
@@ -97,7 +98,10 @@ public class Arvore<T>
         int nivelNo;
         NoArvore noArvore = new NoArvore(infoNo);
         
-        nivelNo = raiz.getNivel(noArvore, 0);
+        if(vazia())
+            return -1;
+        
+        nivelNo = raiz.getNivel(raiz, infoNo, 0);
         
         return nivelNo;
     }
@@ -108,7 +112,12 @@ public class Arvore<T>
      */
     public boolean isDegenerada()
     {
-        return true;
+        // pega a altura da arvore
+        // se tiver qualquer outro no folha com um nivel igual a altura -1, nao é degenerada
+        int alturaArvore = getAltura();
+        
+        return raiz.isDegenerada(raiz, alturaArvore, 0);
+        
     }
     
 }

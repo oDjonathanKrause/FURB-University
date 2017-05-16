@@ -1,7 +1,7 @@
 package furb.arvores_n_arias;
 
 /**
- * @author Djonathan
+ * @author Djonathan, Eliseu, Isabela
  * @param <T> - Tipo de dado da árvore
  */
 public class NoArvore<T>
@@ -128,40 +128,64 @@ public class NoArvore<T>
      * Verifica o nivel do no onde a informação é igual a passada por parametro
      * @param no verificado
      * @param nivel do no
+     * @param info valor do no
      * @return int - Nivel do no
      */
-    public int getNivel(NoArvore no, int nivel)
+    public int getNivel(NoArvore no, T info, int nivel)
     { 
-        int nivelAux = 0;
-        
-        if(this.info.equals(no.info))
+        int nivelAux;
+
+        // Se o no for nulo, retorna -1
+        if (no == null)
+        {
+            return -1;
+        }
+        // Se o no for igual a info que procuramos, retorna o nivel
+        else if (no.getInfo().equals(info)) 
         {
             return nivel;
         } 
-     
-        // Se o no atual tiver filho
-        if(this.filho != null)
+        else 
         {
-            // Soma um na altura
-            nivel++;
+            // Faz a recursao pro irmao
+            nivelAux = getNivel(no.getIrmao(), info, nivel);
             
-            // alturaAux recebe o resultado do getAltura do filho do no atual
-            nivelAux = no.getNivel(this.filho, nivel);
+            // Se for maior que zero, retorna o nivelAux, senao retorna a recursao do filho
+            if (nivelAux >= 0)
+                return nivelAux;
+            else
+                return getNivel(no.getFilho(), info, nivel + 1);
         }
-
-        // Se o no atual não tiver filho mas tiver irmao
-        if(this.irmao != null)
+    }
+    
+    public boolean isDegenerada(NoArvore no, int alturaArvore, int nivel)
+    {
+        // Se o no for folha
+        if(no.filho == null)
         {
-            // Retorna a altura do irmao
-            return no.getNivel(this.irmao, nivel);
+            int nivelNoAtual = no.getNivel(no, no.info, nivel);
+            // Se o nivel do nó folha for igual a altura da arvore -1, não é degenerada
+            if(nivelNoAtual == (alturaArvore - 1) || nivelNoAtual == alturaArvore)
+                return false;
+            else 
+                return true;
+        } 
+        
+        // Se o nó tiver filho
+        if(no.filho != null)
+        {
+            nivel++;
+            return  isDegenerada(no.filho, alturaArvore, nivel);
+        }
+        // Se o nó tiver irmão
+        else if(no.irmao != null)
+        {
+            return isDegenerada(no.irmao, alturaArvore, nivel);
         }
         
-        if(nivel > nivelAux)
-            return nivel;
-        else
-            return nivelAux;
+         return false;
+        
     }
-
 
     // getters and setters
     public T getInfo()
