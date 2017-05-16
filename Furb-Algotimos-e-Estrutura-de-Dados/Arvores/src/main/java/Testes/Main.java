@@ -36,6 +36,21 @@ public class Main
         NoArvore<Integer> no3 = new NoArvore<>(3);
         NoArvore<Integer> no4 = new NoArvore<>(4);
         NoArvore<Integer> no5 = new NoArvore<>(5);
+        NoArvore<Integer> no6 = new NoArvore<>(6);
+        NoArvore<Integer> no7 = new NoArvore<>(7);
+        NoArvore<Integer> no8 = new NoArvore<>(8);
+        NoArvore<Integer> no9 = new NoArvore<>(9);
+        NoArvore<Integer> no10 = new NoArvore<>(10);
+        NoArvore<Integer> no11 = new NoArvore<>(11);
+        NoArvore<Integer> no12 = new NoArvore<>(12);
+        NoArvore<Integer> no13 = new NoArvore<>(13);
+        NoArvore<Integer> no14 = new NoArvore<>(14);
+        NoArvore<Integer> no15 = new NoArvore<>(15);
+        NoArvore<Integer> no16 = new NoArvore<>(16);
+        NoArvore<Integer> no17 = new NoArvore<>(17);
+        NoArvore<Integer> no18 = new NoArvore<>(18);
+        NoArvore<Integer> no19 = new NoArvore<>(19);
+        NoArvore<Integer> no20 = new NoArvore<>(20);
 
         // Cria arvore
         Arvore<Integer> arvore = new Arvore<>();
@@ -57,7 +72,16 @@ public class Main
         arvore.getRaiz().inserirFilho(no2);
         arvore.getRaiz().inserirFilho(no3);
         no3.inserirFilho(no4);
+        no3.inserirFilho(no9);
         no2.inserirFilho(no5);
+        no2.inserirFilho(no6);
+        no2.inserirFilho(no7);
+        no4.inserirFilho(no8);
+        no4.inserirFilho(no10);
+        no5.inserirFilho(no11);
+        no11.inserirFilho(no12);
+        no13.inserirFilho(no14);
+        no12.inserirFilho(no14);
 
         // Verifica se os valores pertencem a arvore
         System.out.println("Pertence (1): " + arvore.pertence(1));

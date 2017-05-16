@@ -88,6 +88,80 @@ public class NoArvore<T>
             return null;
         }
     }
+    
+    /**
+     * Verifica a altura do nó recursivamente
+     * @param no onde sera verificada a altura
+     * @param altura altura atual, é incrementada a cada no filho
+     * @return int - altura do no
+     */
+    public int getAltura(NoArvore no, int altura)
+    {
+        int alturaAux = 0;
+     
+        // Se o no atual tiver filho
+        if(no.filho != null)
+        {
+            // Soma um na altura
+            altura++;
+            
+            // alturaAux recebe o resultado do getAltura do filho do no atual
+            alturaAux = no.getAltura(no.filho, altura);
+        }
+
+        // Se o no atual não tiver filho mas tiver irmao
+        if(no.irmao != null)
+        {
+            // Retorna a altura do irmao
+            return no.getAltura(no.irmao, altura);
+        }
+        
+        // Retorna a maior altura
+        if(altura > alturaAux)
+            return altura;
+        else
+            return alturaAux;
+        
+    }
+    
+    /**
+     * Verifica o nivel do no onde a informação é igual a passada por parametro
+     * @param no verificado
+     * @param nivel do no
+     * @return int - Nivel do no
+     */
+    public int getNivel(NoArvore no, int nivel)
+    { 
+        int nivelAux = 0;
+        
+        if(this.info.equals(no.info))
+        {
+            return nivel;
+        } 
+     
+        // Se o no atual tiver filho
+        if(this.filho != null)
+        {
+            // Soma um na altura
+            nivel++;
+            
+            // alturaAux recebe o resultado do getAltura do filho do no atual
+            nivelAux = no.getNivel(this.filho, nivel);
+        }
+
+        // Se o no atual não tiver filho mas tiver irmao
+        if(this.irmao != null)
+        {
+            // Retorna a altura do irmao
+            return no.getNivel(this.irmao, nivel);
+        }
+        
+        if(nivel > nivelAux)
+            return nivel;
+        else
+            return nivelAux;
+    }
+
 
     // getters and setters
     public T getInfo()
