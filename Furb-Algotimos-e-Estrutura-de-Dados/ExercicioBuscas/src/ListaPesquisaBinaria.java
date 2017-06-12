@@ -5,8 +5,7 @@
  */
 class ListaPesquisaBinaria implements InterfaceExercicio8
 {
-
-    public void addAll(Veiculo[] vetor)
+  public void addAll(Veiculo[] vetor)
     {
         throw new UnsupportedOperationException("Not yet implemented");
     }
@@ -33,5 +32,5 @@ class ListaPesquisaBinaria implements InterfaceExercicio8
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
 }

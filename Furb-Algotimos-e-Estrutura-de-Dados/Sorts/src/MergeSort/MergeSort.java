@@ -3,72 +3,88 @@ package MergeSort;
 /**
  * @author Djonathan Krause
  */
-public class MergeSort
+public class MergeSort<T extends Comparable<T>>
 {
 
-    private int[] numbers;
-    private int[] helper;
-
-    private int number;
-
-    public void sort(int[] values)
+    /**
+     * Método que recebe um array de inteiros e dois inteiros referentes ao
+     * início e ao fim da ordenação desse array, o que nos garante o poder de
+     * escolher uma faixa do array para ser ordenado.
+     *
+     * @param array
+     * @param indiceInicio
+     * @param indiceFim
+     */
+    public void ordena(T[] array, int indiceInicio, int indiceFim)
     {
-        this.numbers = values;
-        number = values.length;
-        this.helper = new int[number];
-        mergeSort(0, number - 1);
-    }
 
-    private void mergeSort(int low, int high)
-    {
-        // check if low is smaller than high, if not then the array is sorted
-        if (low < high)
+        // Condicional que verifica a validade dos parâmetros passados.
+        if (array != null && indiceInicio < indiceFim && indiceInicio >= 0
+                && indiceFim < array.length && array.length != 0)
         {
-            // Get the index of the element which is in the middle
-            int middle = low + (high - low) / 2;
-            // Sort the left side of the array
-            mergeSort(low, middle);
-            // Sort the right side of the array
-            mergeSort(middle + 1, high);
-            // Combine them both
-            merge(low, middle, high);
-        }
-    }
+            int meio = ((indiceFim + indiceInicio) / 2);
 
-    private void merge(int low, int middle, int high)
-    {
+            ordena(array, indiceInicio, meio);
+            ordena(array, meio + 1, indiceFim);
 
-        // Copy both parts into the helper array
-        for (int i = low; i <= high; i++)
-        {
-            helper[i] = numbers[i];
+            merge(array, indiceInicio, meio, indiceFim);
         }
 
-        int i = low;
-        int j = middle + 1;
-        int k = low;
-        // Copy the smallest values from either the left or the right side back
-        // to the original array
-        while (i <= middle && j <= high)
+    }
+
+    /**
+     * O merge consiste na junção de duas listas já ordenadas. Usa um array
+     * auxiliar.
+     *
+     * @param array
+     * @param indiceInicio
+     * @param meio
+     * @param indiceFim
+     */
+    public void merge(T[] array, int indiceInicio, int meio, int indiceFim)
+    {
+
+        T[] auxiliar = (T[]) new Comparable[array.length];
+        //Copiando o trecho da lista que vai ser ordenada
+        for (int i = indiceInicio; i <= indiceFim; i++)
         {
-            if (helper[i] <= helper[j])
+            auxiliar[i] = array[i];
+        }
+
+        //Índices auxiliares
+        int i = indiceInicio;
+        int j = meio + 1;
+        int k = indiceInicio;
+
+        //Junção das listas ordenadas
+        while (i <= meio && j <= indiceFim)
+        {
+            if (auxiliar[i].compareTo(auxiliar[j]) < 0)
             {
-                numbers[k] = helper[i];
+                array[k] = auxiliar[i];
                 i++;
             } else
             {
-                numbers[k] = helper[j];
+                array[k] = auxiliar[j];
                 j++;
             }
             k++;
         }
-        // Copy the rest of the left side of the array into the target array
-        while (i <= middle)
+
+        //Append de itens que não foram usados na Junção
+        while (i <= meio)
         {
-            numbers[k] = helper[i];
-            k++;
+            array[k] = auxiliar[i];
             i++;
+            k++;
         }
 
+        //Append de itens que não foram usados na Junção
+        while (j <= indiceFim)
+        {
+            array[k] = auxiliar[j];
+            j++;
+            k++;
+        }
     }
 }
