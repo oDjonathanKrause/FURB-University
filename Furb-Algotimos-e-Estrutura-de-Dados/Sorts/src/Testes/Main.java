@@ -1,6 +1,7 @@
 package Testes;
 
 import BinarySearch.BinarySearch;
+import BubbleSort.BubbleSort;
 import java.util.Arrays;
 
 /**
@@ -12,6 +13,7 @@ public class Main
 
     public static void main(String[] args)
     {
+        System.out.println("\tBinary Search");
         int[] array = new int[10000];
         int randomInt;
         
@@ -24,7 +26,9 @@ public class Main
         System.out.println("90 esta no array? " + BinarySearch.busca(array, 90));
         System.out.println("-100 esta no array? " + BinarySearch.busca(array, -100));
         
-        
+        System.out.println("\n\n\tBubble Sort");
+        BubbleSort.ordenar(array);
+        BubbleSort.imprimir(array);
     }
 
 }

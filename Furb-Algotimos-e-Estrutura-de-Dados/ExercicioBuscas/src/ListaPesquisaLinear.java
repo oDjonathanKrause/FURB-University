@@ -1,155 +1,101 @@
 
-/**
- *
- * @author nomes....
- */
 class ListaPesquisaLinear implements InterfaceExercicio8
 {
 
-    private ElementoLista<Veiculo> primeiroElemento = null;
-    private ElementoLista<Veiculo> ultimoElemento = null;
-    private int qtdElementos = 0;
+    private Veiculo[] listaPesquisaLinear;
 
     public void addAll(Veiculo[] vetor)
     {
-        // Cria elemento
-        ElementoLista novoElemento = new ElementoLista();
-        novoElemento.setElemento(vetor[0]);
-
-        // Se estiver vazia, o primeiro recebe o elemento criado
-        if (this.estaVazia())
-        {
-            // Atualiza o atributo de primeiro elemento
-            primeiroElemento = novoElemento;
-        } else
-        {
-            ultimoElemento.setProxElemento(novoElemento);
-        }
-
-        // Atualiza atributo de último elemento
-        ultimoElemento = novoElemento;
-
-        // Atualiza tamanho da lista
-        qtdElementos++;
+        listaPesquisaLinear = new Veiculo[vetor.length];
+        System.arraycopy(vetor, 0, listaPesquisaLinear, 0, vetor.length);
     }
 
     public Veiculo[] localizaMaisAntigo()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int maisAntigo = Integer.MAX_VALUE;
 
+        //Verifica o veiculo mais antigo;
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
+        {
+            if (maisAntigo > listaPesquisaLinear[i].getAno())
+            {
+                maisAntigo = listaPesquisaLinear[i].getAno();
+            }
+        }
+        
+        //Verifica a quantidade dos veiculos mais antigos;
+        int qtdMaisAntigo = 0;
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
+        {
+            if (listaPesquisaLinear[i].getAno() == maisAntigo)
+            {
+                qtdMaisAntigo++;
+            }
+        }
+        
+        //Cria um Array do tamanho dos veiculos antigos e os insere no array
+        Veiculo[] retorno = new Veiculo[qtdMaisAntigo];
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
+        {
+            if (listaPesquisaLinear[i].getAno() == maisAntigo)
+            {
+                retorno[--qtdMaisAntigo] = listaPesquisaLinear[i];
+
+            }
+        }
+        return retorno;
     }
 
     @Override
     public Veiculo getMenorPlaca()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (isEmpty())
+            return null;
+
+        Veiculo retorno = listaPesquisaLinear[0];
+        
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
+        {
+            if ((listaPesquisaLinear[i].getPlaca().compareTo(retorno.getPlaca()) < 0))
+                retorno = listaPesquisaLinear[i];
+        }
+
+        return retorno;
     }
 
     @Override
     public Veiculo getMaiorPlaca()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (isEmpty())
+            return null;
+
+        Veiculo retorno = listaPesquisaLinear[0];
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
+        {
+            if ((listaPesquisaLinear[i].getPlaca().compareTo(retorno.getPlaca()) > 0))
+                retorno = listaPesquisaLinear[i];
+        }
+
+        return retorno;
     }
 
     @Override
     public Veiculo pesquisa(String placa)
     {
-        ElementoLista elementoLista = primeiroElemento;
-        Veiculo temp = new Veiculo(placa, "nao econtrado", 0000, "nao econtrado");
+        if (isEmpty())
+            return null;
 
-        int i = 0;
-        while ((elementoLista != null))
+        for (int i = 0; i < listaPesquisaLinear.length; i++)
         {
-            // Se o conteúdo do elemento atual for igual ao do passado por parametro
-            if (elementoLista.getElemento().compareTo(temp) == 0)
-            {
-                // Retorna posição do elemento
-                return elementoLista.getElemento();
-            }
-
-            i++;
-            elementoLista = elementoLista.getProxElemento();
+            if (listaPesquisaLinear[i].getPlaca().equalsIgnoreCase(placa))
+                return listaPesquisaLinear[i];
         }
-
-        // Se não encontrar, retonar erro
-        return temp;
+        return null;
     }
 
-    /**
-     * Verifica se a lista esta vazia
-     *
-     * @return true se estiver vazia e false se tiver elementos na lista
-     */
-    public boolean estaVazia()
+    public boolean isEmpty()
     {
-        return primeiroElemento == null;
-    }
-
-    /**
-     *
-     * @author djonathan.krause
-     * @param <T> - Tipo de dado genérico
-     */
-    public class ElementoLista<T>
-    {
-
-        private Veiculo elemento;
-        private ElementoLista proxElemento = null;
-        private ElementoLista elementoAnt = null;
-
-        // Construtor vazio
-        public ElementoLista()
-        {
-        }
-
-        /**
-         * Construtor da classe
-         *
-         * @param elemento
-         * @param proxElemento
-         */
-        public ElementoLista(Veiculo elemento, ElementoLista proxElemento)
-        {
-            this.setElemento(elemento);
-            this.setProxElemento(proxElemento);
-            this.setElementoAnt(elementoAnt);
-        }
-
-        /**
-         * Gets e sets da classe ElementoLista
-         *
-         * @return T - tipo de dado
-         */
-        public Veiculo getElemento()
-        {
-            return elemento;
-        }
-
-        public void setElemento(Veiculo elemento)
-        {
-            this.elemento = elemento;
-        }
-
-        public ElementoLista getProxElemento()
-        {
-            return proxElemento;
-        }
-
-        public void setProxElemento(ElementoLista proxElemento)
-        {
-            this.proxElemento = proxElemento;
-        }
-
-        public ElementoLista getElementoAnt()
-        {
-            return elementoAnt;
-        }
-
-        public void setElementoAnt(ElementoLista elementoAnt)
-        {
-            this.elementoAnt = elementoAnt;
-        }
-
+        return listaPesquisaLinear == null;
     }
 
 }

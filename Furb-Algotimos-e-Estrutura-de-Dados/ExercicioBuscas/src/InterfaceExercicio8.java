@@ -1,8 +1,4 @@
 
-/**
- *
- * @author Djonathan Krause
- */
 public interface InterfaceExercicio8
 {
 
