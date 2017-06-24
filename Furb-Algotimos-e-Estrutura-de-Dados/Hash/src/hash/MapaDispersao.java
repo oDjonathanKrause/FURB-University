@@ -10,8 +10,8 @@ import ListaEncadeada.ElementoLista;
  */
 public class MapaDispersao<K, T>
 {
-
     private ListaEncadeada<K, T>[] tabela;
+    private int tamanhoTabela;
 
     /**
      * Cria um mapa com vetor encapsulado de tamanho calculado a partir das
@@ -25,35 +25,41 @@ public class MapaDispersao<K, T>
         int tamanho = (int) (qtd * 0.5);
 
         // Calcula o melhor tamanho para o vetor
-        int melhorTamanho = procuraPrimo(tamanho, 10);
+        this.tamanhoTabela = procuraPrimo(tamanho, 10);
 
-        System.out.println("Melhor tamanho: " + melhorTamanho);
-
-        int mapa[] = new int[melhorTamanho];
-
+        System.out.println("Melhor tamanho pra tabela: " + this.tamanhoTabela);
+        
+        // Cria a tabela com o melhor tamanho
+        this.tabela = new ListaEncadeada[this.tamanhoTabela];
+        
     }
-
+    
     /**
-     * Delega para a classe K o cálculo do hash, reusando o método hashCode() do
-     * objeto recebido como argumento (chave). Entretanto, o método
-     * calcularHash() deverá compactar o valor retornado por hashCode() para um
-     * intervalo aceitável para ser armazenado no vetor tabela.
-     *
+     * Calcula o hash da chave passada como parametro compactando o resultado para um intervalo aceitável para ser armazenado na tabela
      * @return hash
      */
     private int calculaHash(K chave)
     {
-        return 1;
+        // Calcula hash como o retorno de hashCode() resto de divisão com o tamanho da tabela
+        int hash = chave.hashCode() % this.tamanhoTabela;
+        
+        // Se o resultado for negativo, utiliza ele positivo
+        if(hash < 0)
+            hash = hash * -1;
+        
+        System.out.println("chave " + chave + " hash: " + hash);
+        
+        return hash;
     }
-
+    
+    
     /**
-     * Armazenar o objeto T no mapa de dispersão de acordo com o valor da chave
-     * (K)
+     * Armazenar o objeto T no mapa de dispersão de acordo com o valor da chave 
      *
-     * @param K - valor da chave
-     * @param T - Objeto que será inserido
+     * @param chave - K valor da chave
+     * @param objeto - T Objeto que será inserido
      */
-    private void inserir(K chave, T objeto)
+    public void inserir(K chave, T objeto)
     {
         // Se a chave ou o objeto forem nulos, retorna. Erro.
         if (chave == null || objeto == null)
@@ -96,7 +102,7 @@ public class MapaDispersao<K, T>
      * @param chave - chave onde o objeto esta
      * @return null se não encontrar o objeto, return objeto se encontrar
      */
-    private T buscar(K chave)
+    public ListaEncadeada buscar(K chave)
     {
         // Chave nula, erro.
         if(chave == null)
@@ -110,11 +116,37 @@ public class MapaDispersao<K, T>
             return null;
         else
         {
-            // Cria objeto e pega valor da posição x
-            ElementoLista<T> objeto = new ElementoLista<>();
-            objeto.setElemento((T) tabela[hash]);
+            // Retorna lista da posição x
+            return tabela[hash];
+        }
+    }
+    
+    /**
+     * Remove do mapa de dispersão o objeto que possui a mesma chave de busca da chave fornecida como argumento. 
+     * @param chave - Chave que será removida
+     * @return objeto removido. Caso não localize, deve retornar null.
+     */
+    public T remover(K chave)
+    {
+        // Se a chave for nula, retorna. Erro.
+        if(chave == null)
+            return null;
+        
+        // Calcula o hash da chave passada por parametro
+        int hash = calculaHash(chave);
+        
+        if(tabela[hash] == null)
+            return null;
+        else
+        {
+            // Pega o objeto da posição
+            T objetoRemovido = (T) tabela[hash];
             
-            return (T) objeto;
+            // Limpa posição
+            tabela[hash] = null;
+            
+            // Retorna objeto removido
+            return objetoRemovido;
         }
     }
 
@@ -156,27 +188,51 @@ public class MapaDispersao<K, T>
         // Se não encontrou, retorna o próprio numero
         return numero;
     }
+    
+    /**
+     * 
+     * @param chave
+     * @return 
+     */
+    public int verificaColisao(K chave)
+    {
+        // Calcula hash da chave
+        int hash = calculaHash(chave);
+        
+        // Verifica se a posição esta vazia
+        if(tabela[hash] == null)
+            return 0;
+        else // Se não estiver, retorna o tamanho da lista na posição, será o número de colisões
+        {
+            return tabela[hash].getTamanho();
+        }
+    }
+    
+    /**
+     * @return Retorna lista encadeada da posição que mais tem colisões na tabela
+     */
+    public ListaEncadeada posicaoComMaisColisoes()
+    {
+        ListaEncadeada listaMaisColisoes = new ListaEncadeada();
+        
+        // Percorre tabela
+        for(int i = 0; i < tamanhoTabela; i++)
+        {
+            // Se a posição não for nula
+            if(tabela[i] != null)
+            {
+                // Se a quantidade de elementos (colisões) na posição for maior do que a maior já calculada
+                if(tabela[i].getTamanho() > listaMaisColisoes.getTamanho())
+                {
+                    // Seta a posição/lista atual como a mais colidida
+                    listaMaisColisoes = tabela[i];
+                }
+            }
+        }
+        
+        System.out.println("A posição com mais colisões tem " + listaMaisColisoes.getTamanho() + " itens na lista");
+        
+        return listaMaisColisoes;
+    }
+
 }
-
-
-/*
-Link: http://ava.furb.br/ava/resources/tela_view.php?ds_diretorio=3436627&nm_arquivo=AED____Trabalho____Mapa_de_dispersao.pdf
-Ajuda: http://www.javamadesoeasy.com/2015/02/hashmap-custom-implementation-put-get.html
-
-* O construtor MapaDispersao(int) deve criar uma mapa com vetor encapsulado, cujo
-tamanho será calculado com base no argumento quantidade, que é a quantidade estimada
-de elementos a serem inseridos. Considere as boas práticas para determinar o tamanho deste
-vetor.
-* O método privado calcularHash() deve delegar para a classe K o cálculo do hash,
-reusando o método hashCode() do objeto recebido como argumento (chave). Entretanto,
-o método calcularHash() deverá compactar o valor retornado por hashCode() para um
-intervalo aceitável para ser armazenado no vetor tabela.
-* O método inserir(K, T) deve armazenar o objeto T, fornecido como argumento, no mapa
-de dispersão de acordo com o valor da chave (K).
-* O método remover(K) deve remover do mapa de dispersão o objeto que possui a mesma
-chave de busca da chave fornecida como argumento, retornando este objeto. Caso não
-localize, deve retornar null.
-* O método buscar(K) deve procurar no mapa de dispersão um objeto que possua chave de
-busca igual à fornecida como argumento. Como resultado do seu processamento, o método
-deve retornar o objeto localizado ou null caso não localize
- */
