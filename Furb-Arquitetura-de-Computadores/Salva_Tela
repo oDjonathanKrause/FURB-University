@@ -1,0 +1,96 @@
+; multi-segment executable file template.
+
+data segment
+; add your data here! 
+
+VIDEO DB 4000 DUP(?)
+
+
+MENSAGEM db "ESTE TEXTO SERA SALVO NA VARIAVEL VIDEO ACIMA...$"
+ends
+
+stack segment
+dw 128 dup(0)
+ends
+
+code segment
+start:
+; set segment registers:
+mov ax, data
+mov ds, ax
+mov es, ax
+
+; add your code here 
+
+
+lea dx, MENSAGEM
+mov ah, 9
+int 21h ; output string at ds:dx
+
+
+
+MOV BX,0000
+
+REPETICAO: 
+
+MOV AX,0B800H
+MOV DS,AX
+MOV SI,0000
+LEA DI,VIDEO
+MOV CX,2000
+
+SALVA_TELA:
+
+LODSW ; AL = DS:[SI] AH = DS:[SI+1]
+; SI = SI + 2
+
+
+STOSW ; ES:[DI] = AL ES:[DI+1] = AH
+; DI = DI + 2
+
+LOOP SALVA_TELA 
+
+
+;APAGA VIDEO 
+MOV CX,2000
+MOV AX,0B800H
+MOV ES,AX 
+MOV AL,"." 
+MOV AH, 7
+MOV DI,0000 
+REP STOSW ; ES:[DI] = AL ES:[DI+1] = AH
+; DI = DI + 2 
+
+LEA SI, VIDEO 
+MOV AX,DATA
+MOV DS,AX
+MOV DI,0000
+MOV AX,0B800H
+MOV ES,AX
+MOV CX,2000
+
+RESTAURA_VIDEO: 
+LODSW ; AL = DS:[SI] AH = DS:[SI+1]
+; SI = SI + 2
+
+STOSW ; ES:[DI] = AL ES:[DI+1] = AH
+; DI = DI + 2 
+
+LOOP RESTAURA_VIDEO 
+
+ADD BX,1
+
+CMP BX,1000
+
+JNE REPETICAO
+
+
+; wait for any key.... 
+mov ah, 1
+int 21h
+
+mov ax, 4c00h ; exit to operating system.
+int 21h 
+ends
+
+end start ; set entry point and stop the assembler.

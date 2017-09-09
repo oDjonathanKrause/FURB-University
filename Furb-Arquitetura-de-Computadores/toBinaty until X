@@ -1,0 +1,64 @@
+data segment
+;nenhum variavel precisa s
+ends
+
+stack segment
+dw 128 dup(0)
+ends
+
+code segment
+start:
+; inicializando os segmentos. DataSegment = DS
+mov ax, data
+mov ds, ax
+
+;comeca
+MOV DH,00000000B ;comeca com o numero 0
+
+IMPRIME:
+MOV CL,0 ;deixa o CL com 0
+
+ROTACIONA: 
+ROL DH, 1 ;joga um numero(sempre o primeiro) para a esquerda, como demonstrado na imagem1 acima 
+JC UM     ;se o numero jogado p/ esquerda for 1, pula para sub-rotina UM:
+JNC ZERO  ;se for 0, pula para sub-rotina ZERO:
+
+VERIFICA:     ;verifica quantos numeros ja foram jogados para esquerda
+INC CL        ;incrementa 1 um CL
+CMP CL,8      ;ate que CL seja igual a 8
+JE PROXIMO    ;quando CL for 8, pula para a sub-rotina PROXIMO:
+JMP ROTACIONA ;enquanto nao for, repete a sub-rotina ROTACIONA:
+
+
+UM:           ;imprime o numero 1
+MOV AH,2      ;rotina para imprimir um caracter
+MOV DL,"1"    ;manda uma string com o numero '1' para o video
+INT 21H       ;chama o servico de video p/ efetuar a impressao
+JMP VERIFICA  ;pula para a sub-rotina VERIFICA:
+
+
+ZERO:         ;imprime o numero 0
+MOV AH,2      ;rotina para imprimir um caracter 
+MOV DL,"0"    ;manda uma string com o numero '0' para o video
+INT 21H       ;chama o servico de video p/ efetuar a impressao
+JMP VERIFICA  ;pula para a sub-rotina VERIFICA:
+
+
+PROXIMO:  ;essa sub-rotina pula uma linha para imprimir o proximo numero
+MOV AH,2 
+MOV DL,13
+INT 21H
+MOV AH,2
+MOV DL,10
+INT 21H 
+
+
+INC DH     ;incrementa 1 em DH
+CMP DH,43  ;ate DH ser 42
+JE FIM     ;se dh for 42. Pula para sub-rotina FIM: e encerra o programa
+JMP IMPRIME;se for diferente(nesse caso, menor que 42). Pula para IMPRIME:
+
+
+FIM: 
+ends
+end start ;fim

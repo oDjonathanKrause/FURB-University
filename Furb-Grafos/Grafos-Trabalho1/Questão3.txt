@@ -1,0 +1,3 @@
+Mostre que não existem grafos com vértices de grau 2, 3, 3, 4, 4 e 5. 
+
+R: Não existe. A soma dessa sequência de graus é 21 que é um número ímpar. 

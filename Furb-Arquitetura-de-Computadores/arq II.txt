@@ -1,0 +1,78 @@
+DATA SEGMENT  ;segmento de dados
+
+	VAR_8_BITS_DS 	 DB 42D  ;var de 8 bits com valor de 42
+	VAR_16_BITS_DS	 DW ?   ;var de 16 bits com valor desconhecido
+	VAR_MENSSAGEM_DS DB "CIENCIA DA COMPUTACAO"  
+	VAR_VETOR_DS	 DB "C","I","E", 78,"CIA" ;var com varios valores
+	VAR_ARRAY_DS	 DB 200 DUP(0) ;array com 200 pocisoes com valor 0 - dup = duplica o 0
+
+DATA ENDS  ;fim do segmento de dados
+
+
+EXTRA SEGMENT ;declaracao de outro segmanto
+
+	VAR_8_BITS_ES 	 DB ?
+	VAR_16_BITS_ES	 DW ? 
+	VAR_MENSSAGEM_ES DB "CIENCIA DA COMPUTACAO"  
+	VAR_VETOR_ES	 DB "A","B","C", 66,"AA" 
+
+EXTRA ENDS ;fim do segmento extra
+
+
+STACK SEGMENT ;segmento da pilha
+
+	MINHA_PILHA 32 DW DUP(?) ;a pilha tem 32 celulas, cada uma com 16 bits
+
+STACK ENDS
+
+
+CODE SEGMENT ;segmento do codigo
+START:  ;programa comeca aqui
+	MOV AX, DATA  ;aponta para o segmento de dados "data" - inicializacao
+	MOV DS, AX
+	MOV AX, DATA  ;aponta para o segmento extra "extra" - inicializacao
+	MOV ES, AX
+	MOV AX, STACK ;aponta para o segmento da pilha "stack" - opcional
+	MOV SS, AX
+	
+	;alteracao de valores de variaveis - metodo1
+	MOV DH, 7     ;move 7 para DH
+	MOV [0000], DH;move DH para o ofset 0
+	MOV DL, 7
+	MOV DS:[0000], DH
+	MOV DS:[0001], DX
+
+	;alteracao de valores de variaveis - metodo2
+	MOV BX, OFFSET VAR_8_BITS_DS  ;joga no bx o endereco da var
+	MOV DS:[BX], DH  ;joga bx em DH
+
+	MOV BX, OFFSET VAR_16_BITS_DS  ;joga no bx o endereco da var
+	MOV DS:[BX], DX
+
+	;alteracao de valores de variaveis - metodo3
+	MOV DS:VAR_8_BITS_DS, DH
+	MOV DH,DS:VAR_8_BITS_DS
+
+	MOV ES:VAR_8_BITS_ES, DH  ;move DH -> var_8_bits do segmento ES
+
+	;pilha
+	PUSH 0003  ;empilha o valor 3
+	PUSH 0002  ;empilha
+	PUSH 0001  ;empilha
+	CALL SOMA
+	NOP
+
+SOMA:
+	PUSH BP ;empilha BP
+	MOV BP, SP ;move SP -> BP
+	MOV AX, [BP+4] ;soma em AX o valor na pocisao de memoria de BP+4
+	ADD AX, [BP+6] ;soma em AX o valor na pocisao de memoria de BP+6
+	ADD AX, [BP+6] ;soma em AX o valor na pocisao de memoria de BP+8
+	POP BP
+	RET 6 ;volta para o estado original
+	
+	
+
+CODE ENDS ;fim do segmento de codigo
+
+END START
