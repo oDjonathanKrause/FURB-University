@@ -1,7 +1,7 @@
 /*
  * @author Carlos Henrique Stapait Junior, Djonathan Krause 
  */
-package grafos.trabalho1;
+package old;
 
 public class Lista
 {

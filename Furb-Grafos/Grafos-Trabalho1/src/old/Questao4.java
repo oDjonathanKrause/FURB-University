@@ -16,7 +16,6 @@
  */
 package old;
 
-import grafos.trabalho1.Lista;
 import java.util.ArrayList;
 import java.util.Collections;
 

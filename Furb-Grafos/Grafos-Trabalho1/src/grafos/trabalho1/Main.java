@@ -9,16 +9,42 @@ import questao4.ReconheceGrafo;
 import questao6.Churrasco;
 import questao7.Energia;
 
-/*Carlos Henrique Stapait Junior*/
 public class Main
 {
+    private static int[][] matrizAdjacenciaGrafoNaoCompleto = {{0, 1, 0}
+                                                             , {1, 1, 2}
+                                                             , {0, 2, 0}};
+    
+    private static int[][] matrizAdjacenciaGrafoCompleto = {{0, 1, 1}
+                                                          , {1, 1, 2}
+                                                          , {1, 2, 0}};
+    
+    private static int[][] matrizAdjacenciaGrafoNulo = {{0, 0, 0}
+                                                      , {0, 0, 0}
+                                                      , {0, 0, 0}};
+    
+    private static int[][] matrizAdjacenciaNaoMultigrafo = {{0, 1, 1}
+                                                          , {1, 0, 1}
+                                                          , {1, 1, 0}};
+    
+    private static int[][] matrizAdjacenciaGrafoDirigido = {{0, 1, 1}
+                                                          , {1, 0, 1}
+                                                          , {0, 0, 0}};
+
+    public static void tests()
+    {
+        questao4.ReconheceGrafo tests = new ReconheceGrafo();
+        System.out.println("testes: " + tests.TipoDoGrafo(matrizAdjacenciaGrafoNulo));
+        
+    }
 
     public static void main(String[] args)
     {
+        //tests();
         Scanner sc = new Scanner(System.in);
         Grafo grafo = null;
 
-        System.out.println("Desenvolvido por: Carlos Henrique Stapait Junior.");
+        System.out.println("Desenvolvido por: Carlos Henrique Stapait Junior, Djonathan Krause.");
         int option = 1;
         while (option != 0)
         {
