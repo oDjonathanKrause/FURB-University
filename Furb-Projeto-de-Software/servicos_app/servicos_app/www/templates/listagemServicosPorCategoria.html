@@ -1,0 +1,20 @@
+<link href="css/css.css" rel="stylesheet">
+
+<ion-view view-title="Servicos por categoria">
+  <ion-content>
+    <div class = "container">
+        <div class="wrapper">
+          <h2 style="margin-top: 15%">Servicos em {{cidade}}</h2>
+          <hr class="colorgraph"><br>
+
+          <ion-list>
+              <ion-item ng-repeat="servico in servicos">
+                  <p>Nome do serviço: {{servico.Nome_servico}}</p>
+                  <p>Descrição: {{servico.Desc_servico}}</p>
+                  <p>Valor serviço: R${{servico.Preco_servico}}</p>
+              </ion-item>
+          </ion-list>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

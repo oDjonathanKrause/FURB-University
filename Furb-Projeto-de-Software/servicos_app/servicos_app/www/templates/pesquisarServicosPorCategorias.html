@@ -1,0 +1,31 @@
+<link href="css/pesquisarEstabelecimentos.css" rel="stylesheet">
+
+<ion-view view-title="Estabelecimentos por Categoria">
+  <ion-content>
+     <div class = "container">
+      <div class="wrapper">
+        <h3 class="list-header" style="margin-top: 15%">Serviços por categoria</h3>
+        <hr class="colorgraph"><br>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Cidade</span>
+                <input type="text" ng-model="cidade">
+            </label>
+            
+            <!-- Escolhe a categoria -->
+            <label class="item item-input item-select">
+            <span class="input-label">Categoria</span>
+                <select ng-model="categoria.Categoria_id"
+                        ng-options="categoria.Categoria_id as categoria.Nome_categoria for categoria in categorias"
+                        class="form-control" id="categoria_list">
+                <option value="" disabled selected>Selecione uma categoria</option>
+                </select>    
+            </label>
+        
+                <button ng-click="pesquisar(cidade, categoria.Categoria_id)" class="button button-block button-positive">Pesquisar</button>
+
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

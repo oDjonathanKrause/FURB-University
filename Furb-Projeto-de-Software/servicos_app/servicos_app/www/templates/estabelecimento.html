@@ -1,0 +1,21 @@
+<link href="css/css.css" rel="stylesheet">
+
+<ion-view view-title="Serviços Disponíveis">
+  <ion-content>
+     <div class="container">
+        <div class="wrapper">
+          <ion-list>
+              <h3 style="margin-top: 15%">{{estabelecimento.Nome_estab}}</h3>
+              <hr class="colorgraph"><br>
+              
+              <h4>Serviços disponíveis:</h4>
+              <ion-item ng-repeat="servico in servicos">
+                  <h3>{{servico.Nome_servico}}</h3>
+                  <p>Descrição: {{servico.Desc_servico}}</p>
+                  <button class="button button-positive button-outline button-block button-small" ng-click='detalhes(servico.Servico_id, estabId)'>Detalhes</button>
+              </ion-item>
+          </ion-list>
+        </div>
+      </div>        
+  </ion-content>
+</ion-view>

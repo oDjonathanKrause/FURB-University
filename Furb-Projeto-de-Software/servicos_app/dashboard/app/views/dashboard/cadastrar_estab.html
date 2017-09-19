@@ -1,0 +1,139 @@
+<div>
+	<a ui-sref="principal" class="pull-right btn btn-primary btn-outline btn-rounded">Ir para Principal</a>
+	<h2>Cadastro de Estabelecimentos <small></small></h2>
+	<span class="glyphicon glyphicon-dashboard bg-fade"></span>
+	<div class="jumbotron">
+		<div class="container">
+            <form class="row" ng-submit="cadastrarEstabelecimento()">
+                
+                <h4>Dados do estabelecimento</h4>
+                
+                <p ng-show="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+                <div class="alert alert-warning"  role="alert" style="display:none;" id="alerta_cep"> <strong>CEP Não encontrado</strong> Verifique se o CEP digitado é valido. </div>
+
+                <div class="form-group col-md-12">
+                    <label for="nome_servico">Nome:</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Nome_estab" id="nome_estab" placeholder="Salão de beleza seja bela">
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="desc_estab">Descrição:</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Desc_estab" id="desc_estab" placeholder="O mais tradicional da cidade!">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="cep_estab">CEP:</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Cep_estab" id="cep_estab" placeholder="89123-321">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="estado_estab">Estado</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Estado_estab" id="estado_estab" placeholder="SC">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="cidade_estab">Cidade</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Cidade_estab" id="cidade_estab" placeholder="Blumenau">
+                </div>
+                
+                <div class="form-group col-md-12">
+                    <label for="cidade_estab">Rua</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Rua_estab" id="cidade_estab" placeholder="Rua sete de setembro">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="bairro_estab">Bairro</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Bairro_estab" id="bairro_estab" placeholder="Centro">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="numero_estab">Número</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Numero_estab" id="numero_estab" placeholder="4242">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="complemento_estab">Complemento</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Complemento_estab" id="complemento_estab" placeholder="Perto do shopping">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="telefone_estab">Telefone</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Telefone_estab" id="telefone_estab" placeholder="(00) 0000-0000">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="whatsapp_estab">Whatsapp</label>
+                    <input type="text" class="form-control phone" ng-model="estabelecimento.Whatsapp_estab" id="whatsapp_estab" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="facebook_estab">Facebook</label>
+                    <input type="text" class="form-control" id="facebook_estab"ng-model="estabelecimento.Facebook_estab"  placeholder="www.facebook.com/SejaBelaEstabelecimento" >
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="site_estab">Site</label>
+                    <input type="text" class="form-control" ng-model="estabelecimento.Site_estab" id="site_estab" placeholder="www.sejabelaestabelecimento.com">
+                </div>
+                
+                <button type="submit" >
+                    Cadastrar
+                </button>
+                
+            </form>
+
+		</div>
+
+        <!-- <a ng-click("cadastrar()") class="pull-right btn btn-primary btn-outline btn-rounded">Cadastrar</a>
+        Botão de cadastro -->
+        
+
+	</div>
+</div>
+
+
+<!-- Buscar endereço pelo CEP -->
+<script type="text/javascript"> /*
+jQuery(function($){
+   $("#cep_estab").change(function(){
+      var cep_code = $(this).val();
+      
+      if(cep_code.length <= 0) 
+        return;
+      $.get("http://apps.widenet.com.br/busca-cep/api/cep.json", { code: cep_code },
+         function(result){
+            if(result.status!=1)
+            {
+                $('#alerta_cep').fadeIn();
+                $('#alerta_cep').show();
+               
+                return;
+            }   
+
+            // Remove aviso de CEP não encontrado
+            $('#alerta_cep').fadeOut();
+            $('#alerta_cep').hide();
+
+            // Seta os valores nas fields
+            $("input#cep_estab").val( result.code );
+            $("input#estado_estab").val( result.state );
+            $("input#cidade_estab").val( result.city );
+            $("input#bairro_estab").val( result.district );
+            $("input#complemento_estab").val( result.address );
+         });
+   });
+});
+*/
+</script>
+
+<!-- Aplicar mascaras nas fields -->
+<script type="text/javascript" charset="utf-8"> 
+    // Telefone
+    $('#telefone_estab').mask('(99) 9999?9-9999');
+
+    //Whatsapp
+    $('#whatsapp_estab').mask('(99) 9999?9-9999');
+
+    //CEP
+    $('#cep_estab').mask('99999-999');
+</script>

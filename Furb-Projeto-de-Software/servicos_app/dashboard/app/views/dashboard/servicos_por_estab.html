@@ -1,0 +1,62 @@
+<div>
+	<a ui-sref="principal" class="pull-right btn btn-primary btn-outline btn-rounded">Ir para Principal</a>
+	<h2>Serviços por Estabelecimentos <small></small></h2>
+	<span class="glyphicon glyphicon-dashboard bg-fade"></span>
+	<div class="jumbotron">
+		<div class="container" ng-controller="ServicosPorEstabPageCtrl">
+			<h4>Escolha o estabelecimento</h4>
+
+            <!-- Combobox -->            
+            <div class="row">
+            <div class="dropdown" >
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdown_estabelecimentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Estabelecimentos
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdown_estabelecimentos" >
+                    <li>
+                        <a ng-repeat="estab in listaDeEstabelecimentos" ng-click="passdata(estab.Estab_id)">
+                          {{estab.Nome_estab}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+            <!-- Menu -->
+            <ul class="nav nav-tabs" style="padding-top: 2%">
+                <li class="active"><a data-toggle="tab" href="#servicos">Serviços</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="servicos" class="tab-pane fade in active">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Descrição Serviço</th>
+                            <th>Valor / Valor hora</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="servico in listaDeServicos">
+                        <tr>
+                            <td>{{servico.Nome_servico}}</td>
+                            <td>{{servico.Desc_servico}}</td>
+                            <td>Valor: R${{servico.Preco_servico}} - Valor/Hora: R${{servico.Preco_hora_ervico}}</td>
+                            <td>{{servico.Status_servico}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Caso a lista estiver vazia -->
+                    <h5 ng-hide="listaDeServicos.length > 0">Escolha um estabelecimento</h5>
+
+                    <!-- Botão que redireciona para add serviços -->
+                    <a ui-sref="cadastrar_servico" class="pull-right btn btn-primary btn-outline btn-rounded">Adicionar Serviço</a>
+                </div>
+            </div>
+            
+		</div>
+	</div>
+</div>

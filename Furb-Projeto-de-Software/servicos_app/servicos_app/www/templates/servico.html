@@ -1,0 +1,32 @@
+<link href="css/css.css" rel="stylesheet">
+
+<ion-view view-title="Detalhes do Serviço">
+  <ion-content>
+    <div class="container">
+        <div class="wrapper">
+            <ion-list>
+                <h2 style="margin-top: 15%">{{servico.Nome_servico}}</h2>
+                <hr class="colorgraph"><br>
+
+                <ion-item>
+                    <p>Descrição: {{servico.Desc_servico}}</p>
+                    <p>Preço: R$ {{servico.Preco_servico}}</p>
+                    <p>Tempo médio: {{tempo_servico}}</p>
+                    <p>Taxa de cancelamento: R$ {{servico.Taxa_cancelamento}}<p>
+                </ion-item>
+
+                <ion-item>
+                    <span class="input-label">Data</span>
+                    <input type="datetime-local" ng-model="datahora">
+                    
+                    <button class="button button-block button-positive" ng-click="agendar(datahora)">Agendar</button>
+                </ion-item>
+
+                <ion-item>
+                    {{mensagem}}
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

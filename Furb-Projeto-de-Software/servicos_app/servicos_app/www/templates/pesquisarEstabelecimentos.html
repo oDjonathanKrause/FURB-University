@@ -1,0 +1,22 @@
+<link href="css/pesquisarEstabelecimentos.css" rel="stylesheet">
+
+
+<ion-view view-title="Estabelecimentos por Cidade">
+  <ion-content>
+    <div class = "container">
+      <div class="wrapper">
+        <h3 class="list-header" style="margin-top: 15%">Pesquisar estabelecimentos</h3>
+        <hr class="colorgraph"><br>
+
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Cidade</span>
+              <input type="text" ng-model="cidade">
+            </label>
+            
+            <button ng-click="pesquisar(cidade)" class="button button-block button-positive">Pesquisar</button>
+          </div>
+       </div>
+     </div>     
+  </ion-content>
+</ion-view>

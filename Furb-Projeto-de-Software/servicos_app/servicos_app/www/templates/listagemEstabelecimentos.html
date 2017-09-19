@@ -1,0 +1,18 @@
+<link href="css/css.css" rel="stylesheet">
+
+<ion-view view-title="ListagemEstabelecimentos">
+  <ion-content>
+      <div class = "container">
+        <div class="wrapper">
+          <ion-list>
+              <h3 style="margin-top: 15%">Estabelecimentos em {{cidade}}</h3>
+              <hr class="colorgraph"><br>
+
+              <ion-item ng-repeat="estabelecimento in estabelecimentos" ng-click="visualizar(estabelecimento.Estab_id)">
+                {{estabelecimento.Nome_estab}}
+              </ion-item>
+          </ion-list>
+        </div>
+      </div>
+  </ion-content>
+</ion-view>

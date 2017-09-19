@@ -1,0 +1,150 @@
+<div>
+	<a ui-sref="principal" class="pull-right btn btn-primary btn-outline btn-rounded">Ir para Principal</a>
+	<h2>Cadastro de Serviços <small></small></h2>
+	<span class="glyphicon glyphicon-dashboard bg-fade"></span>
+	<div class="jumbotron">
+		<div class="container">
+            <form class="row" ng-submit="cadastrarServico()">
+                
+                <h4>Dados do serviço</h4>
+                
+                <p ng-show="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+                <p id="alerta_hora" class="alert alert-warning">Hora inicial maior do que a final!</p>
+                
+                <div class="form-group col-md-6">
+                    <label for="nome_servico">Nome do serviço:</label>
+                    <input type="text" class="form-control"  ng-model="servico.Nome_servico" id="nome_servico" placeholder="Corte de cabelo masculino" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="desc_servico">Descrição:</label>
+                    <input type="text" class="form-control" ng-model="servico.Desc_servico" id="desc_servico" placeholder="Corte seu cabelo em 20 minutos!" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="preco_servico">Preço do serviço (R$):</label>
+                    <input type="text" class="form-control moeda" ng-model="servico.Preco_servico" id="preco_servico" placeholder="R$50,00" required>
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label for="preco_hora_servico">Preço por hora serviço (R$):</label>
+                    <input type="text" class="form-control moeda" ng-model="servico.Preco_hora_servico" id="preco_hora_servico" placeholder="Preencher apenas se for cobrado por hora">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="tempo_medio_servico">Tempo médio do serviço:</label>
+                    <input type="text" class="form-control tempo" ng-model="servico.Tempo_medio_servico" id="tempo_medio_servico" placeholder="00:30 para trinta minutos" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="hora_disp_inicio">Hora de disponibilidade inicial:</label>
+                    <input type="text" class="form-control tempo" ng-model="servico.Hora_disp_inicio" id="hora_disp_inicio" placeholder="08:00" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="hora_disp_fim">Hora de disponibilidade final:</label>
+                    <input type="text" class="form-control tempo" ng-model="servico.Hora_disp_fim" id="hora_disp_fim" placeholder="18:00" required>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="status_servico">O serviço esta ativo?</label>
+                    <select ng-model="servico.Status_servico" class="form-control" id="status_servico" required> 
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="D">Sim</option>
+                        <option value="N">Não</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-3">
+                    <label for="cancelavel_flag">Pode ser cancelado?</label>
+                    <select ng-model="servico.Cancelavel_flag" class="form-control" id="cancelavel_flag" required> 
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Y">Sim</option>
+                        <option value="N">Não</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label for="taxa_cancelamento">Taxa de cancelamento:</label>
+                    <input type="text" class="form-control moeda" ng-model="servico.Taxa_cancelamento" id="taxa_cancelamento" placeholder="R$ 10,00" required>
+                </div>
+                
+                                 
+                 <div class="form-group col-md-6">
+                    <label for="categoria_id">Qual a categoria do serviço</label>
+                    <select class="form-control" id="categoria_id"
+                            ng-controller="CategoriaCtrl" 
+                            ng-model="servico.Categoria_id" 
+                            ng-options="categoria.Categoria_id as categoria.Nome_categoria for categoria in categorias" required> 
+                        <option value="">Selecione uma opção</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-7">
+                    <label for="categoria_id">A qual estabelecimento pertence esse serviço</label>
+                    <select class="form-control" id="servico_estab_id"
+                            ng-controller="EstabelecimentosParaServicoCtrl" 
+                            ng-model="servico.Estab_id" 
+                            ng-options="estabelecimento.Estab_id as estabelecimento.Nome_estab for estabelecimento in estabelecimentos"> 
+                        <option value="" disabled selected>Selecione uma opção</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="btnCadastrar" style="margin-top: 3%" class="form-group col-md-4 btn-primary">Cadastrar</button>
+                
+            </form>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript" charset="utf-8"> 
+    // Aplicar mascaras nas fields on load
+    $(document).ready(function(){
+        // Preço servico
+        $(".moeda").maskMoney();
+
+        // Mascara de tempo
+        $('.tempo').mask('99:99');
+
+        //Seta alerta como hide 
+        $("#alerta_hora").hide();
+    });
+
+    // Verifica se pode ser cancelado, se não puder, congela input de taxa de cancelamento
+    $('#cancelavel_flag').change(function() {
+        $('#taxa_cancelamento, #Enter_Text').prop('disabled', this.value == "N");
+    });
+
+    // Verifica se as horas estão corretas
+    $('#hora_disp_fim').blur(function()
+    {
+        var hora_fim = $("#hora_disp_fim").val();
+        var hora_inicio = $("#hora_disp_inicio").val();
+
+        var data_inicio = new Date("01-01-1990 " + hora_fim + ":00");
+        var data_fim = new Date("01-01-1990 " + hora_inicio + ":00");;
+
+        // Se a hora de inicio for maior do que a de fim
+        if(hora_inicio >= hora_fim) 
+        {
+            // Mostra alerta
+            $("#alerta_hora").show();
+            
+            // Desativa botão
+            $('#btnCadastrar').prop("disabled", true);
+        }
+        else
+        {
+            // Esconde alerta
+            $("#alerta_hora").hide();
+
+            // Ativa botão
+            $('#btnCadastrar').prop("disabled", false);
+        }
+
+
+    });    
+
+</script>

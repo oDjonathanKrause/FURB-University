@@ -1,0 +1,24 @@
+<link href="css/css.css" rel="stylesheet">
+
+
+
+<ion-view view-title="Servicos Agendados">
+  <ion-content>
+      <div class = "container">
+        <div class="wrapper">
+          <h3 style="margin-top: 15%">Serviços agendados em nome de: {{primeiroNome}}</h3>
+          <hr class="colorgraph"><br>
+
+          <ion-list>  
+            <ion-item ng-repeat="agendamento in agendamentos">
+                <p>Estabelecimento: {{agendamento.Estab_id}}</p>
+                <p>Serviço: {{agendamento.Nome_servico}}</p>
+                <p>Dia: {{agendamento.Dia_inicio_exibicao}}</p>
+                <p>Hora: {{agendamento.Hora_inicio}}</p>
+                <p>Preco: R$ {{agendamento.Preco_servico}}</p>
+            </ion-item>
+        </ion-list>
+       </div>
+      </div>
+  </ion-content>
+</ion-view>

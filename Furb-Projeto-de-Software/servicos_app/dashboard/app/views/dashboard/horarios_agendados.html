@@ -1,0 +1,83 @@
+<div>
+	<a ui-sref="principal" class="pull-right btn btn-primary btn-outline btn-rounded">Ir para Principal</a>
+	<h2>Horários Agendados <small></small></h2>
+	<!--span class="glyphicon glyphicon-dashboard bg-fade"></span-->
+	<div class="jumbotron">
+		<div class="container" ng-controller="ServicosAgendadosPageCtrl">
+			<h4>Escolha o estabelecimento</h4>
+
+            <!-- Combobox -->            
+            <div class="row">
+            <div class="dropdown" >
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdown_estabelecimentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Estabelecimentos
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdown_estabelecimentos" >
+                    <li>
+                        <a ng-repeat="estab in listaDeEstabelecimentos" ng-click="passEstab(estab.Estab_id)">
+                          {{estab.Nome_estab}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+            <!-- Combobox -->            
+            <div class="row">
+            <div class="dropdown" >
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdown_status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Status Serviço
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdown_status" >
+                    <li>
+                        <a ng-repeat="status in listaDeStatus" ng-click="passdata(status)">
+                          {{status}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Serviço</th>
+                        <th>Dia/Hora início</th>
+                        <th>Dia/Hora Fim</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Funcionário</th>
+                        <th>Concluir</th>
+                        <th>Cancelar</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="servico in listaDeAgendamentos">
+                    <tr>
+                        <td>{{servico.Nome_servico}}</td>
+                        <td>{{servico.Dia_inicio | date: 'dd/MM/yyyy' }} às {{servico.Hora_inicio}} </td>
+                        <td>{{servico.Dia_fim | date: 'dd/MM/yyyy' }} às {{servico.Hora_fim}} </td>
+                        <td>R${{servico.Preco_servico}}</td>
+                        <td> 
+                            <span ng-if="servico.Status_servico == 'C'">Concluído</span>
+                            <span ng-if="servico.Status_servico == 'A'">Agendado</span>
+                            <span ng-if="servico.Status_servico == 'P'">Pendente</span>
+                            <span ng-if="servico.Status_servico == 'X'">Cancelado</span>  
+                        </td>
+                        <td>{{servico.Nome_funcionario}}</td>
+                        <td> <button ng-click="concluirServico(servico.Hora_servico_id)" class="form-group btn-primary">Concluir</button> </td>
+                        <td><button type="button" ng-click="cancelarServico(servico.Hora_servico_id)" id="btnCancelar" class="form-group btn-primary">Cancelar</td>
+                    </tr>
+                    </tbody>
+                </table>
+                    
+                    <!-- Caso a lista estiver vazia -->
+                    <h5 ng-hide="listaDeAgendamentos.length > 0">Escolha um estabelecimento e um serviço</h5>
+            </div>
+        </div>
+            
+	</div>
+</div>
+</div>
