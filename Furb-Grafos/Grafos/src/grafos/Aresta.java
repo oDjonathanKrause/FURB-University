@@ -8,38 +8,63 @@ import java.util.List;
  */
 public class Aresta
 {
-    private String nome;
-    private List<Vertice> vertices;
 
-    // Contrutores
-    public Aresta()
-    {   }
+    private String rotulo;
+    private float valor;
+    private Vertice verticeOrigem, verticeDestino;
 
-    public Aresta(String nome)
+    // Contrutor
+    public Aresta(String rotulo, float valor, Vertice verticeOrigem, Vertice verticeDestino)
     {
-        this.nome = nome;
+        this.rotulo = rotulo;
+        this.valor = valor;
+        this.verticeDestino = verticeDestino;
+        this.verticeOrigem = verticeOrigem;
     }
+    
+    public Aresta() {}
+
     
     // Gets e sets
-    public String getNome()
+    public float getValor()
     {
-        return nome;
+        return valor;
     }
 
-    public void setNome(String nome)
+    public void setValor(float valor)
     {
-        this.nome = nome;
-    }    
-
-    public List<Vertice> getVertices()
-    {
-        return vertices;
-    }
-
-    public void setVertices(List<Vertice> vertices)
-    {
-        this.vertices = vertices;
+        this.valor = valor;
     }
     
-    
+
+    public String getRotulo()
+    {
+        return rotulo;
+    }
+
+    public void setRotulo(String rotulo)
+    {
+        this.rotulo = rotulo;
+    }
+
+    public Vertice getVerticeOrigem()
+    {
+        return verticeOrigem;
+    }
+
+    public void setVerticeOrigem(Vertice verticeOrigem)
+    {
+        this.verticeOrigem = verticeOrigem;
+    }
+
+    public Vertice getVerticeDestino()
+    {
+        return verticeDestino;
+    }
+
+    public void setVerticeDestino(Vertice verticeDestino)
+    {
+        this.verticeDestino = verticeDestino;
+    }
+
 }

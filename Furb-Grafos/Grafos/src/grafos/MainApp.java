@@ -3,6 +3,8 @@
  */
 package grafos;
 
+import buscas.Dijkstra;
+
 /**
  * 
  * @author Djonathan Krause
@@ -15,25 +17,36 @@ public class MainApp
      */
     public static void main(String[] args)
     {
-        Grafo grafo1 = new Grafo(3);
-
-        grafo1.addAresta(1, 2, "Ola");
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
+        
+        Grafo grafo1 = new Grafo();
+        grafo1.addAresta("aresta1", 2, v1, v2);
+        grafo1.addAresta("aresta2", 3, v1, v3);
+        grafo1.addAresta("aresta3", 7, v3, v4);
+        grafo1.addAresta("aresta4", 4, v2, v4);
+        
         System.out.println(grafo1.toString());
-        System.out.println("Completo? " + grafo1.isCompleto(grafo1.getMatrizAdjacencia()));
+        grafo1.getAdjacentes(v1);
+        
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.dijkstra(grafo1, v1);
    
-        Grafo grafoCompleto = new Grafo(2);
-        grafoCompleto.addAresta(1, 2, "Aresta1");
-        grafoCompleto.addAresta(2, 1, "Aresta2");
+      /*  Grafo grafoCompleto = new Grafo(2);
+        grafoCompleto.addAresta(1, 2, "Aresta1", 0);
+        grafoCompleto.addAresta(2, 1, "Aresta2", 0);
         System.out.println(grafoCompleto.toString());
-        System.out.println("Completo? " + grafoCompleto.isCompleto(grafoCompleto.getMatrizAdjacencia()));
- /*
+
         Grafo grafo2 = new Grafo(5);
-        grafo2.addAresta(1, 2);
-        grafo2.addAresta(1, 3);
-        grafo2.addAresta(1, 4);
-        grafo2.addAresta(1, 5);
-        System.out.println(grafo2.toString());
-*/
+        grafo2.addAresta(1, 2, "Aresta1", 0);
+        grafo2.addAresta(1, 3, "Aresta2", 0);
+        grafo2.addAresta(1, 4, "Aresta3", 0);
+        grafo2.addAresta(1, 5, "Aresta4", 0);
+        System.out.println(grafo2.toString());*/
+        
+        
     }
     
 }

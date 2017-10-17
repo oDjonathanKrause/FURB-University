@@ -3,6 +3,7 @@ package grafos;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -12,163 +13,117 @@ public class Grafo
 {
     private int qtdVertices;
     private int[][] matrizAdjacencia;
-    private List<Vertice> vertices = new ArrayList();
-    private List<Aresta> arestas = new ArrayList();
+    private List<Vertice> verticesGrafo = new ArrayList();
+    private List<Aresta> arestasGrafo = new ArrayList();
+    private Map<Integer, Integer> listaAdjacencia = new HashMap();
 
-    /**
-     * Contrutor do Grafo
-     * @param qtdV quantidades de vértices que o grafo tem
-     */
-    public Grafo(int qtdV)
-    {
-        qtdVertices = qtdV;
-        matrizAdjacencia = new int[qtdV][qtdV];
-        
-        for(int i = 0; i < qtdV; i++)
-        {
-            Vertice vertice = new Vertice(i, "v" + i++);
-            vertices.add(vertice);
-        }
-    }
-
-    /**
-     * Insere aresta entre dois vértices v1 e v2
-     * @param v1 vértice 1
-     * @param v2 vértice 2
-     * @param nomeAresta nome da aresta a ser inserida String
-     * @throws IllegalArgumentException 
-     */
-    public void addAresta(int v1, int v2, String nomeAresta) throws IllegalArgumentException
-    {
-        // Diminui 1 dos valores informados para tratar como array (começa do 0)
-        v1--;
-        v2--;
-        
-        if (v1 < 0 || v2 < 0)
-            throw new IllegalArgumentException("Índice menor do que o esperado");
-        if (v1 > qtdVertices || v2 > qtdVertices)
-            throw new IllegalArgumentException("Excede a quantidade de vértices permitidos");
-        
-        // Adiciona aresta na matriz de adjacência do grafo
-        matrizAdjacencia[v1][v2]++;
-        
-        Aresta aresta = new Aresta(nomeAresta);
-        List<Vertice> verticesAresta = new ArrayList();
-    }
+    public Grafo()
+    {    }
     
     /**
-     * Override do toString para printar a matriz de adjacência do grafo
-     * @return String com a matriz de adjacência
+     * Cria aresta entre dois vértices. Adiciona aresta na lista de arestasGrafo do grafo, e os vértices na lista de vértices.
+     * @param rotulo - Rótulo/nome da aresta
+     * @param valor - Valor/peso da aresta
+     * @param verticeOrigem - Vértice de origem
+     * @param verticeDestino - Vértice de destino
+     */    
+    public void addAresta(String rotulo, float valor, Vertice verticeOrigem, Vertice verticeDestino)
+    {
+        // Cria nova instância de aresta
+        Aresta aresta = new Aresta(rotulo, valor, verticeOrigem, verticeDestino);
+        
+        // Add aresta instanciada na lista de arestas do vértice de origem e destino
+        verticeOrigem.arestas.add(aresta);
+        verticeDestino.arestas.add(aresta);
+        
+        // Add aresta e vértices nas listas de arestas e vértices do grafo
+        arestasGrafo.add(aresta);
+        
+        if(!verticesGrafo.contains(verticeOrigem))
+            verticesGrafo.add(verticeOrigem);
+        if(!verticesGrafo.contains(verticeDestino))
+            verticesGrafo.add(verticeDestino);
+    }
+
+    /**
+     * Da override no toString() para printar todas as arestasGrafo e vértices do grafo
+     * @return String com o grafo no formato aresta: \n origem v1 | detino v2
      */
     @Override
     public String toString()
     {
-        StringBuilder retorno = new StringBuilder("Matriz de Adjacência:\n");
-
-        // Monta cabeçalho
-        retorno.append("\t");
-        for (int i = 0; i < qtdVertices; i++)
-            retorno.append(" " + (i + 1) + "\t");
-
-        // Pula linha
-        retorno.append("\n");
-
-        // Percorre as linhas
-        for (int linha = 0; linha < qtdVertices; linha++)
+        String grafoString = "";
+        
+        for(Aresta a : arestasGrafo)
+            grafoString += "aresta: " + a.getRotulo() + "\n origem: " + a.getVerticeOrigem().getRotulo() + " | destino: " + a.getVerticeDestino().getRotulo() + "\n";
+        
+        return grafoString;
+    }
+    
+    /**
+     * Verifica quais são os vértices adjacentes a v
+     * @param verticeAnalisado - Vértice onde os adjacentes serão retornados
+     * @return Lista com vértices adjacentes a v
+     */
+    public List<Vertice> getAdjacentes(Vertice verticeAnalisado)
+    {
+        List adjacentes = new ArrayList();
+        String adjacentesString = "Adjacentes a " + verticeAnalisado.getRotulo() + "\n ";
+        
+        // Percorre arestas do grafo
+        for(Aresta aresta : arestasGrafo)
         {
-            // Concatena nome da linha
-            retorno.append(linha + 1);
-            
-            // Percorre colunas da linha i
-            for (int coluna = 0; coluna < qtdVertices; coluna++)
-                retorno.append("\t[" + matrizAdjacencia[linha][coluna] + "]");
-
-            // Próxima linha
-            retorno.append("\n");
+            // Se a origem da aresta atual for igual ao vértice analisado, então o destino é adjacente a ele
+            if(aresta.getVerticeOrigem().equals(verticeAnalisado))
+            {
+                adjacentesString += aresta.getVerticeDestino().getRotulo() + " - ";
+                adjacentes.add(aresta.getVerticeDestino());
+            } 
+            // Se o destino da aresta atual for igual ao vértice analisado, então a origem é adjacente a ele
+            else if (aresta.getVerticeDestino().equals(verticeAnalisado))
+            {
+                adjacentesString += aresta.getVerticeOrigem().getRotulo() + " - ";
+                adjacentes.add(aresta.getVerticeOrigem());        
+            }
         }
         
-        retorno.append("\n");
-        return retorno.toString();
+        //System.out.println(adjacentesString);
+        return adjacentes;
     }
     
-     /**
-     * Verifica se o grafo é nulo. 
-     * Percorre a matriz de adjacência, se encontrar algum valor diferente de zero, não é nulo.
-     * @param matrizAdjacencia
-     * @return true se for nulo
+
+    
+    
+    
+    /**
+     * Se não houver nenhuma aresta no grafo, ele é nulo.
+     * @return true se o grafo for nulo.
      */
-    private boolean isNulo(int[][] matrizAdjacencia)
+    public boolean isNulo()
     {
-        // Se for dirigido, percorre a matriz toda
-        if(isDirigido(matrizAdjacencia))
-        {
-            for(int linha = 0; linha < matrizAdjacencia.length; linha++)
-                for(int coluna = 0; coluna < matrizAdjacencia[linha].length; coluna++)
-                    // Se tiver algum relacionamento, não é nulo
-                    if(matrizAdjacencia[linha][coluna] != 0)
-                        return false;
-        }
-        // Se não for dirigido, percorre apenas uma diagonal da matriz de adjacência 
-        else
-        {
-            for(int linha = 0; linha < matrizAdjacencia.length; linha++)
-                for(int coluna = linha; coluna < matrizAdjacencia[linha].length; coluna++)
-                    // Se tiver algum relacionamento, não é nulo
-                    if(matrizAdjacencia[linha][coluna] != 0)
-                        return false;
-        }
-        return true;
+        return arestasGrafo.isEmpty();
     }
     
     /**
-     * Verifica se um grafo é dirigido.
-     * Se as diagonais opostas forem iguais, é dirigido.
-     * Percorre e compara apenas uma diagonal da matriz de adjacência, desconsidera a diagonal principal (coluna = linha + 1)
-     * Se o valor linhaXcoluna for diferente do colunaXlinha, é dirigido
-     * @param matrizAdjacencia
-     * @return true se for dirigido
+     * Verifica a ordem do grafo, ou seja, a quantidade de vértices pertencentes a G.
+     * @return int com a ordem do grafo. 
      */
-    public boolean isDirigido(int[][] matrizAdjacencia)
+    public int getOrdem()
     {
-        for(int linha = 0; linha < matrizAdjacencia.length; linha++)
-            for(int coluna = linha + 1; coluna < matrizAdjacencia[linha].length; coluna++)
-                if(matrizAdjacencia[linha][coluna] != matrizAdjacencia[coluna][linha])
-                    return true;
-        return false;
+        return verticesGrafo.size();
     }
     
     /**
-     * Verifica se o grafo é completo.
-     * Caso algum vértice tiver o valor 0, este vértice não tem relacionamento, então não é completo
-     * @param matrizAdjacencia
-     * @return true se for completo
+     * Verifica o tamanho do grafo, ou seja, a quantidade de arestasGrafo pertencentes a G
+     * @return int com o tamanho do grafo.
      */
-    public boolean isCompleto(int[][] matrizAdjacencia)
+    public int getTamanho()
     {
-        // Se for dirigido, percorre a matriz inteira
-        if(isDirigido(matrizAdjacencia))
-        {
-            for(int linha = 0; linha < matrizAdjacencia.length; linha++)
-                for(int coluna = 0; coluna < matrizAdjacencia[linha].length; coluna++)
-                    // Se não estiver na diagonal principal
-                    if(linha != coluna)
-                        // Se não tiver o relacionamento, não é completo
-                        if(matrizAdjacencia[linha][coluna] == 0)
-                            return false;
-        }
-        // Se não for dirigido, percorre apenas uma diagonal da matriz de adjacência 
-        // Desconsidera a diagonal principal, por isso o coluna = linha + 1 no for
-        else
-        {
-            for(int linha = 0; linha < matrizAdjacencia.length; linha++)
-                for(int coluna = linha + 1; coluna < matrizAdjacencia[linha].length; coluna++)
-                    // Se não tiver o relacionamento, não é completo
-                    if(matrizAdjacencia[linha][coluna] == 0)
-                        return false;
-        }
-        return true;
+        return arestasGrafo.size();
     }
 
+
+    
     // Gets e sets
     public int getQtdVertices()
     {
@@ -192,23 +147,36 @@ public class Grafo
 
     public List<Vertice> getVertices()
     {
-        return vertices;
+        return verticesGrafo;
     }
 
     public void setVertices(List<Vertice> vertices)
     {
-        this.vertices = vertices;
+        this.verticesGrafo = vertices;
     }
 
     public List<Aresta> getArestas()
     {
-        return arestas;
+        return arestasGrafo;
     }
 
     public void setArestas(List<Aresta> arestas)
     {
-        this.arestas = arestas;
+        this.arestasGrafo = arestas;
     }
+
+    public Map<Integer, Integer> getListaAdjacencia()
+    {
+        return listaAdjacencia;
+    }
+
+    public void setListaAdjacencia(Map<Integer, Integer> listaAdjacencia)
+    {
+        this.listaAdjacencia = listaAdjacencia;
+    }
+    
+
+    
     
     
 }
