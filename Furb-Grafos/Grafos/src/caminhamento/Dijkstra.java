@@ -1,4 +1,4 @@
-package buscas;
+package caminhamento;
 
 import grafos.*;
 import java.util.ArrayList;
@@ -14,6 +14,35 @@ public class Dijkstra
     private static final int INFINITO = Integer.MAX_VALUE;
     private List<Vertice> s = new ArrayList();
     private List<Vertice> q = new ArrayList();
+    private Vertice destino;
+    private StringBuilder paiPrint = new StringBuilder();
+    private StringBuilder dPrint = new StringBuilder();
+    private StringBuilder cabecalhoPrint = new StringBuilder();
+
+    /**
+     * Contrutor do Dijsktra. Se o destino for nulo, aplica o algoritmo em todos os vétices do Grafo.
+     * Se o destino for especificado, executa até chegar no vértice.
+     * @param grafo Grafo.
+     * @param origem Vértice de origem.
+     * @param destino Vértice de destino. Pode ser nulo.
+     */
+    public Dijkstra(Grafo grafo, Vertice origem, Vertice destino) 
+    {
+        if(grafo.getOrdem() == 0)
+            throw new IllegalArgumentException("O grafo precisa ser populado");
+        
+        // Se tiver um destino, seta ele no atributo
+        if(destino != null)
+            this.destino = destino;
+        else this.destino = null;
+        
+        // Seta valores para printar matriz de roteamento
+        paiPrint.append("pai:\t");
+        dPrint.append("d:\t");
+
+        // Executa o dijkstra
+        dijkstra(grafo, origem);
+    }
     
     /**
      * Inicializa o grafo para aplicar o dijkstra.
@@ -40,6 +69,8 @@ public class Dijkstra
         }
 
         origem.setDistancia(0);
+        paiPrint.append("nil\t");
+        dPrint.append("0\t");
     }
     
     /**
@@ -67,6 +98,18 @@ public class Dijkstra
         {
             // Pega o vértice não explorado com menor distância
             Vertice u = extractMin(q);
+            
+            // Concatena o vértice no cabeçalho para printar
+            cabecalhoPrint.append(u.getRotulo() + "\t");
+            
+            // Se tiver um destino determinado e o vértice u for ele
+            if(this.destino != null)
+                if(u.equals(this.destino))
+                {
+                    // Limpa q e para o loop
+                    q.clear();
+                    break;
+                }
             
             // Seta o vértice na lista dos explorados e altera o status dele
             s.add(u);
@@ -98,19 +141,21 @@ public class Dijkstra
         Aresta arestaUV = u.getArestaPorVertices(v);
         float wuv = arestaUV.getValor();
         
-        System.out.println("d(" + v.getRotulo() +"): " + v.getDistancia());
-        System.out.println("d("+ u.getRotulo() + "): " + u.getDistancia());
-        System.out.println("w("+ u.getRotulo() + "," + v.getRotulo() + "): " + wuv + "");
-        
         // Se a distância do vérice adjacente for maior do que a distância de u + o vértice que leva até v
+        //  Atualiza a distância dele
         if(v.getDistancia() > (u.getDistancia() + wuv))
         {
-            System.out.println("Seta pai de " + v.getRotulo() + " = " + u.getRotulo());
-            System.out.println("Distancia " + u.getRotulo() + "->" + v.getRotulo() + " = " + wuv);
+            // Seta valores para printar matriz de roteamento
+            paiPrint.append(u.getRotulo() + "\t");
+            dPrint.append(u.getDistancia() + wuv + "\t");
+            
+            // Atualiza valores do vértice
             v.setDistancia(u.getDistancia() + wuv);
             v.setPai(u);
         }
-        System.out.println("ACABO O RELAX MANO DE " + v.getRotulo() + " \n");
+        
+        //if(v.equals(VerticeBunitoQueQueroChegar))
+          //  para aqui pq já deu boa
     }
     
     /**
@@ -120,10 +165,15 @@ public class Dijkstra
      */
     private Vertice extractMin(List<Vertice> q)
     {
-        System.out.println("MIN: " + Collections.min(q).getRotulo());
         return Collections.min(q);
     }
 
-    
+    public void print()
+    {
+        System.out.println("\n\t" + cabecalhoPrint);
+        System.out.println(paiPrint);
+        System.out.println(dPrint);
+        
+    }
 
 }

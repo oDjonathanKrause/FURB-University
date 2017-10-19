@@ -1,9 +1,7 @@
 package grafos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -11,11 +9,10 @@ import java.util.Map;
  */
 public class Grafo
 {
-    private int qtdVertices;
     private int[][] matrizAdjacencia;
+    private boolean isDirigido = false;
     private List<Vertice> verticesGrafo = new ArrayList();
     private List<Aresta> arestasGrafo = new ArrayList();
-    private Map<Integer, Integer> listaAdjacencia = new HashMap();
 
     public Grafo()
     {    }
@@ -52,10 +49,10 @@ public class Grafo
     @Override
     public String toString()
     {
-        String grafoString = "";
+        String grafoString = "Grafo: \n";
         
         for(Aresta a : arestasGrafo)
-            grafoString += "aresta: " + a.getRotulo() + "\n origem: " + a.getVerticeOrigem().getRotulo() + " | destino: " + a.getVerticeDestino().getRotulo() + "\n";
+            grafoString += "(" + a.getVerticeOrigem().getRotulo() + ", " + a.getVerticeDestino().getRotulo() + ")\n";
         
         return grafoString;
     }
@@ -87,13 +84,30 @@ public class Grafo
             }
         }
         
-        //System.out.println(adjacentesString);
+        System.out.println(adjacentesString);
         return adjacentes;
     }
     
+    /**
+     * Imprime a lista de adjacência de cada vértice do grafo
+     * @return Lista com vértices adjacentes a v
+     */
+    public String printListaAdjacencia()
+    {
+        String adjacentesString = "";
+            
+        for(Vertice vertice : verticesGrafo)
+        {
+            // Concatena o nome do vértice atual
+            adjacentesString += "\n" + vertice.getRotulo() + ": ";
+            
+            // Percorre todos os adjacentes do atual e concatena
+            for(Vertice vAdj : vertice.getAdjacentes())
+                adjacentesString += vAdj.getRotulo() + " - ";
+        }
 
-    
-    
+        return adjacentesString;
+    }
     
     /**
      * Se não houver nenhuma aresta no grafo, ele é nulo.
@@ -125,16 +139,6 @@ public class Grafo
 
     
     // Gets e sets
-    public int getQtdVertices()
-    {
-        return qtdVertices;
-    }
-
-    public void setQtdVertices(int qtdVertices)
-    {
-        this.qtdVertices = qtdVertices;
-    }
-
     public int[][] getMatrizAdjacencia()
     {
         return matrizAdjacencia;
@@ -165,18 +169,4 @@ public class Grafo
         this.arestasGrafo = arestas;
     }
 
-    public Map<Integer, Integer> getListaAdjacencia()
-    {
-        return listaAdjacencia;
-    }
-
-    public void setListaAdjacencia(Map<Integer, Integer> listaAdjacencia)
-    {
-        this.listaAdjacencia = listaAdjacencia;
-    }
-    
-
-    
-    
-    
 }

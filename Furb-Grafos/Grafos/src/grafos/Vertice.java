@@ -1,7 +1,6 @@
 package grafos;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -20,14 +19,23 @@ public class Vertice implements Comparable<Vertice>
         this.rotulo = rotuloVertice;
     }
     
+    public Vertice() { }
+    
+    /**
+     * Verifica quais são os vértices adjacentes a this
+     * @return List de vértices adjacentes
+     */
     public List<Vertice> getAdjacentes()
     {
         List<Vertice> verticesAdjacentes = new ArrayList();
         
+        // Percorre todas as arestas do vértice
         for(Aresta aresta : arestas)
         {
+            // Se a origem da aresta atual for this, add o vértice de destino na lista
             if(aresta.getVerticeOrigem().equals(this))
                 verticesAdjacentes.add(aresta.getVerticeDestino());
+            // Se o destino da aresta atual for this, add o vértice de origem na lista
             else if(aresta.getVerticeDestino().equals(this))
                 verticesAdjacentes.add(aresta.getVerticeOrigem());
         }
@@ -35,6 +43,11 @@ public class Vertice implements Comparable<Vertice>
         return  verticesAdjacentes;
     }
 
+    /**
+     * Dado o vértice this, verifica quais são as arestas até o destino
+     * @param vertice vértice de destino
+     * @return Aresta entre this e vertice de destino (param vertice)
+     */
     public Aresta getArestaPorVertices(Vertice vertice)
     {
         for(Aresta aresta : arestas)
@@ -44,12 +57,15 @@ public class Vertice implements Comparable<Vertice>
             else if(aresta.getVerticeDestino().equals(this) && aresta.getVerticeOrigem().equals(vertice))
                 return aresta;
         }
-        System.out.println("NULLAO");
+
         return null;
     }
 
-    public Vertice() { }
-    
+    /**
+     * Override do compareTo para utilização do Collections.min().
+     * @param v - vértice analisado.
+     * @return 1 se this tem menor distância, -1 se não, 0 se for igual.
+     */
     @Override
     public int compareTo(Vertice v) 
     {
@@ -66,7 +82,6 @@ public class Vertice implements Comparable<Vertice>
     {
         this.rotulo = rotulo;
     }
-
 
     public Vertice getPai() {
         return pai;
@@ -99,11 +114,4 @@ public class Vertice implements Comparable<Vertice>
     public void setArestas(List<Aresta> arestas) {
         this.arestas = arestas;
     }
-
- 
-
-
-    
-
-    
 }

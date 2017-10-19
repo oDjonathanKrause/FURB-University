@@ -3,7 +3,7 @@
  */
 package grafos;
 
-import buscas.Dijkstra;
+import caminhamento.Dijkstra;
 
 /**
  * 
@@ -24,16 +24,18 @@ public class MainApp
         
         Grafo grafo1 = new Grafo();
         grafo1.addAresta("aresta1", 2, v1, v2);
-        grafo1.addAresta("aresta2", 3, v1, v3);
+        grafo1.addAresta("aresta2", 5, v1, v3);
         grafo1.addAresta("aresta3", 7, v3, v4);
         grafo1.addAresta("aresta4", 4, v2, v4);
         
-        System.out.println(grafo1.toString());
-        grafo1.getAdjacentes(v1);
         
-        Dijkstra dijkstra = new Dijkstra();
-        dijkstra.dijkstra(grafo1, v1);
-   
+        System.out.println(grafo1.toString());
+        System.out.println("Lista de Adjacência:" + grafo1.printListaAdjacencia());
+        
+        Dijkstra dijkstra = new Dijkstra(grafo1, v1, v4);
+        System.out.print("\nMatriz Roteamento Dijkstra:");
+        dijkstra.print();
+        
       /*  Grafo grafoCompleto = new Grafo(2);
         grafoCompleto.addAresta(1, 2, "Aresta1", 0);
         grafoCompleto.addAresta(2, 1, "Aresta2", 0);
