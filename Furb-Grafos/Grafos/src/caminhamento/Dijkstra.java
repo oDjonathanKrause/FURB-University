@@ -3,7 +3,10 @@ package caminhamento;
 import grafos.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -15,6 +18,8 @@ public class Dijkstra
     private List<Vertice> s = new ArrayList();
     private List<Vertice> q = new ArrayList();
     private Vertice destino;
+    private static final Vertice nil = new Vertice("nil");
+
     private StringBuilder paiPrint = new StringBuilder();
     private StringBuilder dPrint = new StringBuilder();
     private StringBuilder cabecalhoPrint = new StringBuilder();
@@ -34,12 +39,13 @@ public class Dijkstra
         // Se tiver um destino, seta ele no atributo
         if(destino != null)
             this.destino = destino;
-        else this.destino = null;
+        else 
+            this.destino = null;
         
         // Seta valores para printar matriz de roteamento
         paiPrint.append("pai:\t");
         dPrint.append("d:\t");
-
+        
         // Executa o dijkstra
         dijkstra(grafo, origem);
     }
@@ -64,7 +70,7 @@ public class Dijkstra
         {
             vertice.setDistancia(INFINITO);
             vertice.setStatus("ABERTO");
-            vertice.setPai(null);
+            vertice.setPai(nil);
             q.add(vertice);
         }
 
@@ -102,7 +108,7 @@ public class Dijkstra
             // Concatena o vértice no cabeçalho para printar
             cabecalhoPrint.append(u.getRotulo() + "\t");
             
-            // Se tiver um destino determinado e o vértice u for ele
+            // Para o loop se tiver um destino determinado e o vértice u for ele
             if(this.destino != null)
                 if(u.equals(this.destino))
                 {
@@ -123,6 +129,8 @@ public class Dijkstra
                 if(!v.getStatus().equals("EXPLORADO"))
                     relax(u, v);
         }
+        
+        //setMatrizRoteamento(grafo);
     }
     
     /**
@@ -153,13 +161,10 @@ public class Dijkstra
             v.setDistancia(u.getDistancia() + wuv);
             v.setPai(u);
         }
-        
-        //if(v.equals(VerticeBunitoQueQueroChegar))
-          //  para aqui pq já deu boa
     }
     
     /**
-     * Utiliza stream na lista q para verificar qual o vértice com menor distância
+     * Utiliza stream na lista q para verificar qual o vértice com menor distância.
      * @param q - lista de vértices não fechados
      * @return Vértice não explorado com menor distância
      */
@@ -167,13 +172,29 @@ public class Dijkstra
     {
         return Collections.min(q);
     }
-
-    public void print()
+    
+    /**
+     * Printa a matriz de roteamento do dijkstra.
+     */
+    public void getMatrizRoteamento()
     {
         System.out.println("\n\t" + cabecalhoPrint);
         System.out.println(paiPrint);
         System.out.println(dPrint);
         
     }
+    
+    private void setMatrizRoteamento(Grafo grafo) 
+    {
+        for(Vertice v : grafo.getVertices())
+        {
+            cabecalhoPrint.append(v.getRotulo() + "\t");
+            paiPrint.append(v.getPai().getRotulo() + "\t");
+            dPrint.append(v.getDistancia() + "\t");
+        }
+    }
+
+    
+    public Dijkstra(){}
 
 }

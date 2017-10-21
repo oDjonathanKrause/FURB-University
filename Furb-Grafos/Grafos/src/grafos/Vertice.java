@@ -10,16 +10,15 @@ import java.util.List;
 public class Vertice implements Comparable<Vertice>
 {
     private float distancia;
-    private String rotulo, Status;
+    private String rotulo, status;
     private Vertice pai;
     public List<Aresta> arestas = new ArrayList();
 
+    // Construtor
     public Vertice(String rotuloVertice)
     {
         this.rotulo = rotuloVertice;
     }
-    
-    public Vertice() { }
     
     /**
      * Verifica quais são os vértices adjacentes a this
@@ -92,11 +91,11 @@ public class Vertice implements Comparable<Vertice>
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String Status) {
-        this.Status = Status;
+        this.status = Status;
     }
 
     public float getDistancia() {
