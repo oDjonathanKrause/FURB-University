@@ -58,37 +58,6 @@ public class Grafo
     }
     
     /**
-     * Verifica quais são os vértices adjacentes a v
-     * @param verticeAnalisado - Vértice onde os adjacentes serão retornados
-     * @return Lista com vértices adjacentes a v
-     */
-    public List<Vertice> getAdjacentes(Vertice verticeAnalisado)
-    {
-        List adjacentes = new ArrayList();
-        String adjacentesString = "Adjacentes a " + verticeAnalisado.getRotulo() + "\n ";
-        
-        // Percorre arestas do grafo
-        for(Aresta aresta : arestasGrafo)
-        {
-            // Se a origem da aresta atual for igual ao vértice analisado, então o destino é adjacente a ele
-            if(aresta.getVerticeOrigem().equals(verticeAnalisado))
-            {
-                adjacentesString += aresta.getVerticeDestino().getRotulo() + " - ";
-                adjacentes.add(aresta.getVerticeDestino());
-            } 
-            // Se o destino da aresta atual for igual ao vértice analisado, então a origem é adjacente a ele
-            else if (aresta.getVerticeDestino().equals(verticeAnalisado))
-            {
-                adjacentesString += aresta.getVerticeOrigem().getRotulo() + " - ";
-                adjacentes.add(aresta.getVerticeOrigem());        
-            }
-        }
-        
-        System.out.println(adjacentesString);
-        return adjacentes;
-    }
-    
-    /**
      * Imprime a lista de adjacência de cada vértice do grafo
      * @return Lista com vértices adjacentes a v
      */
@@ -136,8 +105,6 @@ public class Grafo
         return arestasGrafo.size();
     }
 
-
-    
     // Gets e sets
     public int[][] getMatrizAdjacencia()
     {

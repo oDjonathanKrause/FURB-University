@@ -3,10 +3,7 @@ package caminhamento;
 import grafos.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -19,10 +16,7 @@ public class Dijkstra
     private List<Vertice> q = new ArrayList();
     private Vertice destino;
     private static final Vertice nil = new Vertice("nil");
-
-    private StringBuilder paiPrint = new StringBuilder();
-    private StringBuilder dPrint = new StringBuilder();
-    private StringBuilder cabecalhoPrint = new StringBuilder();
+    private String paiMatriz = "", dMatriz = "", cabecalhoMatriz = "";
 
     /**
      * Contrutor do Dijsktra. Se o destino for nulo, aplica o algoritmo em todos os vétices do Grafo.
@@ -41,10 +35,6 @@ public class Dijkstra
             this.destino = destino;
         else 
             this.destino = null;
-        
-        // Seta valores para printar matriz de roteamento
-        paiPrint.append("pai:\t");
-        dPrint.append("d:\t");
         
         // Executa o dijkstra
         dijkstra(grafo, origem);
@@ -74,9 +64,8 @@ public class Dijkstra
             q.add(vertice);
         }
 
+        // Origem inicia com a distância 0
         origem.setDistancia(0);
-        paiPrint.append("nil\t");
-        dPrint.append("0\t");
     }
     
     /**
@@ -105,9 +94,6 @@ public class Dijkstra
             // Pega o vértice não explorado com menor distância
             Vertice u = extractMin(q);
             
-            // Concatena o vértice no cabeçalho para printar
-            cabecalhoPrint.append(u.getRotulo() + "\t");
-            
             // Para o loop se tiver um destino determinado e o vértice u for ele
             if(this.destino != null)
                 if(u.equals(this.destino))
@@ -130,7 +116,8 @@ public class Dijkstra
                     relax(u, v);
         }
         
-        //setMatrizRoteamento(grafo);
+        // Monta matriz de roteamento
+        setMatrizRoteamento(grafo);
     }
     
     /**
@@ -153,10 +140,6 @@ public class Dijkstra
         //  Atualiza a distância dele
         if(v.getDistancia() > (u.getDistancia() + wuv))
         {
-            // Seta valores para printar matriz de roteamento
-            paiPrint.append(u.getRotulo() + "\t");
-            dPrint.append(u.getDistancia() + wuv + "\t");
-            
             // Atualiza valores do vértice
             v.setDistancia(u.getDistancia() + wuv);
             v.setPai(u);
@@ -178,23 +161,39 @@ public class Dijkstra
      */
     public void getMatrizRoteamento()
     {
-        System.out.println("\n\t" + cabecalhoPrint);
-        System.out.println(paiPrint);
-        System.out.println(dPrint);
-        
-    }
-    
-    private void setMatrizRoteamento(Grafo grafo) 
-    {
-        for(Vertice v : grafo.getVertices())
-        {
-            cabecalhoPrint.append(v.getRotulo() + "\t");
-            paiPrint.append(v.getPai().getRotulo() + "\t");
-            dPrint.append(v.getDistancia() + "\t");
-        }
+        System.out.println("\n\t" + cabecalhoMatriz);
+        System.out.println("pai:\t" + paiMatriz);
+        System.out.println("d:\t" + dMatriz);
     }
 
+    /**
+     * Monta a matriz de roteamento do grafo após aplicar o Dijsktra.
+     * @param grafo - Grafo que o dijkstra foi aplicado.
+     */
+    public void setMatrizRoteamento(Grafo grafo) 
+    {
+        cabecalhoMatriz = "";
+        paiMatriz = "";
+        dMatriz = "";
+        
+        for(Vertice v : grafo.getVertices())
+        {
+            if(v.getDistancia() == INFINITO)
+            {
+                cabecalhoMatriz += v.getRotulo() + "\t";
+                dMatriz += "- \t";
+                paiMatriz += "- \t";
+            }
+            else
+            {
+                cabecalhoMatriz += v.getRotulo() + "\t";
+                paiMatriz += v.getPai().getRotulo() + "\t";
+                dMatriz += v.getDistancia() + "\t";
+            }
+        }
+    }
     
+    // Construtor vazio.
     public Dijkstra(){}
 
 }
