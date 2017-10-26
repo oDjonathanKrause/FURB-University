@@ -1,6 +1,8 @@
 package caminhamento;
 
 import grafos.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Dijkstra
     private Vertice destino;
     private static final Vertice nil = new Vertice("nil");
     private String paiMatriz = "", dMatriz = "", cabecalhoMatriz = "";
+    private Duration tempoExecucao;
 
     /**
      * Contrutor do Dijsktra. Se o destino for nulo, aplica o algoritmo em todos os vétices do Grafo.
@@ -35,9 +38,16 @@ public class Dijkstra
             this.destino = destino;
         else 
             this.destino = null;
+    
+        // Starta o time para verificar o tempo de execução
+        Instant start = Instant.now(); 
         
         // Executa o dijkstra
         dijkstra(grafo, origem);
+        
+        // Para o timer
+        Instant end = Instant.now(); 
+        tempoExecucao = Duration.between(start, end);
     }
     
     /**
@@ -111,7 +121,7 @@ public class Dijkstra
             q.remove(u);
             
             // Relaxa cada vértice não explorado adjacente a v
-            for(Vertice v : u.getAdjacentes())
+            for(Vertice v : u.getAdjacentes(grafo.isDirigido()))
                 if(!v.getStatus().equals("EXPLORADO"))
                     relax(u, v);
         }
@@ -196,4 +206,10 @@ public class Dijkstra
     // Construtor vazio.
     public Dijkstra(){}
 
+    public Duration getTempoExecucao()
+    {
+        return tempoExecucao;
+    }
+
+    
 }

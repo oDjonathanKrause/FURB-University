@@ -10,36 +10,40 @@ import java.util.List;
 public class Vertice implements Comparable<Vertice>
 {
     private float distancia;
+    private int grau;
     private String rotulo, status;
     private Vertice pai;
-    public List<Aresta> arestas = new ArrayList();
+    public List<Aresta> arestas;
+    List<Vertice> verticesAdjacentes;
 
     // Construtor
     public Vertice(String rotuloVertice)
     {
         this.rotulo = rotuloVertice;
+        this.verticesAdjacentes = new ArrayList();
+        this.arestas = new ArrayList();
     }
     
     /**
-     * Verifica quais são os vértices adjacentes a this
+     * Verifica quais são os vértices adjacentes a this.
+     * A tratativa é diferente caso o grafo for dirigido. Se for dirigido, não entra no segundo if.
+     * @param isDirigido - Parâmetro que informa se o grafo é ou não dirigido.
      * @return List de vértices adjacentes
      */
-    public List<Vertice> getAdjacentes()
+    public List<Vertice> getAdjacentes(boolean isDirigido)
     {
-        List<Vertice> verticesAdjacentes = new ArrayList();
-        
         // Percorre todas as arestas do vértice
         for(Aresta aresta : arestas)
         {
             // Se a origem da aresta atual for this, add o vértice de destino na lista
             if(aresta.getVerticeOrigem().equals(this))
                 verticesAdjacentes.add(aresta.getVerticeDestino());
-            // Se o destino da aresta atual for this, add o vértice de origem na lista
-            else if(aresta.getVerticeDestino().equals(this))
+            // Se o destino da aresta atual for this e o grafo não for dirigido, add o vértice de origem na lista
+            else if(!isDirigido && aresta.getVerticeDestino().equals(this))
                 verticesAdjacentes.add(aresta.getVerticeOrigem());
         }
-        
-        return  verticesAdjacentes;
+
+        return verticesAdjacentes;
     }
 
     /**
@@ -112,5 +116,15 @@ public class Vertice implements Comparable<Vertice>
 
     public void setArestas(List<Aresta> arestas) {
         this.arestas = arestas;
+    }
+
+    public int getGrau()
+    {
+        return grau;
+    }
+
+    public void setGrau(int grau)
+    {
+        this.grau = grau;
     }
 }

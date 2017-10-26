@@ -4,7 +4,6 @@
 package grafos;
 
 import caminhamento.Dijkstra;
-
 /**
  * 
  * @author Djonathan Krause
@@ -21,11 +20,11 @@ public class MainApp
         grafo1();
         grafo2();
         grafo3();
+        grafo4();
     }
     
     static void grafo1()
     {
-        System.out.println("Grafo 1");
         System.out.println(LINHA);
         
         Vertice v1 = new Vertice("v1");
@@ -34,22 +33,25 @@ public class MainApp
         Vertice v4 = new Vertice("v4");
         Vertice v5 = new Vertice("v5");
         
-        Grafo grafo1 = new Grafo();
+        Grafo grafo1 = new Grafo(false);
         grafo1.addAresta("aresta1", 2, v1, v2);
         grafo1.addAresta("aresta2", 5, v1, v3);
         grafo1.addAresta("aresta3", 7, v3, v4);
         grafo1.addAresta("aresta4", 4, v2, v4);
         grafo1.addAresta("aresta5", 3, v4, v5);
         
+        System.out.println("Grafo 1");
         System.out.println(grafo1.toString());
+        
         System.out.println("Lista de Adjacência:" + grafo1.printListaAdjacencia());
         
         Dijkstra dijkstra = new Dijkstra(grafo1, v1, v4);
-        System.out.print("\nMatriz Roteamento Dijkstra de v1 -> v4:");
+        System.out.println("\nTempo de execução do Dijkstra de v1 -> v4: " + dijkstra.getTempoExecucao().getSeconds() + " segundos." + "\nMatriz Roteamento do Dijkstra");
         dijkstra.getMatrizRoteamento();
         
         dijkstra = new Dijkstra(grafo1, v1, null);
         System.out.print("\nMatriz Roteamento Dijkstra a partir de v1:");
+        System.out.println("\nTempo de execução do Dijkstra a partir de v1: " + dijkstra.getTempoExecucao().getSeconds() + " segundos." + "\nMatriz Roteamento do Dijkstra:");
         dijkstra.getMatrizRoteamento();
         
         System.out.println(LINHA);
@@ -57,7 +59,7 @@ public class MainApp
     
     static void grafo2()
     {
-        Grafo grafo2 = new Grafo();
+        Grafo grafo2 = new Grafo(false);
         Vertice v1 = new Vertice("v1");
         Vertice v2 = new Vertice("v2");
         Vertice v3 = new Vertice("v3");
@@ -83,7 +85,7 @@ public class MainApp
         System.out.println("Lista de Adjacência:" + grafo2.printListaAdjacencia());
         
         Dijkstra dijkstra = new Dijkstra(grafo2, v1, null);
-        System.out.print("\nMatriz Roteamento Dijkstra a partir de v1:");
+        System.out.println("\nTempo de execução do Dijkstra: " + dijkstra.getTempoExecucao().getSeconds() + " segundos." + "\nMatriz Roteamento Dijkstra a partir de v1:");
         dijkstra.getMatrizRoteamento();
         
         System.out.println(LINHA);
@@ -93,7 +95,7 @@ public class MainApp
     
     static void grafo3()
     {
-        Grafo grafo3 = new Grafo();
+        Grafo grafo3 = new Grafo(false);
         Vertice v1 = new Vertice("v1");
         Vertice v2 = new Vertice("v2");
         Vertice v3 = new Vertice("v3");
@@ -117,9 +119,20 @@ public class MainApp
         System.out.println("Lista de Adjacência:" + grafo3.printListaAdjacencia());
         
         Dijkstra dijkstra = new Dijkstra(grafo3, v1, null);
-        System.out.print("\nMatriz Roteamento Dijkstra a partir de v1:");
+        System.out.println("\nTempo de execução do Dijkstra: " + dijkstra.getTempoExecucao().getSeconds() + " segundos."
+                + "\nMatriz Roteamento Dijkstra a partir de v1:");
         dijkstra.getMatrizRoteamento();
         
         System.out.println(LINHA);
+    }
+    
+    static void grafo4()
+    {
+        Grafo grafo4 = new Grafo(true);
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        
+        grafo4.addAresta("a1", 12, v1, v2);
+        System.out.println(grafo4.printListaAdjacencia());
     }
 }

@@ -10,12 +10,18 @@ import java.util.List;
 public class Grafo
 {
     private int[][] matrizAdjacencia;
-    private boolean isDirigido = false;
+    private boolean isDirigido;
     private List<Vertice> verticesGrafo = new ArrayList();
     private List<Aresta> arestasGrafo = new ArrayList();
 
-    public Grafo()
-    {    }
+    /**
+     * Construtor seta apenas a flag para determinar se o grafo é dirigido ou não.
+     * @param isDirigido true se for dirigido.
+     */
+    public Grafo(boolean isDirigido)
+    {
+        this.isDirigido = isDirigido;
+    }
     
     /**
      * Cria aresta entre dois vértices. Adiciona aresta na lista de arestasGrafo do grafo, e os vértices na lista de vértices.
@@ -32,6 +38,12 @@ public class Grafo
         // Add aresta instanciada na lista de arestas do vértice de origem e destino
         verticeOrigem.arestas.add(aresta);
         verticeDestino.arestas.add(aresta);
+        
+        // Incrementa o grau do vértice. Se for dirigido, incrementa apenas do vértices de origem.
+        if(isDirigido)
+            verticeOrigem.setGrau(verticeOrigem.getGrau() + 1);
+        else
+            verticeDestino.setGrau(verticeDestino.getGrau() + 1);
         
         // Add aresta e vértices nas listas de arestas e vértices do grafo
         arestasGrafo.add(aresta);
@@ -71,7 +83,7 @@ public class Grafo
             adjacentesString += "\n" + vertice.getRotulo() + ": ";
             
             // Percorre todos os adjacentes do atual e concatena
-            for(Vertice vAdj : vertice.getAdjacentes())
+            for(Vertice vAdj : vertice.getAdjacentes(this.isDirigido))
                 adjacentesString += vAdj.getRotulo() + " - ";
         }
 
@@ -85,6 +97,23 @@ public class Grafo
     public boolean isNulo()
     {
         return arestasGrafo.isEmpty();
+    }
+    
+    /**
+     * Um grafo simples não possuí laços e nem arestas paralelas.
+     * @return true se for simples.
+     */
+    public boolean isSimples()
+    {
+        for(Aresta a : arestasGrafo)
+        {
+            // Se o vértice de origem for o mesmo do de destino, é um laço. Não é simples.
+            if(a.getVerticeOrigem().equals(a.getVerticeDestino()))
+                return false;
+            // Se tiver mais de uma aresta onde a origem Vi e o destino Vii, tem aresta paralela. Não é simples.
+
+        }
+        return true;
     }
     
     /**
@@ -135,5 +164,17 @@ public class Grafo
     {
         this.arestasGrafo = arestas;
     }
+
+    public boolean isDirigido()
+    {
+        return isDirigido;
+    }
+
+    public void setIsDirigido(boolean isDirigido)
+    {
+        this.isDirigido = isDirigido;
+    }
+    
+    
 
 }
