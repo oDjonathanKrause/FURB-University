@@ -1,7 +1,9 @@
 package grafos;
 
+import caminhamento.Hamiltoniano;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -43,7 +45,10 @@ public class Grafo
         if(isDirigido)
             verticeOrigem.setGrau(verticeOrigem.getGrau() + 1);
         else
+        {
+            verticeOrigem.setGrau(verticeOrigem.getGrau() + 1);
             verticeDestino.setGrau(verticeDestino.getGrau() + 1);
+        }
         
         // Add aresta e vértices nas listas de arestas e vértices do grafo
         arestasGrafo.add(aresta);
@@ -70,7 +75,7 @@ public class Grafo
     }
     
     /**
-     * Imprime a lista de adjacência de cada vértice do grafo
+     * Imprime a lista de adjacência de cada vértice do grafo.
      * @return Lista com vértices adjacentes a v
      */
     public String printListaAdjacencia()
@@ -117,6 +122,28 @@ public class Grafo
     }
     
     /**
+     * Um grafo é Euleriano se é possível passr por todas as arestas e voltar a origem.
+     * Caso algum vértice do grafo tenha grau ímpar, o grafo não é euleriano. Do contrário, o grafo é euleriano.
+     * @return true se for euleriano.
+     */
+    public boolean isEuleriano()
+    {
+        // Percorre todos os vértices do grafo. Caso um deles tenha grau ímpar, retorna false.  
+        return verticesGrafo.stream().noneMatch((v) -> (v.getGrau() % 2 != 0));
+    }
+    
+    /**
+     * Um grafo é Hamiltoniano quando é possível passar por todos os vértices sem repetir nenhum.
+     * Utiliza a classe Hamiltoniano da package de caminhamento em grafos para efetuar a verificação.
+     * @return true se for hamiltoniano.
+     */
+    public boolean isHamiltoniano()
+    {
+        Hamiltoniano h = new Hamiltoniano();
+        return h.RobertAndFlores();
+    }
+    
+    /**
      * Verifica a ordem do grafo, ou seja, a quantidade de vértices pertencentes a G.
      * @return int com a ordem do grafo. 
      */
@@ -132,6 +159,34 @@ public class Grafo
     public int getTamanho()
     {
         return arestasGrafo.size();
+    }
+    
+    
+    /**
+     * Gera um grafo de ordem e tamanho informados por parâmetro.
+     * O peso das arestas é um número aleatório entre 0 e 100000.
+     * Os vértices terão o rótulo vi e as arestas arestai. Onde i é o índice dos loops internos.
+     * @param ordem - número de vértices.
+     * @param tamanho - número de arestas.
+     */
+    public void grafoBuilder(int ordem, int tamanho)
+    {
+        List<Vertice> vertices = new ArrayList();
+        int randIndexV1, randIndexV2, randValue;
+
+        for (int i = 0; i <= ordem; i++)
+            vertices.add(new Vertice("v" + i));
+
+        for (int i = 0; i <= tamanho; i++)
+        {
+            Random rand = new Random();
+            randIndexV1 = rand.nextInt((ordem - 1) + 1) + 1;
+            randIndexV2 = rand.nextInt((ordem - 1) + 1) + 1;
+            randValue = rand.nextInt((100000 - 1) + 1) + 1;
+            
+            this.addAresta("aresta" + i, randValue, vertices.get(randIndexV1), vertices.get(randIndexV2));
+        }
+        
     }
 
     // Gets e sets

@@ -4,9 +4,6 @@
 package grafos;
 
 import caminhamento.Dijkstra;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -14,7 +11,7 @@ import java.util.Random;
  */
 public class MainApp
 {
-
+    
     private static final String LINHA = "--------------------------------------------------------------------------";
 
     /**
@@ -25,34 +22,12 @@ public class MainApp
         grafo1();
         grafo2();
         grafo3();
-        grafoMaker(10000, 10000, false);
+        //grafoBuilder1();
     }
-
-    static void grafoMaker(int ordem, int tamanho, boolean isDirigido)
+    static void grafoBuilder1()
     {
-        Grafo g = new Grafo(isDirigido);
-        List<Vertice> vertices = new ArrayList();
-        List<Aresta> arestas = new ArrayList();
-        int randIndexV1, randIndexV2, randValue;
-
-        for (int i = 0; i <= ordem; i++)
-            vertices.add(new Vertice("v" + i));
-
-        for (int i = 0; i <= tamanho; i++)
-        {
-            Random rand = new Random();
-            randIndexV1 = rand.nextInt((ordem - 1) + 1) + 1;
-            randIndexV2 = rand.nextInt((ordem - 1) + 1) + 1;
-            randValue = rand.nextInt((100000 - 1) + 1) + 1;
-            
-            g.addAresta("aresta" + i, randValue, vertices.get(randIndexV1), vertices.get(randIndexV2));
-        }
-        
-        Dijkstra dijkstra = new Dijkstra(g, vertices.get(1), null);
-        System.out.println("\nTempo de execução do Dijkstra: " + dijkstra.getTempoExecucao().getSeconds() + " segundos ou " + dijkstra.getTempoExecucao().getNano() + " nano segundos." + "\nMatriz Roteamento Dijkstra a partir de v1:");
-        dijkstra.getMatrizRoteamento();
-
-
+        Grafo grafoBuilder1 = new Grafo(false);
+        grafoBuilder1.grafoBuilder(100, 100);
     }
 
     static void grafo1()
@@ -74,7 +49,7 @@ public class MainApp
 
         System.out.println("Grafo 1");
         System.out.println(grafo1.toString());
-
+        
         System.out.println("Lista de Adjacência:" + grafo1.printListaAdjacencia());
 
         Dijkstra dijkstra = new Dijkstra(grafo1, v1, v4);

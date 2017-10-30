@@ -13,7 +13,6 @@ public class Hamiltoniano
 {
     private Queue s;
     
-    
     /**
      * Aplica o teorema de Ore para verificar se o grafo é hamiltoniano.
      * Se a soma dos graus de cada par de vértices não-adjacentes seja no mínimo n. 
@@ -26,7 +25,7 @@ public class Hamiltoniano
     {
         if(grafo.getOrdem() < 3 || grafo.isSimples())
             return false;
-        
+        // NOT OK
         return true;
     }
 
