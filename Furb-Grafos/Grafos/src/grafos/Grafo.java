@@ -1,12 +1,13 @@
 package grafos;
 
+import caminhamento.ConjuntosDisjuntos;
 import caminhamento.Hamiltoniano;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- *
+ * Estrutura de dados Grafo implementada durante a disciplina de Teoria dos Grafos na FURB, 2017.
  * @author Djonathan Krause
  */
 public class Grafo
@@ -57,6 +58,16 @@ public class Grafo
             verticesGrafo.add(verticeOrigem);
         if(!verticesGrafo.contains(verticeDestino))
             verticesGrafo.add(verticeDestino);
+    }
+    
+    /**
+     * Adiciona vértice v no grafo G.
+     * Não faz nenhuma ligação, ou seja, até aqui, o vértice ficará desconexo.
+     * @param v vértice que será adicionado do grafo.
+     */
+    public void addVertice(Vertice v)
+    {
+        verticesGrafo.add(v);
     }
 
     /**
@@ -141,6 +152,16 @@ public class Grafo
     {
         Hamiltoniano h = new Hamiltoniano();
         return h.RobertAndFlores();
+    }
+    
+    /**
+     * Verifica se o grafo é conexo utilizando a estrutura de conjuntos disjuntos.
+     * Utiliza o método isConexo da classe ConjuntosDisjuntos para fazer a verificação. 
+     * @return true se for conexo.
+     */
+    public boolean isConexoConjuntosDisjuntos()
+    {
+        return new ConjuntosDisjuntos(this).isConexo();
     }
     
     /**

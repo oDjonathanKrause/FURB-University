@@ -3,6 +3,7 @@
  */
 package grafos;
 
+import caminhamento.ConjuntosDisjuntos;
 import caminhamento.Dijkstra;
 
 /**
@@ -19,10 +20,12 @@ public class MainApp
      */
     public static void main(String[] args)
     {
-        grafo1();
-        grafo2();
-        grafo3();
+        //grafo1();
+        //grafo2();
+        //grafo3();
         //grafoBuilder1();
+        grafoConjuntosDisjuntos1();
+        grafoConjuntosDisjuntos2();
     }
     static void grafoBuilder1()
     {
@@ -141,5 +144,56 @@ public class MainApp
 
         grafo4.addAresta("a1", 12, v1, v2);
         System.out.println(grafo4.printListaAdjacencia());
+    }
+    
+    static void grafoConjuntosDisjuntos1()
+    {
+        // Imagem do grafo https://awwapp.com/b/uijsgwsyi/
+        Grafo g = new Grafo(false);
+     
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
+        Vertice v5 = new Vertice("v5");
+        Vertice v6 = new Vertice("v6");
+        
+        g.addAresta("a1", 0, v1, v2);
+        g.addAresta("a2", 0, v1, v3);
+        g.addAresta("a3", 0, v2, v5);
+        g.addAresta("a4", 0, v3, v5);
+        g.addAresta("a5", 0, v3, v4);
+        g.addAresta("a6", 0, v4, v6);
+        
+        ConjuntosDisjuntos conjuntos = new ConjuntosDisjuntos(g);
+
+        System.out.println("\nConjuntos: \n" + conjuntos.toString() + "\nisConexo: " + g.isConexoConjuntosDisjuntos());
+    }
+    
+     static void grafoConjuntosDisjuntos2()
+    {
+        // Imagem do grafo https://awwapp.com/b/uungdfhsl/
+        Grafo g = new Grafo(false);
+     
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
+        Vertice v5 = new Vertice("v5");
+        Vertice v6 = new Vertice("v6");
+        Vertice v7 = new Vertice("v7");
+        
+        g.addAresta("a1", 0, v1, v2);
+        g.addAresta("a2", 0, v1, v3);
+        g.addAresta("a3", 0, v2, v5);
+        g.addAresta("a4", 0, v3, v5);
+        g.addAresta("a5", 0, v3, v4);
+        g.addAresta("a6", 0, v4, v6);
+        
+        g.addVertice(v7);
+        
+        ConjuntosDisjuntos conjuntos = new ConjuntosDisjuntos(g);
+
+        System.out.println("\nConjuntos: \n" + conjuntos.toString() + "\nisConexo: " + g.isConexoConjuntosDisjuntos());
     }
 }
