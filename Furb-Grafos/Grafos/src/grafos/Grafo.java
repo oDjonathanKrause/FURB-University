@@ -151,7 +151,7 @@ public class Grafo
     public boolean isHamiltoniano()
     {
         Hamiltoniano h = new Hamiltoniano();
-        return h.RobertAndFlores();
+        return h.RobertsAndFlores(this);
     }
     
     /**
@@ -182,15 +182,28 @@ public class Grafo
         return arestasGrafo.size();
     }
     
+    /**
+     * Retorna o vértice V do grafo G pelo rótulo.
+     * @param rotuloVertice rótudo do vértice que será procurado.
+     * @return null se não encontrar o vértice. Objeto do vértice se encontrar.
+     */
+    public Vertice getVerticePorRotulo(String rotuloVertice)
+    {
+        for(Vertice vertice : this.verticesGrafo)
+            if(vertice.getRotulo().equals(rotuloVertice))
+                return vertice;
+        return null;
+    }
+    
     
     /**
      * Gera um grafo de ordem e tamanho informados por parâmetro.
-     * O peso das arestas é um número aleatório entre 0 e 100000.
+     * O peso das arestas é um número aleatório entre 0 e 1000.
      * Os vértices terão o rótulo vi e as arestas arestai. Onde i é o índice dos loops internos.
-     * @param ordem - número de vértices.
-     * @param tamanho - número de arestas.
+     * @param ordem número de vértices.
+     * @param tamanho número de arestas.
      */
-    public void grafoBuilder(int ordem, int tamanho)
+    public void buildGrafo(int ordem, int tamanho)
     {
         List<Vertice> vertices = new ArrayList();
         int randIndexV1, randIndexV2, randValue;
@@ -203,7 +216,7 @@ public class Grafo
             Random rand = new Random();
             randIndexV1 = rand.nextInt((ordem - 1) + 1) + 1;
             randIndexV2 = rand.nextInt((ordem - 1) + 1) + 1;
-            randValue = rand.nextInt((100000 - 1) + 1) + 1;
+            randValue = rand.nextInt((1000 - 1) + 1) + 1;
             
             this.addAresta("aresta" + i, randValue, vertices.get(randIndexV1), vertices.get(randIndexV2));
         }

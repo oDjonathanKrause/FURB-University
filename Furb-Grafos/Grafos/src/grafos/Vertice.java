@@ -15,13 +15,19 @@ public class Vertice implements Comparable<Vertice>
     private Vertice pai;
     public List<Aresta> arestas;
     List<Vertice> verticesAdjacentes;
+    int botCount;
 
-    // Construtor
+    
+    /**
+     * Construtor do vértice. Inicializa as listas e seta o identificador do vértice.
+     * @param rotuloVertice - Identificado do vértice.
+     */
     public Vertice(String rotuloVertice)
     {
         this.rotulo = rotuloVertice;
         this.verticesAdjacentes = new ArrayList();
         this.arestas = new ArrayList();
+        this.botCount = 0;
     }
     
     /**
@@ -102,7 +108,8 @@ public class Vertice implements Comparable<Vertice>
         this.status = Status;
     }
 
-    public float getDistancia() {
+    public float getDistancia() 
+    {
         return distancia;
     }
 
@@ -127,4 +134,16 @@ public class Vertice implements Comparable<Vertice>
     {
         this.grau = grau;
     }
+
+    public int getBotCount()
+    {
+        return botCount;
+    }
+
+    public void setBotCount(int botCount)
+    {
+        this.botCount = botCount;
+    }
+
+    public Vertice(){}
 }

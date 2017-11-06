@@ -16,7 +16,7 @@ public class Dijkstra
     private static final int INFINITO = Integer.MAX_VALUE;
     private List<Vertice> s = new ArrayList();
     private List<Vertice> q = new ArrayList();
-    private Vertice destino;
+    private Vertice destino, origem;
     private static final Vertice nil = new Vertice("nil");
     private String paiMatriz = "", dMatriz = "", cabecalhoMatriz = "";
     private Duration tempoExecucao;
@@ -38,6 +38,8 @@ public class Dijkstra
             this.destino = destino;
         else 
             this.destino = null;
+        
+        this.origem = origem;
     
         // Starta o time para verificar o tempo de execução
         Instant start = Instant.now(); 
@@ -169,11 +171,11 @@ public class Dijkstra
     /**
      * Printa a matriz de roteamento do dijkstra.
      */
-    public void getMatrizRoteamento()
+    public void printMatrizRoteamento()
     {
         System.out.println("\n\t" + cabecalhoMatriz);
         System.out.println("pai:\t" + paiMatriz);
-        System.out.println("d:\t" + dMatriz);
+        System.out.println("d:\t" + dMatriz + "\n");
     }
 
     /**
@@ -185,7 +187,7 @@ public class Dijkstra
         cabecalhoMatriz = "";
         paiMatriz = "";
         dMatriz = "";
-        
+     
         for(Vertice v : grafo.getVertices())
         {
             if(v.getDistancia() == INFINITO)
@@ -198,9 +200,55 @@ public class Dijkstra
             {
                 cabecalhoMatriz += v.getRotulo() + "\t";
                 paiMatriz += v.getPai().getRotulo() + "\t";
-                dMatriz += v.getDistancia() + "\t";
+                
+                // Seta as casas decimais só quando são significantes   
+                //dMatriz += v.getDistancia() + "\t";
+                if(v.getDistancia() == (long) v.getDistancia())
+                    dMatriz += String.format("%d",(long)v.getDistancia()) + "\t";
+                else
+                    dMatriz += String.format("%s",v.getDistancia()) + "\t";
             }
         }
+    }
+    
+    /**
+     * Constroi o caminho de vértices da origem ao destino.
+     * Para isso, baseia-se no pai de cada vértice. Ou seja, a partir do destino, pega o pai até chegar na origem.
+     * @param destino vértice de destino do caminho.
+     * @return List de vértices até o destino.
+     */
+    public List<Vertice> getCaminho(Vertice destino)
+    {
+        List caminho = new ArrayList();
+        boolean chegou = false;
+        Vertice atual = destino.getPai();
+
+        // Enquanto não chegar ao destino
+        while(!chegou)
+        {
+            if(atual.getPai() == null)
+                System.out.println("Pá, de ruim no " + atual.getRotulo());
+            
+            // Se o vértice atual não for igual ao da origem
+            if(!atual.equals(this.origem))
+            {
+                // Add o vértice atual na lista de caminho
+                caminho.add(atual);
+                
+                // O atual será seu pai
+                atual = atual.getPai();
+            }
+            // Quando chegar no destino, add o atual na lista e sai do loop
+            else
+            {
+                caminho.add(atual);
+                chegou = true;
+            }
+        }
+        
+        // Inverte ordem da lista visto que o caminho é baseado no pai dos vértices
+        Collections.reverse(caminho);
+        return caminho;
     }
     
     // Construtor vazio.
