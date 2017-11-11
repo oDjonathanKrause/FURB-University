@@ -56,7 +56,7 @@ public class CiclosHamiltonianos
         verticeInicial.setStatus(EXPLORADO);
 
         // Executa a recursividade a partir do vértice inicial, se na recursividade voltar true, é hamiltoniano.
-        return isHamiltoniano(verticeInicial, grafo);
+        return robertsFloresRecursivo(verticeInicial, grafo);
        
     }
 
@@ -67,7 +67,7 @@ public class CiclosHamiltonianos
      * @param grafo grafo que está sendo analisado.
      * @return true se encontrar um ciclo hamiltoniano.
      */
-    public boolean isHamiltoniano(Vertice atual, Grafo grafo)
+    public boolean robertsFloresRecursivo(Vertice atual, Grafo grafo)
     {
         // Para cada vértice adjancente ao que está sendo analisado
         for (Vertice adjacenteDoAtual : atual.getAdjacentes(grafo.isDirigido()))
@@ -83,7 +83,7 @@ public class CiclosHamiltonianos
                 adjacenteDoAtual.setStatus(EXPLORADO);
 
                 // Segue a busca a partir dele
-                return isHamiltoniano(adjacenteDoAtual, grafo);
+                return robertsFloresRecursivo(adjacenteDoAtual, grafo);
             }
             // Se o vértice analisado for o mesmo que o inicial e todos os vértices já estão na pilha
             // Fechou o ciclo hamiltoniano, retorna true
