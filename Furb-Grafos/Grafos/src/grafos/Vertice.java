@@ -81,6 +81,26 @@ public class Vertice implements Comparable<Vertice>
         return this.distancia > v.getDistancia() ? 1 : this.distancia < v.getDistancia() ? -1 : 0;
     }
     
+    /**
+     * Procura os vértices não adjacentes a v.
+     * Para isso, percorre todos os vértices da lista de adjacentes a ele.
+     * Add a lista de não adjacentes todos os vértices que não estão na lista de adjacentes.
+     * @param grafo onde os vértices estão.
+     * @return List com os vértices não adjacentes a v.
+     */
+    public List<Vertice> getNaoAdjacente(Grafo grafo)
+    {
+        List naoAdjacentes = new ArrayList();
+        
+        // Percorre todos os vértices do grafo
+        for(Vertice vertice : grafo.getVertices())
+            // Se a lista de vértices adjacentes do grafo NÃO conter este vértice, add ele na lista
+            if(!this.getAdjacentes(grafo.isDirigido()).contains(vertice))
+                naoAdjacentes.add(vertice);
+        
+        return naoAdjacentes;
+    }
+    
     // Gets e sets
     public String getRotulo()
     {

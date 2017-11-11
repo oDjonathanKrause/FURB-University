@@ -187,7 +187,7 @@ public class Dijkstra
         cabecalhoMatriz = "";
         paiMatriz = "";
         dMatriz = "";
-     
+        
         for(Vertice v : grafo.getVertices())
         {
             if(v.getDistancia() == INFINITO)

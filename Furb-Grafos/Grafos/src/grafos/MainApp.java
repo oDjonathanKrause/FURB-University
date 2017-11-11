@@ -4,6 +4,7 @@
 package grafos;
 
 import bots.Bot;
+import caminhamento.CiclosHamiltonianos;
 import caminhamento.ConjuntosDisjuntos;
 import caminhamento.Dijkstra;
 
@@ -24,15 +25,18 @@ public class MainApp
         //grafo1();
         //grafo2();
         //grafo3();
+        //grafo4();
+        //grafo5();
         //grafoBuilder1();
         //grafoConjuntosDisjuntos1();
-        grafoConjuntosDisjuntos2();
+        //grafoConjuntosDisjuntos2();
+        //grafoConjuntosDisjuntos3();
         //bot1();
         //bot2();
         //botThread1();
         //grafoHamiltoniano1();
         //grafoHamiltoniano2();
-        //grafo5();
+        grafoHamiltoniano3();
 
     }
 
@@ -255,7 +259,32 @@ public class MainApp
 
         System.out.println("\nConjuntos: \n" + conjuntos.toString() + "\nisConexo: " + g.isConexoConjuntosDisjuntos());
     }
+    
+    static void grafoConjuntosDisjuntos3()
+    {
+        Grafo grafo = new Grafo(true);
 
+        Vertice a = new Vertice("A");
+        Vertice b = new Vertice("B");
+        Vertice c = new Vertice("C");
+        Vertice d = new Vertice("D");
+        Vertice e = new Vertice("E");
+        Vertice f = new Vertice("F");
+        Vertice g = new Vertice("G");
+
+        grafo.addAresta("a1", 0, a, c);
+        grafo.addAresta("a2", 0, a, d);
+        grafo.addAresta("a3", 0, c, d);
+        grafo.addAresta("a4", 0, d, b);
+        grafo.addAresta("a5", 0, e, f);
+        grafo.addAresta("a6", 0, f, g);
+        grafo.addAresta("a6", 0, g, e);
+
+        ConjuntosDisjuntos conjuntos = new ConjuntosDisjuntos(grafo);
+
+        System.out.println("\nConjuntos: \n" + conjuntos.toString() + "\nisConexo: " + grafo.isConexoConjuntosDisjuntos());
+    }
+    
     static void bot1()
     {
         Grafo g = new Grafo(false);
@@ -313,11 +342,17 @@ public class MainApp
         g.addAresta("a8", 0, e, a);
         g.addAresta("a9", 0, e, c);
         
-        System.out.println(g.isHamiltoniano());
+        System.out.println("Roberts e Flores: " + g.isHamiltoniano());
+        System.out.println("Dirac: " + g.teoremaDeDirac() + ". Ore: " + g.teoremaDeOre());
     }
     
     static void grafoHamiltoniano2()
     {
+        /**
+         * A---B    
+         * |   |   
+         * D---C
+         */
         Grafo g = new Grafo(false);
         
         Vertice a = new Vertice("A");
@@ -326,14 +361,50 @@ public class MainApp
         Vertice d = new Vertice("D");
         
         g.addAresta("a1", 0, a, b);
-        g.addAresta("a3", 0, a, d);
-        g.addAresta("a2", 0, b, c);
+        g.addAresta("a2", 0, a, d);
+        g.addAresta("a3", 0, b, c);
+        g.addAresta("a4", 0, d, c);
         
-        System.out.println(g.isHamiltoniano());
-        System.out.println(g.isHamiltoniano());
-        System.out.println(g.isHamiltoniano());
-        System.out.println(g.isHamiltoniano());
-        System.out.println(g.isHamiltoniano());
+        System.out.println("Roberts e Flores: " + g.isHamiltoniano());
+        System.out.println("Dirac: " + g.teoremaDeDirac() + ". Ore: " + g.teoremaDeOre());
+    }
+    
+    static void grafoHamiltoniano3()
+    {
+        // Imagem do grafo: https://imgur.com/KlryeFt
+        Grafo g = new Grafo(false);
         
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
+        Vertice v5 = new Vertice("v5");
+        Vertice v6 = new Vertice("v6");
+        Vertice v7 = new Vertice("v7");
+        Vertice v8 = new Vertice("v8");
+        Vertice v9 = new Vertice("v9");
+        
+        g.addAresta("a", 0, v1, v2);
+        g.addAresta("a", 0, v2, v3);
+        g.addAresta("a", 0, v3, v4);
+        g.addAresta("a", 0, v4, v5);
+        g.addAresta("a", 0, v5, v6);
+        g.addAresta("a", 0, v6, v7);
+        g.addAresta("a", 0, v7, v8);
+        g.addAresta("a", 0, v8, v9);
+        g.addAresta("a", 0, v9, v1);
+        g.addAresta("a", 0, v1, v7);
+        g.addAresta("a", 0, v8, v6);
+        g.addAresta("a", 0, v6, v4);
+        g.addAresta("a", 0, v5, v3);
+        g.addAresta("a", 0, v5, v2);
+        g.addAresta("a", 0, v9, v7);
+        g.addAresta("a", 0, v9, v5);
+        g.addAresta("a", 0, v7, v2);
+        g.addAresta("a", 0, v7, v5);
+        g.addAresta("a", 0, v7, v4);
+        
+        System.out.println("Roberts e Flores: " + g.isHamiltoniano());
+        System.out.println("Dirac: " + g.teoremaDeDirac() + ". Ore: " + g.teoremaDeOre());
     }
 }

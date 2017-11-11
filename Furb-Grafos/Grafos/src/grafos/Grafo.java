@@ -1,7 +1,7 @@
 package grafos;
 
 import caminhamento.ConjuntosDisjuntos;
-import caminhamento.Hamiltoniano;
+import caminhamento.CiclosHamiltonianos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -150,8 +150,32 @@ public class Grafo
      */
     public boolean isHamiltoniano()
     {
-        Hamiltoniano h = new Hamiltoniano();
-        return h.RobertsAndFlores(this);
+        return new CiclosHamiltonianos().RobertsAndFlores(this);
+    }
+    
+    /**
+     * Verifica se o grafo é hamiltoniano segundo o teorema de Ore.
+     * Há exeções para o teorema!
+     * 
+     * Ore diz que se a soma dos graus de cada par de vértices não-adjacentes seja no mínimo n. 
+     * N sendo o número de vértices. O grafo também tem que ter ordem maior ou igual a 3 e ser simples. 
+     * @return true se for hamiltoniano.
+     */
+    public boolean teoremaDeOre()
+    {
+        return new CiclosHamiltonianos().teoremaDeOre(this);
+    }
+    
+    /**
+     * Verifica se o grafo é hamiltoniano segundo o teorema de Dirac.
+     * Há exceções para o teorema!
+     * 
+     * Dirac diz que o grau de todo vértice de G seja no mínimo n/2, onde n é o número de vértices em G. 
+     * @return true se for hamiltoniano.
+     */
+    public boolean teoremaDeDirac()
+    {
+        return new CiclosHamiltonianos().teoremaDeDirac(this);
     }
     
     /**
@@ -220,7 +244,6 @@ public class Grafo
             
             this.addAresta("aresta" + i, randValue, vertices.get(randIndexV1), vertices.get(randIndexV2));
         }
-        
     }
 
     // Gets e sets
