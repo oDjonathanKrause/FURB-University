@@ -5,15 +5,26 @@ import grafos.Grafo;
 import grafos.Vertice;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
+ * O algoritmo de Fleury irá verificar o ciclo euleriano de um grafo G.
+ * 
+ * O algoritmo consiste em:
+ * 1. Começar de um vértice V não importando qual.
+ * 2. Ir para qualquer vértice adjacente de V e marcar a aresta percorrida. 
+      Não atravesse pontes a não ser que seja a única opção.
+ * 3. Continue até voltar ao vértice inicial.
  *
  * @author Djonathan
  */
 public class Fleury
 {
+    private Grafo grafo;
     private List<Vertice> vertices;
     private List<Aresta> arestas;
+    private Stack<Vertice> Q;
+    
 
     /**
      * Contrutor do método. Popula as listas de vértices e arestas locais.
@@ -21,8 +32,15 @@ public class Fleury
      */
     public Fleury(Grafo grafo)
     {
+        if(grafo == null)
+             throw new IllegalArgumentException("O grafo não pode ser nulo!");
+        
+        this.grafo = grafo;
         this.vertices = grafo.getVertices();
         this.arestas = grafo.getArestas();
+        this.Q = new Stack();
+        
+        this.Q.push(grafo.getVertices().get(0));
     }
 
     /**

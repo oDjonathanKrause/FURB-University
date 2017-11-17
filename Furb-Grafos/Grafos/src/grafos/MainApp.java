@@ -4,7 +4,7 @@
 package grafos;
 
 import bots.Bot;
-import caminhamento.CiclosHamiltonianos;
+import caminhamento.CaixeiroViajante;
 import caminhamento.ConjuntosDisjuntos;
 import caminhamento.Dijkstra;
 
@@ -36,8 +36,11 @@ public class MainApp
         //botThread1();
         //grafoHamiltoniano1();
         //grafoHamiltoniano2();
-        grafoHamiltoniano3();
-
+        //grafoHamiltoniano3();
+        verificarPontes1();
+        //caixeiroViajante1();
+        
+        
     }
 
     static void grafoBuilder1()
@@ -406,5 +409,46 @@ public class MainApp
         
         System.out.println("Roberts e Flores: " + g.isHamiltoniano());
         System.out.println("Dirac: " + g.teoremaDeDirac() + ". Ore: " + g.teoremaDeOre());
+    }
+    
+    static void verificarPontes1()
+    {
+        /**
+         * A---B
+         * |   |
+         * C---D--E
+         */
+        Grafo g = new Grafo(false);
+        
+        Vertice a = new Vertice("A");
+        Vertice b = new Vertice("B");
+        Vertice c = new Vertice("C");
+        Vertice d = new Vertice("D");
+        Vertice e = new Vertice("E");
+        
+        g.addAresta("a1", 0, a, b);
+        g.addAresta("a2", 0, a, c);
+        g.addAresta("a3", 0, c, d);
+        g.addAresta("a4", 0, b, d);
+        g.addAresta("ponte", 0, d, e);
+        
+        //System.out.println(g.getArestaPorRotulo("ponte").isPonte(g));
+        System.out.println(g.getArestaPorRotulo("a1").isPonte(g));
+    }
+    
+    static void caixeiroViajante1()
+    {
+        Grafo g = new Grafo(false);
+        
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        
+        g.addAresta("a1", 20, v1, v2);
+        g.addAresta("a2", 10, v1, v3);
+        
+        CaixeiroViajante caixeiroViajante = new CaixeiroViajante();
+        caixeiroViajante.getListVizinhoMaisProximo(g, v1);
+        
     }
 }

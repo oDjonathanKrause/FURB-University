@@ -3,6 +3,7 @@ package grafos;
 import caminhamento.ConjuntosDisjuntos;
 import caminhamento.CiclosHamiltonianos;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -219,6 +220,18 @@ public class Grafo
         return null;
     }
     
+    /**
+     * Retorna a aresta A do grafo G que contém o rótulo de identificação passado por parâmetro.
+     * @param rotuloAresta rótulo da aresta procurada.
+     * @return Aresta com o rótulo procurado.
+     */
+    public Aresta getArestaPorRotulo(String rotuloAresta)
+    {
+        for(Aresta aresta : this.arestasGrafo)
+            if (aresta.getRotulo().equals(rotuloAresta))
+                return aresta;
+        return null;
+    }
     
     /**
      * Gera um grafo de ordem e tamanho informados por parâmetro.

@@ -13,7 +13,13 @@ public class Aresta
     private float valor;
     private Vertice verticeOrigem, verticeDestino;
 
-    // Contrutor
+    /**
+     * Construtor da aresta.
+     * @param rotulo identificação da aresta.
+     * @param valor caso o grafo seja valorado.
+     * @param verticeOrigem vértice de origem da aresta.
+     * @param verticeDestino  vértice de destino da aresta.
+     */
     public Aresta(String rotulo, float valor, Vertice verticeOrigem, Vertice verticeDestino)
     {
         this.rotulo = rotulo;
@@ -22,7 +28,23 @@ public class Aresta
         this.verticeOrigem = verticeOrigem;
     }
     
+    // Construtor vazio 
     public Aresta() {}
+    
+    /**
+     * Verifica se a aresta em questão é uma ponte.
+     * Uma aresta é uma ponte quando ao remove-la, o grafo fica disconexo.
+     * @param grafo.
+     * @return true se a aresta for uma ponte.
+     */
+    public boolean isPonte(Grafo grafo)
+    {
+        // Remove a aresta do grafo.
+        grafo.getArestas().remove(this);
+        
+        // Se o grafo ficar disconexo, retorna true.
+        return !grafo.isConexoConjuntosDisjuntos();
+    }
 
     
     // Gets e sets

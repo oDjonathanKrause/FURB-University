@@ -43,8 +43,6 @@ public final class ConjuntosDisjuntos
         for(Aresta a : grafo.getArestas())
              union(a.getVerticeOrigem(), a.getVerticeDestino());
         
-        //conjuntos.removeIf(c -> c.isEmpty());
-
         for(List<Vertice> conjunto : conjuntos)
             if(conjunto.isEmpty())
                 conjuntos.remove(conjunto);
@@ -110,6 +108,15 @@ public final class ConjuntosDisjuntos
     public boolean isConexo()
     {
         return conjuntos.size() == 1;
+    }
+    
+    /**
+     * Retorna os conjuntos disjuntos calculados a partir da construção da classe.
+     * @return Uma lista de lista de vértices.
+     */
+    public List<List<Vertice>> getConjuntosDisjuntos()
+    {
+        return conjuntos;
     }
 
     /**
