@@ -10,7 +10,7 @@ import java.util.List;
 public class Vertice implements Comparable<Vertice>
 {
     private float distancia;
-    private int grau;
+    private int grau, abertura, fechamento;
     private String rotulo, status;
     private Vertice pai;
     public List<Aresta> arestas;
@@ -164,6 +164,28 @@ public class Vertice implements Comparable<Vertice>
     {
         this.botCount = botCount;
     }
+
+    public int getAbertura()
+    {
+        return abertura;
+    }
+
+    public void setAbertura(int abertura)
+    {
+        this.abertura = abertura;
+    }
+
+    public int getFechamento()
+    {
+        return fechamento;
+    }
+
+    public void setFechamento(int fechamento)
+    {
+        this.fechamento = fechamento;
+    }
+    
+    
 
     public Vertice(){}
 }

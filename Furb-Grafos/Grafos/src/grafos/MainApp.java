@@ -4,6 +4,7 @@
 package grafos;
 
 import bots.Bot;
+import busca.BFS;
 import caminhamento.CaixeiroViajante;
 import caminhamento.ConjuntosDisjuntos;
 import caminhamento.Dijkstra;
@@ -37,9 +38,9 @@ public class MainApp
         //grafoHamiltoniano1();
         //grafoHamiltoniano2();
         //grafoHamiltoniano3();
-        verificarPontes1();
+        //verificarPontes1();
         //caixeiroViajante1();
-        
+        bfs1();
         
     }
 
@@ -449,6 +450,36 @@ public class MainApp
         
         CaixeiroViajante caixeiroViajante = new CaixeiroViajante();
         caixeiroViajante.getListVizinhoMaisProximo(g, v1);
+        
+    }
+    
+    static void bfs1()
+    {
+        /**
+         * v1 --- v2
+         * |
+         * v3 --- v5 --- v6
+         * |
+         * v4
+         */
+        Grafo g = new Grafo(false);
+        BFS bfs = new BFS();
+        
+        Vertice v1 = new Vertice("v1");
+        Vertice v2 = new Vertice("v2");
+        Vertice v3 = new Vertice("v3");
+        Vertice v4 = new Vertice("v4");
+        Vertice v5 = new Vertice("v5");
+        Vertice v6 = new Vertice("v6");
+        
+        g.addAresta("a1", 10, v1, v2);
+        g.addAresta("a2", 10, v1, v3);
+        g.addAresta("a3", 10, v3, v5);
+        g.addAresta("a4", 10, v5, v6);
+        g.addAresta("a5", 10, v3, v4);
+        
+        
+        
         
     }
 }
