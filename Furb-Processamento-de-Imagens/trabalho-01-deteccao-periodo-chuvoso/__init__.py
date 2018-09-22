@@ -1,34 +1,46 @@
-import sys
-import cv2
+﻿from cv2 import cv2
 import numpy as np
+import cv2
+
+"""
+    Djonathan Krause, Rafael Rossi.
+    Processamento de Imagens - FURB 2018/2
+"""
 
 # Carrega imagens
-chuvoso = cv2.imread("imagens/chuvoso.png")
-seca = cv2.imread("imagens/seca.png")
+chuvoso = cv2.imread('imagens/chuvoso.png', 1)
+seca = cv2.imread('imagens/seca.png', 1)
 
-# Imagem negativa em tons de cinza
-chuvoso = cv2.cvtColor(chuvoso, cv2.COLOR_BGR2GRAY)
-seca = cv2.cvtColor(seca, cv2.COLOR_BGR2GRAY)
+# Escala de cinza
+chuvoso = cv2.cvtColor(chuvoso, cv2.COLOR_RGB2GRAY)
+seca = cv2.cvtColor(seca, cv2.COLOR_RGB2GRAY)
 
-# Faz inversão
+# Inverte
 chuvoso = cv2.bitwise_not(chuvoso)
 seca = cv2.bitwise_not(seca)
 
-# Binarização
-retval_chuvoso, chuvoso = cv2.threshold(chuvoso, 200, 255, cv2.THRESH_BINARY)
-retval_seca, seca = cv2.threshold(seca, 110, 255, cv2.THRESH_BINARY)
+# Adição
+chuvoso = cv2.add(chuvoso, 40)
+seca = cv2.add(seca, -50)
 
-# Faz imagens ficarem do mesmo tamanho para subtrair
-chuvoso = cv2.resize(chuvoso, (380, 200)).astype(np.float32)
-seca = cv2.resize(seca, (380, 200)).astype(np.float32)
+# binarizar 190 chuvoso, 110 estiagem
+r, chuvoso = cv2.threshold(chuvoso, 210, 255, cv2.THRESH_BINARY)
+r2, seca = cv2.threshold(seca, 73, 255, cv2.THRESH_BINARY)
 
-# Subtrai as imagens
-subtracao = cv2.subtract(chuvoso, seca)
+# abertura
+abertura = np.ones((2, 2), np.int8)
+chuvoso = cv2.morphologyEx(chuvoso, cv2.MORPH_OPEN, abertura)
+seca = cv2.morphologyEx(seca, cv2.MORPH_OPEN, abertura)
 
-# Mostra imagem
-cv2.imshow('chuvoso', chuvoso)
-cv2.imshow('seca', seca)
-cv2.imshow('subtracao', subtracao)
+# subtração
+chuvoso = cv2.resize(chuvoso, (385, 200))
+seca = cv2.resize(seca, (385, 200))
+resSub = cv2.subtract(chuvoso, seca)
+resSub = cv2.resize(resSub, (385, 200))
+
+cv2.imshow('Resultado Subtracao', resSub)
+
+cv2.imshow('SECA', seca)
 
 # Aguarda input para fechar janela
 cv2.waitKey(0)
