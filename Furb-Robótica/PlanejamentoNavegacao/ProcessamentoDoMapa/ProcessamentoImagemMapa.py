@@ -3,7 +3,7 @@ import cv2
 import math
 
 # Define o tamanho da matriz quadrada
-TAMANHO_MATRIZ = 7;
+TAMANHO_MATRIZ = 7
 
 # Carrega imagem e transforma em escala de cinza
 img = cv2.imread('mapa.jpg')
