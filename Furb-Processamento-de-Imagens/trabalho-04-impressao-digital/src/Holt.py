@@ -1,4 +1,5 @@
 import numpy as np
+import cv2
 
 __author__ = "Djonathan Krause"
 __credits__ = "Baseado na implementação Java https://github.com/marinalaux/PDI"
@@ -10,7 +11,7 @@ class Holt:
         result = img.copy()
         process = img.copy()
         odd = False
-    
+
         # linha/y/h, colunas/x/w
         height, width = process.shape
         for x in range(0, width-1):

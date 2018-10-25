@@ -1,4 +1,4 @@
-
+﻿
 # Created by https://www.gitignore.io/api/eclipse,java,netbeans,python,windows,sublimetext
 
 ### Eclipse ###
@@ -830,3 +830,8 @@ hs_err_pid*
 /Furb-Grafos/Grafos-Trabalho1/nbproject/private/
 /Furb-Grafos/Grafos/nbproject/private/
 /Furb-Robótica/PlanejamentoNavegacao/WaveFront/nbproject/private/
+
+/Furb-Processamento-de-Imagens/trabalho-03-hough-circles/imagens
+/Furb-Processamento-de-Imagens/trabalho-04-impressao-digital/.idea
+/Furb-Processamento-de-Imagens/trabalho-04-impressao-digital/dataset
+/venv
