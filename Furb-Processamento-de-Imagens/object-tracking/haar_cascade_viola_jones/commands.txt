@@ -1,0 +1,16 @@
+1.
+ opencv_createsamples -img pos/mouse50x50.jpg -bg bg_dir_info.txt -info info/info.lst -pngoutput info/pos -maxxangle 0.5 -maxyangle 0.5 -maxzangle 0.5 -num 1500
+
+
+2.
+ opencv_createsamples -info info/info.lst -num 1500 -w 20 -h 20 -vec positives.vec
+
+3.
+ opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 1800 -numNeg 900 -numStages 10 -w 20 -h 20
+
+C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_createsamples -img pos/dino50x50.png -bg bg_dir_info.txt -info info/info.lst -pngoutput info/pos -maxxangle 0.5 -maxyangle 0.5 -maxzangle 0.5 -num 1500
+C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_createsamples -info info/info.lst -num 1300 -w 20 -h 20 -vec positives.vec
+C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 200 -numNeg 2000 -numStages 20 -w 50 -h 50
+
+
+C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 1000 -numNeg 2000 -numStages 15 -w 50 -h 50
