@@ -1,7 +1,4 @@
-import cv2, sys, os
-from random import randint
-from ObjectDetected import ObjectDetected
-from Color import Color
+import cv2, sys
 
 """
     1. O arquivo setup.py faz o download das imagens negativas e cria os diretórios necessários
@@ -11,21 +8,17 @@ from Color import Color
     Djonathan Krause, Rafael Rossi.
 """
 
-DIR_CASCADE = '../data/cascade.xml'
+# Parametros
+DIR_CASCADE = '../data/hand_cascade.xml'
 MIN_SIZE = 50           # 50
 SCALE_FACTOR = 1.1      # 1.1
-MIN_NEIGHBORS = 5       # 5
-
-def verify_color(color):
-    DINO_COLOR = Color(23, 23, 23)
-    if color.r > 20 and color.r < 45:
-        if color.g > 28 and color.r < 50:
-            if color.b > 30 and color.b < 51:
-                return True
-    #return DINO_COLOR.dist(color) < 50
+MIN_NEIGHBORS = 3       # 5
 
 def track():
+    # Carrega o arquivo com o cascade
     cascade = cv2.CascadeClassifier(DIR_CASCADE)
+
+    # Inicia a captura de video
     video_capture = cv2.VideoCapture(0)
 
     while True:
@@ -38,13 +31,7 @@ def track():
 
         # Desenha retangulo no objeto
         for (x, y, w, h) in objects:
-            r = frame[y][x][2]
-            g = frame[y][x][1]
-            b = frame[y][x][0]
-            actual_color = Color(r, g, b)
-            if verify_color(actual_color):
-                print(actual_color.to_string())
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (50, 50, 200), 2)
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (50, 50, 200), 2)
 
         # Mostra video
         cv2.imshow('Video', frame)
@@ -52,6 +39,5 @@ def track():
         # q pra sair
         if cv2.waitKey(1) & 0xFF == ord('q'):
            sys.exit()
-
 
 track()

@@ -13,4 +13,4 @@ C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_createsamples -info in
 C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 200 -numNeg 2000 -numStages 20 -w 50 -h 50
 
 
-C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 1000 -numNeg 2000 -numStages 15 -w 50 -h 50
+C:\Users\djodr\Downloads\opencv\build\x64\vc14\bin\opencv_traincascade -data data -vec positives.vec -bg bg_dir_info.txt -numPos 1000 -numNeg 2000 -numStages 17 -w 50 -h 50
